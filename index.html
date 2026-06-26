@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trails Timeline — Zemuria</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+
+  <!-- ===== timeline header ===== -->
+  <div class="topbar">
+    <div class="datewrap">
+      <p class="eyebrow">In-world date</p>
+      <h1 class="date" id="date">—</h1>
+      <p class="beat-title" id="beatTitle"></p>
+    </div>
+    <div class="timeline">
+      <div class="transport">
+        <button class="tbtn" id="start" title="Jump to start">⏮</button>
+        <button class="tbtn" id="prev" title="Previous beat (←)">‹</button>
+        <button class="tbtn play" id="play" title="Play / pause (space)">▶</button>
+        <button class="tbtn" id="next" title="Next beat (→)">›</button>
+        <span class="counter" id="counter"></span>
+      </div>
+      <input type="range" class="scrub" id="scrub" min="0" max="0" value="0" step="1">
+      <span class="chaptag" id="chaptag"></span>
+    </div>
+  </div>
+
+  <!-- ===== tabs ===== -->
+  <div class="tabs">
+    <button class="tab active" id="tabMap">Map</button>
+    <button class="tab" id="tabCodex">Codex</button>
+  </div>
+
+  <!-- ===== MAP view ===== -->
+  <div class="view active" id="viewMap">
+    <div class="maplayout">
+      <div class="mapframe">
+        <img src="zemuria.png" alt="Map of Zemuria">
+        <svg id="routes" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+        <div id="pips"></div>
+        <div id="markers"></div>
+      </div>
+      <div class="side">
+        <div class="card">
+          <h3>On the map now</h3>
+          <div id="cast"></div>
+        </div>
+        <div class="card">
+          <h3>Display</h3>
+          <label class="toggle-row">
+            <input type="checkbox" id="trailsToggle">
+            Keep travelled paths visible
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CODEX view ===== -->
+  <div class="view" id="viewCodex">
+    <p class="spoiler-note">Entries appear only once the timeline reaches the beat where they're revealed — so scrubbing back hides later spoilers.</p>
+    <div class="codex-grid" id="codexGrid"></div>
+  </div>
+
+</div>
+
+<!-- data first, then routes, then the app -->
+<script src="data.js"></script>
+<script src="routes.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

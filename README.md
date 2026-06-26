@@ -27,9 +27,15 @@ trails-timeline/
 ├── build_data.py           # regenerates data.js from the spreadsheet
 ├── TrailsTimeline.xlsx     # source of truth for all timeline data
 ├── DATA_DICTIONARY.md      # what every column means
+├── CODE_GUIDE.md           # how the code works, for editing it yourself
 └── tools/
-    └── map-coordinate-finder.html   # click the map to read x/y % for coordinates & routes
+    ├── map-coordinate-finder.html   # click the map to read x/y % for coordinates & routes
+    └── road-network-editor.html     # visual editor for routes.js (draw/drag roads & junctions)
 ```
+
+New to the codebase? Read **[CODE_GUIDE.md](CODE_GUIDE.md)** — it walks through how every part
+works (the timeline model, the camera/zoom math, the road graph, the render loop) and has a
+"how do I…?" cookbook for common edits.
 
 All the site files reference each other by relative path, so they must stay siblings in the
 same folder. (`map-coordinate-finder.html` is standalone and can live in `tools/`.)

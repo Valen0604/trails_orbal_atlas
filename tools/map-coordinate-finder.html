@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Map Coordinate Finder</title>
+<style>
+  :root {
+    --bg: #14181b;
+    --panel: #1b2125;
+    --line: #2c353b;
+    --ink: #e8edf0;
+    --muted: #8a979f;
+    --accent: #ffb454;
+    --accent-dim: #6b4d23;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh; padding: 28px 20px 48px;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  header { margin-bottom: 22px; }
+  h1 { font-size: 19px; font-weight: 650; letter-spacing: -0.01em; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 13px; margin: 0; }
+
+  .layout { display: grid; grid-template-columns: 1fr 240px; gap: 18px; align-items: start; }
+  @media (max-width: 720px) { .layout { grid-template-columns: 1fr; } }
+
+  .stagewrap { position: relative; }
+  .stage {
+    position: relative; background: var(--panel);
+    border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+    min-height: 320px; display: flex; align-items: center; justify-content: center;
+  }
+  .stage.has-image {
+    display: block; height: 62vh; min-height: 320px;
+    overflow: auto; text-align: left;
+  }
+  .drop {
+    width: 100%; min-height: 320px; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 14px; padding: 40px 24px;
+    text-align: center; cursor: pointer; color: var(--muted);
+    transition: background .15s, color .15s;
+  }
+  .drop.over { background: #20272c; color: var(--ink); }
+  .drop svg { opacity: .55; }
+  .drop b { color: var(--ink); font-weight: 600; }
+  .imgbox { position: relative; line-height: 0; display: inline-block; cursor: crosshair; }
+  .imgbox.panning { cursor: grabbing; }
+  .imgbox img { display: block; user-select: none; -webkit-user-drag: none; }
+
+  .marker { position: absolute; width: 0; height: 0; transform: translate(-50%,-50%); pointer-events: none; }
+  .marker::before, .marker::after { content: ""; position: absolute; background: var(--accent); box-shadow: 0 0 0 1px rgba(0,0,0,.55); }
+  .marker::before { width: 22px; height: 2px; left: -11px; top: -1px; }
+  .marker::after  { width: 2px; height: 22px; left: -1px; top: -11px; }
+  .dot { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); transform: translate(-50%,-50%); box-shadow: 0 0 0 2px rgba(0,0,0,.55); pointer-events: none; }
+
+  .zoombar {
+    position: absolute; top: 10px; right: 10px; display: flex; align-items: center;
+    gap: 2px; background: rgba(20,24,27,.92); border: 1px solid var(--line);
+    border-radius: 8px; padding: 3px; backdrop-filter: blur(4px);
+  }
+  .zoombar button {
+    background: none; border: none; color: var(--ink); width: 30px; height: 28px;
+    border-radius: 5px; cursor: pointer; font-size: 15px; line-height: 1;
+    display: flex; align-items: center; justify-content: center; transition: background .12s;
+  }
+  .zoombar button:hover { background: #2a3238; }
+  .zoombar button.txt { width: auto; padding: 0 9px; font-size: 11px; font-family: var(--mono); }
+  .zoombar .pct { font-family: var(--mono); font-size: 11px; color: var(--muted); min-width: 42px; text-align: center; }
+  .zoombar .div { width: 1px; height: 18px; background: var(--line); margin: 0 2px; }
+
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+  .panel h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; margin: 0 0 14px; }
+  .readout { display: flex; flex-direction: column; gap: 10px; }
+  .row { display: flex; align-items: center; justify-content: space-between; background: var(--bg); border: 1px solid var(--line); border-radius: 7px; padding: 9px 11px; }
+  .row .label { font-size: 11px; color: var(--muted); }
+  .row .val { font-family: var(--mono); font-size: 15px; font-weight: 600; }
+  .row .val.empty { color: var(--muted); font-weight: 400; }
+  .copy { background: none; border: 1px solid var(--line); color: var(--muted); border-radius: 6px; padding: 3px 8px; font-size: 11px; cursor: pointer; font-family: var(--mono); transition: all .12s; margin-left: 8px; }
+  .copy:hover { border-color: var(--accent-dim); color: var(--accent); }
+  .copy.done { color: var(--accent); border-color: var(--accent-dim); }
+
+  .css-out { margin-top: 14px; padding: 11px; background: var(--bg); border: 1px solid var(--line); border-radius: 7px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); white-space: pre-wrap; word-break: break-all; line-height: 1.5; }
+  .css-out span { color: var(--accent); }
+
+  .controls { display: flex; gap: 8px; margin-top: 14px; }
+  .btn { flex: 1; background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 7px; padding: 8px; font-size: 12px; cursor: pointer; transition: all .12s; }
+  .btn:hover { border-color: var(--accent-dim); color: var(--accent); }
+  .btn:disabled { opacity: .4; cursor: default; }
+
+  .hint { color: var(--muted); font-size: 11.5px; margin-top: 12px; line-height: 1.5; }
+  input[type=file] { display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Map Coordinate Finder</h1>
+    <p class="sub">Load an image, click any point, read its x / y percentage. Origin is top-left; y increases downward.</p>
+  </header>
+
+  <div class="layout">
+    <div class="stagewrap">
+      <div class="stage" id="stage">
+        <label class="drop" id="drop" for="file">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="8.5" cy="8.5" r="1.5"/>
+          </svg>
+          <div><b>Drop a map image here</b><br>or click to browse</div>
+        </label>
+      </div>
+      <div class="zoombar" id="zoombar" hidden>
+        <button id="zout" title="Zoom out">&minus;</button>
+        <span class="pct" id="zpct">100%</span>
+        <button id="zin" title="Zoom in">+</button>
+        <span class="div"></span>
+        <button class="txt" id="zfit" title="Fit to frame">Fit</button>
+      </div>
+      <input type="file" id="file" accept="image/*">
+    </div>
+
+    <div class="panel">
+      <h2>Coordinates</h2>
+      <div class="readout">
+        <div class="row"><span class="label">x %</span><span><span class="val empty" id="xval">&mdash;</span><button class="copy" id="cx" disabled>copy</button></span></div>
+        <div class="row"><span class="label">y %</span><span><span class="val empty" id="yval">&mdash;</span><button class="copy" id="cy" disabled>copy</button></span></div>
+        <div class="row"><span class="label">pixel</span><span class="val empty" id="pxval">&mdash;</span></div>
+      </div>
+      <div class="css-out" id="css">click the map to generate<br>positioning values</div>
+      <div class="controls">
+        <button class="btn" id="precise">2 decimals</button>
+        <button class="btn" id="reset" disabled>Clear pin</button>
+      </div>
+      <p class="hint">Drag to pan when zoomed. Scroll-wheel zooms toward the cursor (hold <b>Ctrl/&#8984;</b> if the frame scrolls instead). Percentages are resolution-independent &mdash; they stay correct at any zoom or display size.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var stage = document.getElementById('stage');
+  var drop = document.getElementById('drop');
+  var fileInput = document.getElementById('file');
+  var zoombar = document.getElementById('zoombar');
+  var zpct = document.getElementById('zpct');
+  var xval = document.getElementById('xval'), yval = document.getElementById('yval'), pxval = document.getElementById('pxval');
+  var cssOut = document.getElementById('css');
+  var cx = document.getElementById('cx'), cy = document.getElementById('cy');
+  var resetBtn = document.getElementById('reset'), preciseBtn = document.getElementById('precise');
+
+  var decimals = 1, last = null, imgbox = null, img = null;
+  var baseW = 0, zoom = 1, MIN = 1, MAX = 8;
+
+  function showError(msg) {
+    zoombar.hidden = true;
+    stage.classList.remove('has-image');
+    stage.innerHTML = '<div class="drop" style="cursor:default">' +
+      '<div style="color:var(--accent);font-weight:600">Could not load image</div>' +
+      '<div style="font-size:12px;max-width:280px">' + msg + '</div>' +
+      '<label class="btn" for="file" style="cursor:pointer;max-width:160px;text-align:center">Try another file</label></div>';
+  }
+
+  function mount(image) {
+    stage.innerHTML = '';
+    stage.classList.add('has-image');
+    imgbox = document.createElement('div');
+    imgbox.className = 'imgbox';
+    img = image;
+    image.draggable = false;
+    imgbox.appendChild(image);
+    stage.appendChild(imgbox);
+    // fit width: never upscale a small image past natural on load
+    baseW = Math.min(stage.clientWidth, image.naturalWidth);
+    zoom = 1; MAX = Math.max(2, (image.naturalWidth / baseW) * 4);
+    applyZoom();
+    zoombar.hidden = false;
+    bindPointer();
+    resetState();
+  }
+
+  function applyZoom() {
+    img.style.width = (baseW * zoom) + 'px';
+    img.style.height = 'auto';
+    zpct.textContent = Math.round((baseW * zoom / img.naturalWidth) * 100) + '%';
+  }
+
+  // zoom toward an anchor point given in client coords
+  function zoomTo(newZoom, ax, ay) {
+    newZoom = Math.max(MIN, Math.min(MAX, newZoom));
+    if (newZoom === zoom) return;
+    var rect = img.getBoundingClientRect();
+    var fx = (ax - rect.left) / rect.width;
+    var fy = (ay - rect.top) / rect.height;
+    fx = Math.max(0, Math.min(1, fx)); fy = Math.max(0, Math.min(1, fy));
+    zoom = newZoom;
+    applyZoom();
+    var newW = baseW * zoom, newH = newW * (img.naturalHeight / img.naturalWidth);
+    var cRect = stage.getBoundingClientRect();
+    stage.scrollLeft = fx * newW - (ax - cRect.left);
+    stage.scrollTop  = fy * newH - (ay - cRect.top);
+  }
+
+  function centerAnchor() {
+    var r = stage.getBoundingClientRect();
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+  }
+
+  function bindPointer() {
+    var downX, downY, startL, startT, moved, isDown = false;
+    var TH = 4;
+    imgbox.addEventListener('pointerdown', function (e) {
+      isDown = true; moved = false;
+      downX = e.clientX; downY = e.clientY;
+      startL = stage.scrollLeft; startT = stage.scrollTop;
+      imgbox.setPointerCapture(e.pointerId);
+    });
+    imgbox.addEventListener('pointermove', function (e) {
+      if (!isDown) return;
+      var dx = e.clientX - downX, dy = e.clientY - downY;
+      if (!moved && Math.abs(dx) + Math.abs(dy) > TH) { moved = true; imgbox.classList.add('panning'); }
+      if (moved) { stage.scrollLeft = startL - dx; stage.scrollTop = startT - dy; }
+    });
+    imgbox.addEventListener('pointerup', function (e) {
+      isDown = false; imgbox.classList.remove('panning');
+      if (!moved) placePin(e.clientX, e.clientY);
+    });
+    imgbox.addEventListener('pointercancel', function () { isDown = false; imgbox.classList.remove('panning'); });
+
+    stage.addEventListener('wheel', function (e) {
+      if (e.ctrlKey || e.metaKey || !e.shiftKey && stage.scrollHeight <= stage.clientHeight && stage.scrollWidth <= stage.clientWidth) {
+        e.preventDefault();
+        zoomTo(zoom * (e.deltaY < 0 ? 1.15 : 1 / 1.15), e.clientX, e.clientY);
+      }
+    }, { passive: false });
+  }
+
+  function placePin(clientX, clientY) {
+    var r = img.getBoundingClientRect();
+    var px = Math.max(0, Math.min(r.width, clientX - r.left));
+    var py = Math.max(0, Math.min(r.height, clientY - r.top));
+    var xp = (px / r.width) * 100, yp = (py / r.height) * 100;
+    var natX = Math.round((px / r.width) * img.naturalWidth);
+    var natY = Math.round((py / r.height) * img.naturalHeight);
+    last = { xp: xp, yp: yp, px: natX, py: natY };
+    var old = imgbox.querySelector('.marker'); if (old) old.remove();
+    var m = document.createElement('div'); m.className = 'marker';
+    m.style.left = xp + '%'; m.style.top = yp + '%';
+    m.innerHTML = '<div class="dot"></div>';
+    imgbox.appendChild(m);
+    render();
+  }
+
+  function fmt(n) { return n.toFixed(decimals); }
+  function render() {
+    if (!last) return;
+    xval.textContent = fmt(last.xp) + '%'; yval.textContent = fmt(last.yp) + '%';
+    pxval.textContent = last.px + ', ' + last.py;
+    xval.classList.remove('empty'); yval.classList.remove('empty'); pxval.classList.remove('empty');
+    cssOut.innerHTML = 'left: <span>' + fmt(last.xp) + '%</span>;\ntop:  <span>' + fmt(last.yp) + '%</span>;';
+    cx.disabled = false; cy.disabled = false; resetBtn.disabled = false;
+  }
+  function resetState() {
+    last = null;
+    var m = imgbox && imgbox.querySelector('.marker'); if (m) m.remove();
+    xval.textContent = '\u2014'; yval.textContent = '\u2014'; pxval.textContent = '\u2014';
+    xval.classList.add('empty'); yval.classList.add('empty'); pxval.classList.add('empty');
+    cssOut.innerHTML = 'click the map to generate<br>positioning values';
+    cx.disabled = true; cy.disabled = true; resetBtn.disabled = true;
+  }
+
+  function copy(btn, get) {
+    if (!last) return;
+    navigator.clipboard && navigator.clipboard.writeText(get());
+    btn.textContent = 'copied'; btn.classList.add('done');
+    setTimeout(function () { btn.textContent = 'copy'; btn.classList.remove('done'); }, 1100);
+  }
+  cx.addEventListener('click', function () { copy(cx, function () { return fmt(last.xp); }); });
+  cy.addEventListener('click', function () { copy(cy, function () { return fmt(last.yp); }); });
+  resetBtn.addEventListener('click', resetState);
+  preciseBtn.addEventListener('click', function () {
+    decimals = decimals === 1 ? 2 : 1;
+    preciseBtn.textContent = decimals === 1 ? '2 decimals' : '1 decimal';
+    render();
+  });
+
+  document.getElementById('zin').addEventListener('click', function () { var a = centerAnchor(); zoomTo(zoom * 1.4, a.x, a.y); });
+  document.getElementById('zout').addEventListener('click', function () { var a = centerAnchor(); zoomTo(zoom / 1.4, a.x, a.y); });
+  document.getElementById('zfit').addEventListener('click', function () { var a = centerAnchor(); zoomTo(1, a.x, a.y); stage.scrollLeft = 0; stage.scrollTop = 0; });
+
+  function loadFile(f) {
+    if (!f) return;
+    if (!/^image\//.test(f.type) && !/\.(png|jpe?g|gif|webp|bmp|svg)$/i.test(f.name || '')) {
+      showError('That file is not an image format the browser can display.'); return;
+    }
+    var reader = new FileReader();
+    reader.onerror = function () { showError('The file could not be read.'); };
+    reader.onload = function (e) {
+      var image = new Image();
+      image.onload = function () { mount(image); };
+      image.onerror = function () { showError('The browser cannot decode this image. HEIC/HEIF photos from iPhones are a common cause &mdash; re-save as PNG or JPEG.'); };
+      image.src = e.target.result;
+    };
+    reader.readAsDataURL(f);
+  }
+  fileInput.addEventListener('change', function (e) { loadFile(e.target.files[0]); });
+  ['dragenter', 'dragover'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('over'); }); });
+  ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('over'); }); });
+  drop.addEventListener('drop', function (e) { if (e.dataTransfer.files && e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
+})();
+</script>
+</body>
+</html>

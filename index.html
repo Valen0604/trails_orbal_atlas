@@ -38,25 +38,13 @@
   <!-- ===== MAP view ===== -->
   <div class="view active" id="viewMap">
     <div class="maplayout">
-      <div class="mapframe">
-        <img src="zemuria.png" alt="Map of Zemuria">
+      <div class="mapframe" id="mapframe">
+        <div class="mapcontent" id="mapcontent"><img src="zemuria.png" alt="Map of Zemuria"></div>
         <svg id="routes" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
         <div id="pips"></div>
         <div id="markers"></div>
       </div>
-      <div class="side">
-        <div class="card">
-          <h3>On the map now</h3>
-          <div id="cast"></div>
-        </div>
-        <div class="card">
-          <h3>Display</h3>
-          <label class="toggle-row">
-            <input type="checkbox" id="trailsToggle">
-            Keep travelled paths visible
-          </label>
-        </div>
-      </div>
+      <div class="caststrip" id="cast"></div>
     </div>
   </div>
 

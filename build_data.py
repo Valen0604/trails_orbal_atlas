@@ -40,6 +40,12 @@ def to_float(v):
     return float(v) if v is not None else None
 
 
+def to_bool(v):
+    """Truthy spreadsheet cell -> True; blank / false-ish / missing column -> False."""
+    v = clean(v)
+    return v is not None and v.lower() in ("1", "true", "yes", "y", "t", "x", "show")
+
+
 def rows(df, spec):
     """Build a list of dicts from a dataframe. spec: {out_key: (col, caster)}."""
     out = []
@@ -82,6 +88,7 @@ def main():
             "type": ("type", clean),
             "map_x": ("map_x", to_float),
             "map_y": ("map_y", to_float),
+            "show_name": ("show_name", to_bool),
         }),
         "beats": sorted(rows(xl["beats"], {
             "beat_id": ("beat_id", clean),

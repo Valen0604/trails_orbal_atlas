@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Road Network Editor</title>
+<style>
+  :root {
+    --bg: #14181b;
+    --panel: #1b2125;
+    --line: #2c353b;
+    --ink: #e8edf0;
+    --muted: #8a979f;
+    --accent: #ffb454;
+    --accent-dim: #6b4d23;
+    --loc: #4fd1c5;
+    --jct: #ff8f6b;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh; padding: 24px 20px 48px;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+  header { margin-bottom: 16px; }
+  h1 { font-size: 19px; font-weight: 650; letter-spacing: -0.01em; margin: 0 0 4px; }
+  .sub { color: var(--muted); font-size: 13px; margin: 0; }
+
+  .toolbar {
+    display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+    padding: 8px; margin-bottom: 14px;
+  }
+  .tool {
+    background: var(--bg); border: 1px solid var(--line); color: var(--ink);
+    border-radius: 7px; padding: 7px 12px; font-size: 12.5px; cursor: pointer;
+    transition: all .12s; font-family: inherit;
+  }
+  .tool:hover { border-color: var(--accent-dim); }
+  .tool.active { border-color: var(--accent); color: var(--accent); background: #21282d; }
+  .tool.danger:hover { border-color: #b4543a; color: #ff8f6b; }
+  .tool:disabled { opacity: .4; cursor: default; }
+  .sep { width: 1px; align-self: stretch; background: var(--line); margin: 0 2px; }
+  .status { margin-left: auto; font-size: 12px; color: var(--muted); font-family: var(--mono); }
+  .status b { color: var(--accent); font-weight: 600; }
+
+  .layout { display: grid; grid-template-columns: 1fr 330px; gap: 16px; align-items: start; }
+  @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } }
+
+  .stagewrap { position: relative; }
+  .stage {
+    position: relative; background: var(--panel);
+    border: 1px solid var(--line); border-radius: 10px; overflow: auto;
+    aspect-ratio: 16 / 9; max-height: 64vh;   /* a fixed map frame, like the app */
+  }
+  .stage.loading, .stage.error {
+    display: flex; align-items: center; justify-content: center; color: var(--muted);
+    font-size: 13px; text-align: center; padding: 30px;
+  }
+  .imgbox { position: relative; line-height: 0; display: inline-block; cursor: crosshair; }
+  .imgbox.panning { cursor: grabbing; }
+  .imgbox.connect { cursor: pointer; }
+  .imgbox img { display: block; user-select: none; -webkit-user-drag: none; }
+
+  .overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .overlay polyline { fill: none; stroke: var(--muted); stroke-width: 2;
+    stroke-linejoin: round; stroke-linecap: round; opacity: .85; }
+  .overlay polyline.sel { stroke: var(--accent); stroke-width: 3; opacity: 1; }
+
+  .handles { position: absolute; inset: 0; pointer-events: none; }
+  .nd { position: absolute; width: 13px; height: 13px; border-radius: 50%;
+    transform: translate(-50%,-50%); border: 2px solid rgba(0,0,0,.6); }
+  .nd.loc { background: var(--loc); }
+  .nd.jct { background: var(--jct); width: 11px; height: 11px; border-radius: 3px; }
+  .nd.sel { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .nd.pick { outline: 2px dashed var(--accent); outline-offset: 3px; }
+  .vh { position: absolute; width: 8px; height: 8px; background: #fff;
+    transform: translate(-50%,-50%) rotate(45deg); border: 1px solid rgba(0,0,0,.6); }
+  .vh.sel { background: var(--accent); width: 10px; height: 10px; }
+  .lbl { position: absolute; transform: translate(9px,-50%); white-space: nowrap;
+    font-size: 11px; font-family: var(--mono); font-weight: 600; color: #11161a;
+    background: rgba(255,255,255,.94); padding: 1px 5px; border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.45); }
+  .lbl.jct { color: #9a3d1c; }
+
+  .zoombar {
+    position: absolute; top: 10px; right: 10px; display: flex; align-items: center;
+    gap: 2px; background: rgba(20,24,27,.92); border: 1px solid var(--line);
+    border-radius: 8px; padding: 3px; backdrop-filter: blur(4px);
+  }
+  .zoombar button {
+    background: none; border: none; color: var(--ink); width: 30px; height: 28px;
+    border-radius: 5px; cursor: pointer; font-size: 15px; line-height: 1;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .zoombar button:hover { background: #2a3238; }
+  .zoombar button.txt { width: auto; padding: 0 9px; font-size: 11px; font-family: var(--mono); }
+  .zoombar .pct { font-family: var(--mono); font-size: 11px; color: var(--muted); min-width: 42px; text-align: center; }
+
+  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 16px; }
+  .panel h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; margin: 0 0 10px; }
+  .legend { display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; font-size: 12px; color: var(--muted); }
+  .legend div { display: flex; align-items: center; gap: 9px; }
+  .swatch { width: 13px; height: 13px; border-radius: 50%; border: 2px solid rgba(0,0,0,.6); flex: none; }
+  .swatch.jct { border-radius: 3px; width: 11px; height: 11px; }
+  .swatch.via { width: 9px; height: 9px; transform: rotate(45deg); border: 1px solid rgba(0,0,0,.6); }
+
+  .export-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .copy { background: none; border: 1px solid var(--line); color: var(--muted); border-radius: 6px; padding: 4px 10px; font-size: 11px; cursor: pointer; font-family: var(--mono); transition: all .12s; }
+  .copy:hover { border-color: var(--accent-dim); color: var(--accent); }
+  .copy.done { color: var(--accent); border-color: var(--accent-dim); }
+  textarea {
+    width: 100%; height: 300px; resize: vertical; background: var(--bg);
+    color: var(--ink); border: 1px solid var(--line); border-radius: 7px; padding: 11px;
+    font-family: var(--mono); font-size: 11px; line-height: 1.5; white-space: pre;
+  }
+  .hint { color: var(--muted); font-size: 11.5px; margin-top: 12px; line-height: 1.55; }
+  .hint b { color: var(--ink); }
+  kbd { font-family: var(--mono); font-size: 10.5px; background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Road Network Editor</h1>
+    <p class="sub">Loads the live map, locations, and roads from <code>data.js</code> / <code>routes.js</code>. Edit visually, then copy the new <code>routes.js</code>.</p>
+  </header>
+
+  <div class="toolbar">
+    <button class="tool active" id="mSelect" data-mode="select">Select / Move</button>
+    <button class="tool" id="mConnect" data-mode="connect">New road</button>
+    <button class="tool" id="mJunction" data-mode="junction">Add junction</button>
+    <span class="sep"></span>
+    <button class="tool danger" id="del" disabled>Delete selected</button>
+    <span class="sep"></span>
+    <button class="tool" id="decimals">2 decimals</button>
+    <button class="tool" id="reset">Revert to saved</button>
+    <span class="status" id="status"></span>
+  </div>
+
+  <div class="layout">
+    <div class="stagewrap">
+      <div class="stage loading" id="stage">Loading map&hellip;</div>
+      <div class="zoombar" id="zoombar" hidden>
+        <button id="zout" title="Zoom out">&minus;</button>
+        <span class="pct" id="zpct">100%</span>
+        <button id="zin" title="Zoom in">+</button>
+        <button class="txt" id="zfit" title="Frame the road network">Fit</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Legend</h2>
+      <div class="legend">
+        <div><span class="swatch" style="background:var(--loc)"></span> Location (from data.js — fixed)</div>
+        <div><span class="swatch jct" style="background:var(--jct)"></span> Junction (draggable, deletable)</div>
+        <div><span class="swatch via" style="background:#fff"></span> Bend point on a road (drag to shape)</div>
+      </div>
+
+      <div class="export-head">
+        <h2 style="margin:0">routes.js output</h2>
+        <button class="copy" id="copy">copy</button>
+      </div>
+      <textarea id="out" readonly spellcheck="false"></textarea>
+
+      <p class="hint">
+        <b>New road:</b> click two nodes to connect them.<br>
+        <b>Bend a road:</b> in Select mode, click a road to select it, then click it again where you want a bend. Drag the diamond handles to shape it.<br>
+        <b>Junctions:</b> use Add junction for forks where roads meet away from a town; drag to position.<br>
+        <b>Delete:</b> select a road, junction, or bend and press <kbd>Delete</kbd>.<br>
+        Drag empty map to pan; scroll to zoom. Locations come from data.js and can't be moved or deleted here.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script src="../data.js"></script>
+<script src="../routes.js"></script>
+<script>
+(function () {
+  var IMG_SRC = '../zemuria.png';
+  var TRAILS = window.TRAILS || { locations: [] };
+  var NET = window.ROAD_NETWORK || { nodes: {}, edges: [] };
+  var OVR = window.ROUTES || {};
+
+  var stage = document.getElementById('stage');
+  var zoombar = document.getElementById('zoombar'), zpct = document.getElementById('zpct');
+  var statusEl = document.getElementById('status');
+  var out = document.getElementById('out');
+  var delBtn = document.getElementById('del');
+
+  var NODE_HIT = 15, VIA_HIT = 11, EDGE_HIT = 9;
+  var decimals = 1;
+  var mode = 'select';
+  var sel = null;          // {type:'node',id} | {type:'edge',i} | {type:'via',i,vi}
+  var connectA = null;
+
+  var nodes = {};          // id -> { x, y, loc:bool, name }
+  var edges = [];          // { a, b, via:[[x,y],...] }
+
+  var imgbox, img, svg, handles;
+  var baseW = 0, zoom = 1, MIN = 1, MAX = 8;
+
+  // ---- model ---------------------------------------------------------------
+  function initModel() {
+    nodes = {}; edges = [];
+    (TRAILS.locations || []).forEach(function (l) {
+      if (l.map_x == null || l.map_y == null) return;
+      nodes[l.loc_id] = { x: l.map_x, y: l.map_y, loc: true, name: l.name || l.loc_id };
+    });
+    Object.keys(NET.nodes || {}).forEach(function (id) {
+      var p = NET.nodes[id];
+      nodes[id] = { x: p[0], y: p[1], loc: false, name: id };
+    });
+    (NET.edges || []).forEach(function (e) {
+      if (!nodes[e.a] || !nodes[e.b]) return;
+      edges.push({ a: e.a, b: e.b, via: (e.via || []).map(function (p) { return [p[0], p[1]]; }) });
+    });
+    sel = null; connectA = null;
+  }
+
+  function hasEdge(a, b) {
+    return edges.some(function (e) { return (e.a === a && e.b === b) || (e.a === b && e.b === a); });
+  }
+  function newJunctionId() { var n = 1; while (nodes['j' + n]) n++; return 'j' + n; }
+  function edgeCoords(e) {           // [[x,y]...] incl. endpoints
+    return [[nodes[e.a].x, nodes[e.a].y]].concat(e.via, [[nodes[e.b].x, nodes[e.b].y]]);
+  }
+
+  // ---- geometry ------------------------------------------------------------
+  function imgRect() { return img.getBoundingClientRect(); }
+  function toMap(cx, cy) {
+    var r = imgRect();
+    return { x: clamp((cx - r.left) / r.width * 100, 0, 100), y: clamp((cy - r.top) / r.height * 100, 0, 100) };
+  }
+  function toPx(x, y) { var r = imgRect(); return { x: r.left + x / 100 * r.width, y: r.top + y / 100 * r.height }; }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function dist(ax, ay, bx, by) { return Math.hypot(ax - bx, ay - by); }
+  function distToSeg(px, py, ax, ay, bx, by) {
+    var dx = bx - ax, dy = by - ay, len2 = dx * dx + dy * dy;
+    var t = len2 ? ((px - ax) * dx + (py - ay) * dy) / len2 : 0;
+    t = clamp(t, 0, 1);
+    return dist(px, py, ax + dx * t, ay + dy * t);
+  }
+
+  function hitNode(cx, cy) {
+    var best = null, bd = NODE_HIT;
+    Object.keys(nodes).forEach(function (id) {
+      var p = toPx(nodes[id].x, nodes[id].y), d = dist(cx, cy, p.x, p.y);
+      if (d < bd) { bd = d; best = id; }
+    });
+    return best;
+  }
+  function hitVia(cx, cy) {
+    var best = null, bd = VIA_HIT;
+    edges.forEach(function (e, i) {
+      e.via.forEach(function (v, vi) {
+        var p = toPx(v[0], v[1]), d = dist(cx, cy, p.x, p.y);
+        if (d < bd) { bd = d; best = { i: i, vi: vi }; }
+      });
+    });
+    return best;
+  }
+  function hitEdge(cx, cy) {
+    var best = null, bd = EDGE_HIT;
+    edges.forEach(function (e, i) {
+      var poly = edgeCoords(e).map(function (c) { return toPx(c[0], c[1]); });
+      for (var k = 0; k < poly.length - 1; k++) {
+        var d = distToSeg(cx, cy, poly[k].x, poly[k].y, poly[k + 1].x, poly[k + 1].y);
+        if (d < bd) { bd = d; best = i; }
+      }
+    });
+    return best;
+  }
+  function nearestSeg(e, cx, cy) {      // index k of segment poly[k]-poly[k+1]
+    var poly = edgeCoords(e).map(function (c) { return toPx(c[0], c[1]); });
+    var best = 0, bd = Infinity;
+    for (var k = 0; k < poly.length - 1; k++) {
+      var d = distToSeg(cx, cy, poly[k].x, poly[k].y, poly[k + 1].x, poly[k + 1].y);
+      if (d < bd) { bd = d; best = k; }
+    }
+    return best;
+  }
+
+  // ---- mutations -----------------------------------------------------------
+  function deleteSel() {
+    if (!sel) return;
+    if (sel.type === 'via') { edges[sel.i].via.splice(sel.vi, 1); sel = { type: 'edge', i: sel.i }; }
+    else if (sel.type === 'edge') { edges.splice(sel.i, 1); sel = null; }
+    else if (sel.type === 'node') {
+      if (nodes[sel.id].loc) { setStatus('Locations come from data.js — edit them there, not here.'); return; }
+      var id = sel.id; delete nodes[id];
+      edges = edges.filter(function (e) { return e.a !== id && e.b !== id; });
+      sel = null;
+    }
+    refresh();
+  }
+
+  // ---- rendering -----------------------------------------------------------
+  function render() {
+    if (!svg) return;
+    svg.innerHTML = edges.map(function (e, i) {
+      var pts = edgeCoords(e).map(function (c) { return c[0] + ',' + c[1]; }).join(' ');
+      var cls = (sel && sel.type === 'edge' && sel.i === i) ? ' class="sel"' : '';
+      return '<polyline points="' + pts + '"' + cls + ' vector-effect="non-scaling-stroke"/>';
+    }).join('');
+
+    var h = '';
+    edges.forEach(function (e, i) {
+      e.via.forEach(function (v, vi) {
+        var s = (sel && sel.type === 'via' && sel.i === i && sel.vi === vi) ? ' sel' : '';
+        h += '<div class="vh' + s + '" style="left:' + v[0] + '%;top:' + v[1] + '%"></div>';
+      });
+    });
+    Object.keys(nodes).forEach(function (id) {
+      var n = nodes[id];
+      var s = (sel && sel.type === 'node' && sel.id === id) ? ' sel' : '';
+      var pk = connectA === id ? ' pick' : '';
+      h += '<div class="nd ' + (n.loc ? 'loc' : 'jct') + s + pk + '" style="left:' + n.x + '%;top:' + n.y + '%"></div>';
+      h += '<div class="lbl ' + (n.loc ? '' : 'jct') + '" style="left:' + n.x + '%;top:' + n.y + '%">' + n.name + '</div>';
+    });
+    handles.innerHTML = h;
+    delBtn.disabled = !sel;
+  }
+
+  function num(n) { return parseFloat((+n).toFixed(decimals)); }
+  function updateExport() {
+    var nodeIds = Object.keys(nodes).filter(function (id) { return !nodes[id].loc; });
+    var nodeLines = nodeIds.map(function (id) {
+      return '    "' + id + '": [' + num(nodes[id].x) + ', ' + num(nodes[id].y) + ']';
+    }).join(',\n');
+    var edgeLines = edges.map(function (e) {
+      var s = '    { a: "' + e.a + '", b: "' + e.b + '"';
+      if (e.via.length) {
+        s += ', via: [' + e.via.map(function (v) { return '[' + num(v[0]) + ', ' + num(v[1]) + ']'; }).join(', ') + ']';
+      }
+      return s + ' }';
+    }).join(',\n');
+
+    var ovrKeys = Object.keys(OVR);
+    var ovrBody = ovrKeys.map(function (k) {
+      return '  "' + k + '": ' + JSON.stringify(OVR[k]);
+    }).join(',\n');
+
+    out.value =
+      '// ROAD NETWORK — generated by tools/road-network-editor.html\n' +
+      '// nodes = junctions (locations come from data.js automatically).\n' +
+      '// edges = two-way road segments; `via` adds bend points. [x, y] in map %.\n\n' +
+      'window.ROAD_NETWORK = {\n' +
+      '  nodes: {\n' + nodeLines + (nodeLines ? '\n' : '') + '  },\n\n' +
+      '  edges: [\n' + edgeLines + (edgeLines ? '\n' : '') + '  ]\n' +
+      '};\n\n' +
+      '// Optional hard overrides, keyed "from>to". Checked before the network search.\n' +
+      'window.ROUTES = {\n' + ovrBody + (ovrBody ? '\n' : '') + '};\n';
+  }
+
+  function refresh() { render(); updateExport(); }
+
+  function setStatus(msg) { statusEl.innerHTML = msg || ''; }
+  function modeStatus() {
+    if (mode === 'connect') setStatus(connectA ? 'click the <b>destination</b> node' : 'click the <b>first</b> node');
+    else if (mode === 'junction') setStatus('click the map to drop a junction');
+    else setStatus('');
+  }
+
+  // ---- interaction ---------------------------------------------------------
+  function handleClick(cx, cy) {
+    if (mode === 'connect') {
+      var id = hitNode(cx, cy);
+      if (!id) return;
+      if (!connectA) { connectA = id; }
+      else if (id !== connectA) {
+        if (!hasEdge(connectA, id)) { edges.push({ a: connectA, b: id, via: [] }); sel = { type: 'edge', i: edges.length - 1 }; }
+        connectA = null;
+      } else { connectA = null; }
+      modeStatus(); refresh(); return;
+    }
+    if (mode === 'junction') {
+      var m = toMap(cx, cy), id2 = newJunctionId();
+      nodes[id2] = { x: m.x, y: m.y, loc: false, name: id2 };
+      sel = { type: 'node', id: id2 };
+      refresh(); return;
+    }
+    // select mode — priority: via, node, edge
+    var hv = hitVia(cx, cy);
+    if (hv) { sel = { type: 'via', i: hv.i, vi: hv.vi }; refresh(); return; }
+    var hn = hitNode(cx, cy);
+    if (hn) { sel = { type: 'node', id: hn }; refresh(); return; }
+    var he = hitEdge(cx, cy);
+    if (he != null) {
+      if (sel && sel.type === 'edge' && sel.i === he) {        // 2nd click on selected edge -> add bend
+        var k = nearestSeg(edges[he], cx, cy), mm = toMap(cx, cy);
+        edges[he].via.splice(k, 0, [mm.x, mm.y]);
+        sel = { type: 'via', i: he, vi: k };
+      } else { sel = { type: 'edge', i: he }; }
+      refresh(); return;
+    }
+    sel = null; refresh();
+  }
+
+  function bindPointer() {
+    var downX, downY, startL, startT, moved, isDown = false, drag = null;
+    var TH = 4;
+    imgbox.addEventListener('pointerdown', function (e) {
+      isDown = true; moved = false; drag = null;
+      downX = e.clientX; downY = e.clientY;
+      startL = stage.scrollLeft; startT = stage.scrollTop;
+      imgbox.setPointerCapture(e.pointerId);
+      if (mode === 'select') {                 // grab a handle to drag it
+        var hv = hitVia(e.clientX, e.clientY);
+        if (hv) { drag = { kind: 'via', i: hv.i, vi: hv.vi }; sel = { type: 'via', i: hv.i, vi: hv.vi }; refresh(); return; }
+        var hn = hitNode(e.clientX, e.clientY);
+        if (hn && !nodes[hn].loc) { drag = { kind: 'node', id: hn }; sel = { type: 'node', id: hn }; refresh(); return; }
+      }
+    });
+    imgbox.addEventListener('pointermove', function (e) {
+      if (!isDown) return;
+      var dx = e.clientX - downX, dy = e.clientY - downY;
+      if (!moved && Math.abs(dx) + Math.abs(dy) > TH) { moved = true; if (!drag) imgbox.classList.add('panning'); }
+      if (!moved) return;
+      if (drag) {
+        var m = toMap(e.clientX, e.clientY);
+        if (drag.kind === 'via') edges[drag.i].via[drag.vi] = [m.x, m.y];
+        else nodes[drag.id].x = m.x, nodes[drag.id].y = m.y;
+        refresh();
+      } else {
+        stage.scrollLeft = startL - dx; stage.scrollTop = startT - dy;
+      }
+    });
+    imgbox.addEventListener('pointerup', function (e) {
+      isDown = false; imgbox.classList.remove('panning');
+      if (!moved) handleClick(e.clientX, e.clientY);
+      drag = null;
+    });
+    imgbox.addEventListener('pointercancel', function () { isDown = false; drag = null; imgbox.classList.remove('panning'); });
+
+    stage.addEventListener('wheel', function (e) {
+      e.preventDefault();                                  // drag to pan; wheel always zooms toward the cursor
+      zoomTo(zoom * (e.deltaY < 0 ? 1.15 : 1 / 1.15), e.clientX, e.clientY);
+    }, { passive: false });
+  }
+
+  // ---- zoom ----------------------------------------------------------------
+  function applyZoom() {
+    img.style.width = (baseW * zoom) + 'px'; img.style.height = 'auto';
+    zpct.textContent = Math.round((baseW * zoom / img.naturalWidth) * 100) + '%';
+  }
+  function zoomTo(nz, ax, ay) {
+    nz = clamp(nz, MIN, MAX); if (nz === zoom) return;
+    var rect = img.getBoundingClientRect();
+    var fx = clamp((ax - rect.left) / rect.width, 0, 1), fy = clamp((ay - rect.top) / rect.height, 0, 1);
+    zoom = nz; applyZoom();
+    var newW = baseW * zoom, newH = newW * (img.naturalHeight / img.naturalWidth);
+    var c = stage.getBoundingClientRect();
+    stage.scrollLeft = fx * newW - (ax - c.left);
+    stage.scrollTop = fy * newH - (ay - c.top);
+  }
+  function centerAnchor() { var r = stage.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
+
+  // bounding box of all nodes (map %), padded, with a sensible minimum extent
+  function nodeBBoxPadded() {
+    var ids = Object.keys(nodes);
+    if (!ids.length) return { minx: 0, miny: 0, maxx: 100, maxy: 100 };
+    var minx = Infinity, miny = Infinity, maxx = -Infinity, maxy = -Infinity;
+    ids.forEach(function (id) {
+      var n = nodes[id];
+      minx = Math.min(minx, n.x); maxx = Math.max(maxx, n.x);
+      miny = Math.min(miny, n.y); maxy = Math.max(maxy, n.y);
+    });
+    var cx = (minx + maxx) / 2, cy = (miny + maxy) / 2;
+    var ex = Math.max(maxx - minx, 6) * 1.7, ey = Math.max(maxy - miny, 6) * 1.7;
+    return {
+      minx: Math.max(0, cx - ex / 2), maxx: Math.min(100, cx + ex / 2),
+      miny: Math.max(0, cy - ey / 2), maxy: Math.min(100, cy + ey / 2)
+    };
+  }
+  // zoom/scroll so the road area fills the frame — like the app's "zoom to all locations"
+  function fitNetwork() {
+    var b = nodeBBoxPadded();
+    var imgH = baseW * (img.naturalHeight / img.naturalWidth);
+    var wPct = (b.maxx - b.minx) / 100, hPct = (b.maxy - b.miny) / 100;
+    var z = Math.min(stage.clientWidth / (wPct * baseW), stage.clientHeight / (hPct * imgH));
+    MAX = Math.max(8, z * 1.4);
+    zoom = clamp(z, MIN, MAX); applyZoom();
+    var dispW = baseW * zoom, dispH = imgH * zoom;
+    stage.scrollLeft = (b.minx + b.maxx) / 2 / 100 * dispW - stage.clientWidth / 2;
+    stage.scrollTop = (b.miny + b.maxy) / 2 / 100 * dispH - stage.clientHeight / 2;
+  }
+
+  // ---- boot ----------------------------------------------------------------
+  function mount(image) {
+    stage.className = 'stage'; stage.innerHTML = '';
+    imgbox = document.createElement('div'); imgbox.className = 'imgbox';
+    img = image; image.draggable = false;
+    svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'overlay');
+    svg.setAttribute('viewBox', '0 0 100 100');
+    svg.setAttribute('preserveAspectRatio', 'none');
+    handles = document.createElement('div'); handles.className = 'handles';
+    imgbox.appendChild(image); imgbox.appendChild(svg); imgbox.appendChild(handles);
+    stage.appendChild(imgbox);
+    baseW = Math.min(stage.clientWidth, image.naturalWidth);
+    zoom = 1; MIN = 1; MAX = 8;
+    applyZoom(); zoombar.hidden = false; bindPointer();
+    initModel();
+    refresh();
+    requestAnimationFrame(fitNetwork);   // frame after the 16:9 layout settles, so measurements are right
+  }
+
+  var im = new Image();
+  im.onload = function () { mount(im); };
+  im.onerror = function () {
+    stage.className = 'stage error';
+    stage.innerHTML = 'Could not load <code>' + IMG_SRC + '</code>.<br>Open this file from the project\'s <code>tools/</code> folder so the relative path resolves.';
+  };
+  im.src = IMG_SRC;
+
+  // ---- toolbar -------------------------------------------------------------
+  function setMode(m) {
+    mode = m; connectA = null;
+    ['mSelect', 'mConnect', 'mJunction'].forEach(function (id) {
+      document.getElementById(id).classList.toggle('active', document.getElementById(id).dataset.mode === m);
+    });
+    if (imgbox) imgbox.classList.toggle('connect', m === 'connect');
+    modeStatus(); render();
+  }
+  document.getElementById('mSelect').addEventListener('click', function () { setMode('select'); });
+  document.getElementById('mConnect').addEventListener('click', function () { setMode('connect'); });
+  document.getElementById('mJunction').addEventListener('click', function () { setMode('junction'); });
+  delBtn.addEventListener('click', deleteSel);
+  document.getElementById('reset').addEventListener('click', function () { initModel(); setMode('select'); refresh(); });
+  document.getElementById('decimals').addEventListener('click', function () {
+    decimals = decimals === 1 ? 2 : 1;
+    this.textContent = decimals === 1 ? '2 decimals' : '1 decimal';
+    updateExport();
+  });
+  document.getElementById('copy').addEventListener('click', function () {
+    var btn = this;
+    out.select(); navigator.clipboard && navigator.clipboard.writeText(out.value);
+    btn.textContent = 'copied'; btn.classList.add('done');
+    setTimeout(function () { btn.textContent = 'copy'; btn.classList.remove('done'); }, 1100);
+  });
+  document.getElementById('zin').addEventListener('click', function () { var a = centerAnchor(); zoomTo(zoom * 1.4, a.x, a.y); });
+  document.getElementById('zout').addEventListener('click', function () { var a = centerAnchor(); zoomTo(zoom / 1.4, a.x, a.y); });
+  document.getElementById('zfit').addEventListener('click', function () { fitNetwork(); });
+
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Delete' || e.key === 'Backspace') && sel) { e.preventDefault(); deleteSel(); }
+    else if (e.key === 'Escape') { sel = null; connectA = null; modeStatus(); render(); }
+  });
+})();
+</script>
+</body>
+</html>

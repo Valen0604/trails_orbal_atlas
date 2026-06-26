@@ -1,4 +1,4 @@
-// Auto-generated from TrailsTimeline.xlsx — regenerate this file when the Excel changes.
+// Auto-generated from TrailsTimeline.xlsx by build_data.py — do not edit by hand.
 // Shape matches Data_Dictionary_Trails.txt. Coordinates are percentages (top-left origin).
 window.TRAILS = {
   "characters": [
@@ -58,7 +58,8 @@ window.TRAILS = {
       "parent_loc_id": "liberl",
       "type": "region",
       "map_x": null,
-      "map_y": null
+      "map_y": null,
+      "show_name": false
     },
     {
       "loc_id": "rolent_city",
@@ -66,7 +67,8 @@ window.TRAILS = {
       "parent_loc_id": "rolent",
       "type": "city",
       "map_x": 31.3,
-      "map_y": 68.9
+      "map_y": 68.9,
+      "show_name": false
     },
     {
       "loc_id": "liberl",
@@ -74,7 +76,8 @@ window.TRAILS = {
       "parent_loc_id": null,
       "type": "nation",
       "map_x": null,
-      "map_y": null
+      "map_y": null,
+      "show_name": false
     },
     {
       "loc_id": "esmelas",
@@ -82,7 +85,8 @@ window.TRAILS = {
       "parent_loc_id": "rolent",
       "type": "district",
       "map_x": 30.5,
-      "map_y": 67.7
+      "map_y": 67.7,
+      "show_name": false
     },
     {
       "loc_id": "perzel",
@@ -90,7 +94,8 @@ window.TRAILS = {
       "parent_loc_id": "rolent",
       "type": "district",
       "map_x": 30.1,
-      "map_y": 69.2
+      "map_y": 69.2,
+      "show_name": true
     },
     {
       "loc_id": "bright_house",
@@ -98,7 +103,8 @@ window.TRAILS = {
       "parent_loc_id": "rolent",
       "type": "district",
       "map_x": 31.3,
-      "map_y": 69.9
+      "map_y": 69.9,
+      "show_name": true
     },
     {
       "loc_id": "malga",
@@ -106,7 +112,8 @@ window.TRAILS = {
       "parent_loc_id": "rolent",
       "type": "district",
       "map_x": 31.1,
-      "map_y": 65.8
+      "map_y": 65.8,
+      "show_name": false
     },
     {
       "loc_id": "mistwald",
@@ -114,7 +121,8 @@ window.TRAILS = {
       "parent_loc_id": "rolent",
       "type": "district",
       "map_x": 31.2,
-      "map_y": 70.6
+      "map_y": 70.6,
+      "show_name": true
     },
     {
       "loc_id": "bose",
@@ -122,7 +130,8 @@ window.TRAILS = {
       "parent_loc_id": "liberl",
       "type": "region",
       "map_x": null,
-      "map_y": null
+      "map_y": null,
+      "show_name": false
     },
     {
       "loc_id": "bose_city",
@@ -130,7 +139,8 @@ window.TRAILS = {
       "parent_loc_id": "bose",
       "type": "city",
       "map_x": 26.3,
-      "map_y": 66.6
+      "map_y": 66.6,
+      "show_name": false
     }
   ],
   "beats": [
@@ -362,7 +372,7 @@ window.TRAILS = {
       "beat_id": "fc_pro",
       "sequence": 38,
       "chapter": "Prologue",
-      "title": "Learned the airliner Linda has disappeared over Bose, which Cassius was aboard",
+      "title": "Learned the airliner Linde has disappeared over Bose, which Cassius was aboard",
       "default_location": "bright_house",
       "approx_date": "May 1202"
     },
@@ -451,10 +461,10 @@ window.TRAILS = {
     {
       "char_id": "josette",
       "join_beat": "fc_pro",
-      "join_sequence": 21,
+      "join_sequence": 32,
       "location": "mistwald",
       "leave_beat": "fc_pro",
-      "leave_sequence": 22,
+      "leave_sequence": 34,
       "activity": "Fled on airship with his brother"
     }
   ],

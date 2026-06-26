@@ -4,7 +4,7 @@ An interactive map of Zemuria that plays back the *Trails / Kiseki* story beat b
 character markers travel between locations along the timeline, routes trace their path
 across the map, and a spoiler-gated codex reveals facts only once the story reaches them.
 
-> **Live site:** [`(https://valen0604.github.io/trails_orbal_atlas/)`
+> **Live site:** `https://valen0604.github.io/trails_orbal_atlas/`
 
 
 ## What it does

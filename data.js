@@ -8,8 +8,8 @@ window.TRAILS = {
       "faction": "Bracer Guild",
       "first_met_location": "bright_house",
       "first_appearance_beat": "fc_pro",
-      "icon": null,
-      "body": null
+      "icon": "estelle1.png",
+      "body": "estelleFullBody1.webp"
     },
     {
       "char_id": "joshua",
@@ -17,8 +17,8 @@ window.TRAILS = {
       "faction": "Bracer Guild",
       "first_met_location": "bright_house",
       "first_appearance_beat": "fc_pro",
-      "icon": null,
-      "body": null
+      "icon": "joshua1.png",
+      "body": "joshuaFullBody1.png"
     },
     {
       "char_id": "schera",
@@ -26,8 +26,8 @@ window.TRAILS = {
       "faction": "Bracer Guild",
       "first_met_location": "rolent_city",
       "first_appearance_beat": "fc_pro",
-      "icon": null,
-      "body": null
+      "icon": "scherazard1.webp",
+      "body": "scherazardFullBody1.webp"
     },
     {
       "char_id": "cassius",
@@ -35,8 +35,8 @@ window.TRAILS = {
       "faction": "Bracer Guild",
       "first_met_location": "bright_house",
       "first_appearance_beat": "fc_pro",
-      "icon": null,
-      "body": null
+      "icon": "cassius1.png",
+      "body": "cassiusFullBody1.png"
     },
     {
       "char_id": "josette",
@@ -44,8 +44,8 @@ window.TRAILS = {
       "faction": "Jenis Royal Academy",
       "first_met_location": "rolent_city",
       "first_appearance_beat": "fc_pro",
-      "icon": null,
-      "body": null
+      "icon": "josetteCapua1.png",
+      "body": "josetteFullBody1.webp"
     },
     {
       "char_id": "alba",
@@ -53,8 +53,8 @@ window.TRAILS = {
       "faction": "Archeologist",
       "first_met_location": "esmelas",
       "first_appearance_beat": "fc_pro",
-      "icon": null,
-      "body": null
+      "icon": "weismann1.webp",
+      "body": "weismannFullBody1.webp"
     }
   ],
   "locations": [
@@ -476,14 +476,44 @@ window.TRAILS = {
   ],
   "codex": [
     {
+      "char_id": "joshua",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 10,
+      "entry_type": "bio",
+      "text": "Adopted brother of Estelle",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
+      "char_id": "estelle",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 10,
+      "entry_type": "bio",
+      "text": "Her mother died protecting her during the 100 day war",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
+      "char_id": "schera",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 12,
+      "entry_type": "bio",
+      "text": "Estelle's and Joshua's bracer mentor",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
       "char_id": "josette",
       "revealed_at_beat": "fc_pro",
       "sequence": 32,
       "entry_type": "identity",
       "text": "Josette Capua",
       "reveal_name": null,
-      "icon": null,
-      "body": null
+      "icon": "josetteCapua2.png",
+      "body": "josetterFullBody2.png"
     },
     {
       "char_id": "josette",

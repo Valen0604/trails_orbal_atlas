@@ -414,9 +414,9 @@ window.TRAILS = {
       "char_id": "cassius",
       "join_beat": "fc_pro",
       "join_sequence": 10,
-      "location": "bright_house",
+      "location": null,
       "leave_beat": "fc_pro",
-      "leave_sequence": 11,
+      "leave_sequence": 10,
       "activity": "Sent children to buy newspaper"
     },
     {
@@ -434,7 +434,7 @@ window.TRAILS = {
       "join_sequence": 14,
       "location": null,
       "leave_beat": "fc_pro",
-      "leave_sequence": 17,
+      "leave_sequence": 16,
       "activity": "On a work trip with the guild"
     },
     {
@@ -513,7 +513,7 @@ window.TRAILS = {
       "text": "Josette Capua",
       "reveal_name": null,
       "icon": "josetteCapua2.png",
-      "body": "josetterFullBody2.png"
+      "body": "josetteFullBody2.png"
     },
     {
       "char_id": "josette",

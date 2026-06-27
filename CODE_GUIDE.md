@@ -60,11 +60,11 @@ That's separate from running the site.
 | [routes.js](routes.js) | `window.ROAD_NETWORK` (the road graph) + `window.ROUTES` (manual overrides). | Yes — by hand or via the editor tool. |
 | [build_data.py](build_data.py) | Reads `TrailsTimeline.xlsx`, writes `data.js`. | Yes, when you add a new column. |
 | [TrailsTimeline.xlsx](TrailsTimeline.xlsx) | The source of truth for all timeline data. | Yes — this is where data lives. |
-| [zemuria.png](zemuria.png) | The map image. | Swap it if you want a different map. |
+| assets/ | All images — the map (`assets/zemuria.png`) plus character icons/portraits. | Add images here. |
 | tools/ | Two standalone helper pages (see §12). | They're dev tools, not the site. |
 
 **Important:** the site files reference each other by relative path, so they must stay siblings
-in the same folder. The tools in `tools/` reach back up with `../` (e.g. `../zemuria.png`).
+in the same folder. The tools in `tools/` reach back up with `../` (e.g. `../assets/zemuria.png`).
 
 ---
 
@@ -325,9 +325,20 @@ and grows downward without shifting the map.
 nudges each onto a tiny ring (radius `r`) so the badges sit together but don't perfectly overlap.
 A lone character gets no offset.
 
-**The codex** — `renderCodex()` (~line 341) is spoiler-gated by sequence: it only shows entries
-whose `sequence <= ` the current beat's sequence. Scrub backward and later reveals hide again.
-The Map/Codex tabs are switched by `showTab()`.
+**The codex** — an **index of known characters** that expand into dossiers. Key pieces:
+
+- `effectiveChar(charId, seq)` is the brain: it starts from the character's base record, then
+  replays every codex entry revealed by `seq` to compute their *current* `name`, `alias`, `icon`,
+  `body`, and the list of `facts`. An `entry_type:"identity"` entry (or an explicit `reveal_name`)
+  renames them and turns the old name into the `alias`; `icon`/`body` columns swap their art at that
+  sequence. This same function feeds the map name tags and cast chips too (via `displayNameAt`), so
+  an identity reveal updates the name everywhere at once.
+- `isKnown(charId, seq)` decides who appears in the index (met on the timeline, or surfaced by a
+  revealed codex entry).
+- `renderCodex()` builds the list; clicking a row sets `expandedCodexId` and re-renders, expanding
+  that one into a dossier (full-body portrait — a placeholder until a `body` image exists — plus the
+  alias line and the facts). It is spoiler-gated by `seq` and shows **no** "revealed @ sequence"
+  text. The Map/Codex tabs are switched by `showTab()`.
 
 ---
 
@@ -388,8 +399,21 @@ Edit the `STYLE` object at the top of [app.js](app.js) (~line 12). Each entry is
 `{ color, initials }`.
 
 **Give a character an image instead of initials.**
-Drop the image in the folder, put its filename in the `icon` column of the `characters` sheet,
-regenerate. (`makeMarker` uses `icon` if present.)
+Put the image in `assets/`, set the `icon` column of the `characters` sheet to its path
+(e.g. `assets/estelle.png`), regenerate. (`makeMarker` and the codex avatar use `icon` if present.)
+
+**Add a character's full-body codex portrait.**
+Put the image in `assets/`, set the `body` column of the `characters` sheet. Until then a
+placeholder shows in the codex dossier.
+
+**Make an identity reveal (rename a character mid-story).**
+Add a `codex` row with `entry_type: identity` and `text` = the new name, gated at the reveal's
+`sequence`. From there the map, cast, and codex switch to the new name and the dossier shows
+"formerly known as <old name>". (Code: `effectiveChar` in app.js.)
+
+**Change a character's icon or portrait partway through the story.**
+Put the new image in `assets/`, then add a `codex` row at the right `sequence` with the `icon`
+and/or `body` column set. `effectiveChar` applies the latest one revealed.
 
 **Add or reshape a road.**
 Use `tools/road-network-editor.html`, then paste the output over `routes.js`. Or hand-edit the
@@ -412,9 +436,9 @@ The `r = 0.5` in `groupOffsets()` (~line 167). Bigger = more spread.
 (the `theaterBox.w * 0.25` factor).
 
 **Change the map image.**
-Replace `zemuria.png` (keep the name, or update the `<img src>` in index.html and `IMG_SRC` in the
-tools). All coordinates are percentages, so they still line up if the new map has the same framing;
-otherwise you'll re-pick coordinates.
+Replace `assets/zemuria.png` (keep the name, or update the `<img src>` in index.html and `IMG_SRC`
+in the tools). All coordinates are percentages, so they still line up if the new map has the same
+framing; otherwise you'll re-pick coordinates.
 
 **Add a new data column.**
 Add the column in Excel, then one line in the matching `spec` in `build_data.py` (with the right
@@ -431,8 +455,8 @@ caster: `clean`, `to_int`, `to_float`, or `to_bool`). Then use `l.your_field` (e
 - **`map_x` is % of width, `map_y` is % of height** (independent axes). The in-app camera math
   divides both by `vp.w`, so on a non-square map a road can look very slightly different in the app
   than in the editor — positions are right, only fine proportions differ.
-- **Files must stay siblings.** The site loads `data.js`/`routes.js`/`zemuria.png` by relative path;
-  the tools reach up with `../`.
+- **Files must stay siblings.** The site loads `data.js`/`routes.js`/`assets/zemuria.png` by relative
+  path; the tools reach up with `../`.
 - **A straight-line route means a missing road.** `routeBetween` falls back to a straight line when
   the graph has no path between two locations.
 - **Edges are two-way.** You define a road once; the app walks it in either direction.

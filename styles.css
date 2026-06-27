@@ -166,19 +166,50 @@ input[type=range].scrub::-moz-range-thumb {
 .cast-empty { font-size: 12px; color: var(--muted); align-self: center; padding-left: 6px; }
 
 /* ---------- codex ---------- */
-.codex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
-.codex-card {
-  background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--gold);
-  border-radius: 10px; padding: 14px;
+/* codex = an index of known characters; each row expands into a dossier */
+.codex-grid { display: flex; flex-direction: column; gap: 8px; max-width: 680px; }
+.codex-entry { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.codex-entry.open { border-color: var(--gold-dim); }
+.codex-row {
+  width: 100%; display: flex; align-items: center; gap: 12px; padding: 10px 12px;
+  background: none; border: 0; color: var(--ink); cursor: pointer; text-align: left;
+  font-family: var(--sans); transition: background .12s;
 }
-.codex-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-.codex-name { font-family: var(--serif); font-size: 17px; font-weight: 600; }
-.codex-type {
-  font-size: 10px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700;
-  color: var(--gold); border: 1px solid var(--gold-dim); padding: 2px 7px; border-radius: 20px;
+.codex-row:hover { background: var(--panel-2); }
+.codex-ava {
+  width: 38px; height: 38px; border-radius: 50%; flex: none; overflow: hidden;
+  display: grid; place-items: center; border: 1.5px solid rgba(255,255,255,.85);
+  color: #fff; font-size: 13px; font-weight: 700; font-family: var(--sans);
 }
-.codex-text { font-size: 14px; color: var(--ink); line-height: 1.45; }
-.codex-meta { font-size: 11px; color: var(--muted); font-family: var(--mono); margin-top: 8px; }
+.codex-ava img { width: 100%; height: 100%; object-fit: cover; }
+.codex-row-text { flex: 1; display: flex; flex-direction: column; gap: 1px; }
+.codex-row-name { font-family: var(--serif); font-size: 16px; font-weight: 600; }
+.codex-row-meta { font-size: 11.5px; color: var(--muted); }
+.codex-chevron { color: var(--muted); font-size: 12px; flex: none; }
+
+.codex-detail { display: flex; gap: 16px; padding: 4px 14px 16px; border-top: 1px solid var(--line); }
+@media (max-width: 560px) { .codex-detail { flex-direction: column; } }
+.codex-portrait { flex: none; width: 150px; }
+.codex-body-img { width: 100%; border-radius: 8px; display: block; border: 1px solid var(--line); }
+.codex-body-ph {
+  width: 100%; aspect-ratio: 3 / 4; border-radius: 8px;
+  border: 1px dashed var(--line); background: var(--bg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  color: var(--line); text-align: center;
+}
+.codex-body-ph svg { width: 46px; height: 46px; }
+.codex-body-ph span { font-size: 11px; color: var(--muted); }
+.codex-info { flex: 1; padding-top: 12px; }
+.codex-alias { font-size: 12.5px; color: var(--gold); font-style: italic; margin: 0 0 12px; }
+.codex-facts { display: flex; flex-direction: column; gap: 10px; }
+.codex-fact { display: flex; flex-direction: column; gap: 3px; }
+.codex-fact-type {
+  align-self: flex-start; font-size: 9.5px; text-transform: uppercase; letter-spacing: .08em;
+  font-weight: 700; color: var(--gold); border: 1px solid var(--gold-dim);
+  padding: 1px 7px; border-radius: 20px;
+}
+.codex-fact p { font-size: 14px; color: var(--ink); line-height: 1.45; margin: 0; }
+.codex-nofacts { font-size: 13px; color: var(--muted); margin: 0; padding-top: 4px; }
 .codex-empty {
   text-align: center; color: var(--muted); padding: 50px 20px; font-size: 14px;
   border: 1px dashed var(--line); border-radius: 12px;

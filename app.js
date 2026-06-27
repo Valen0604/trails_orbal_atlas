@@ -26,6 +26,13 @@
   var beats = D.beats.slice().sort(function (a, b) { return a.sequence - b.sequence; });
   var appsByChar = {};
   D.appearances.forEach(function (a) { (appsByChar[a.char_id] = appsByChar[a.char_id] || []).push(a); });
+  var codexByChar = {};
+  D.codex.forEach(function (e) { (codexByChar[e.char_id] = codexByChar[e.char_id] || []).push(e); });
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"]/g, function (ch) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch];
+    });
+  }
 
   // --- DOM -----------------------------------------------------------------
   var $ = function (id) { return document.getElementById(id); };
@@ -39,7 +46,7 @@
   };
 
   // --- state ---------------------------------------------------------------
-  var index = 0, playing = false, playTimer = null;
+  var index = 0, playing = false, playTimer = null, expandedCodexId = null;
   var mode = "theater";                 // theater | follow | whole | free | char
   var followId = null;                  // char_id the map is locked onto (mode === "char")
   var ZBASE = 1;                        // zoom factor of the default framing; icons are full-size here
@@ -141,6 +148,40 @@
     }
     return match ? match.activity : null;
   }
+  // Codex entries this character has unlocked by `seq`, oldest first.
+  function revealedCodex(charId, seq) {
+    return (codexByChar[charId] || [])
+      .filter(function (e) { return e.sequence != null && e.sequence <= seq; })
+      .sort(function (a, b) { return a.sequence - b.sequence; });
+  }
+  // A character's state AT a point in the timeline: name/alias/icon/body evolve as the
+  // codex reveals fire. An `entry_type: "identity"` row (or an explicit `reveal_name`)
+  // renames them; the previous name becomes their alias. icon/body rows swap the art.
+  function effectiveChar(charId, seq) {
+    var c = charById[charId] || { display_name: charId };
+    var st = { id: charId, name: c.display_name, alias: null,
+               icon: c.icon || null, body: c.body || null, faction: c.faction || null, facts: [] };
+    revealedCodex(charId, seq).forEach(function (e) {
+      var rn = e.reveal_name || (e.entry_type === "identity" ? e.text : null);
+      if (rn) st.name = rn;
+      if (e.icon) st.icon = e.icon;
+      if (e.body) st.body = e.body;
+      var isPureIdentity = e.entry_type === "identity" && !e.reveal_name;  // text IS the name
+      if (e.text && !isPureIdentity) st.facts.push({ type: e.entry_type, text: e.text });
+    });
+    if (st.name !== c.display_name) st.alias = c.display_name;   // original name -> alias
+    return st;
+  }
+  function displayNameAt(charId, seq) { return effectiveChar(charId, seq).name; }
+  // "Known" = met on the timeline, or surfaced by a revealed codex entry.
+  function isKnown(charId, seq) {
+    var apps = appsByChar[charId] || [];
+    for (var i = 0; i < apps.length; i++) {
+      if (apps[i].join_sequence != null && apps[i].join_sequence <= seq) return true;
+    }
+    return revealedCodex(charId, seq).length > 0;
+  }
+
   function alongPath(pts, t) {
     if (pts.length === 1) return pts[0];
     var segs = [], total = 0, i;
@@ -276,6 +317,8 @@
       var id = c.char_id;
       if (!markerEls[id]) markerEls[id] = makeMarker(c);
       var tgt = targets[id], from = currentPos[id], mk = markerEls[id];
+      var nt = mk.querySelector(".nametag");                       // keep the label on the revealed name
+      if (nt) nt.textContent = displayNameAt(id, beat.sequence);
       if (!tgt) { delete currentPos[id]; return; }
       if (animate && from && (Math.abs(from.x - tgt.x) > 0.04 || Math.abs(from.y - tgt.y) > 0.04)) {
         var route = routeBetween(mk.dataset.loc || tgt.loc, tgt.loc);
@@ -330,28 +373,65 @@
     D.characters.forEach(function (c) {
       var loc = charLocAt(c.char_id, beat); if (!loc) return;
       var s = styleFor(c.char_id);
+      var name = displayNameAt(c.char_id, beat.sequence);
       var place = (locById[loc] && locById[loc].name) || loc;
       var following = c.char_id === followId ? " is-following" : "";
-      rows.push('<button class="cast-chip' + following + '" data-char="' + c.char_id + '" title="Follow ' + c.display_name + ' on the map">' +
+      rows.push('<button class="cast-chip' + following + '" data-char="' + c.char_id + '" title="Follow ' + esc(name) + ' on the map">' +
         '<span class="cdot" style="background:' + s.color + '"></span>' +
-        '<span class="cast-chip-txt"><span class="cast-name">' + c.display_name + '</span>' +
-        '<span class="cast-act">' + place + '</span></span></button>');
+        '<span class="cast-chip-txt"><span class="cast-name">' + esc(name) + '</span>' +
+        '<span class="cast-act">' + esc(place) + '</span></span></button>');
     });
     el.cast.innerHTML = rows.length ? rows.join("") : '<div class="cast-empty">No one on the map yet.</div>';
   }
 
-  // --- codex ---------------------------------------------------------------
+  // --- codex (a character index that expands into a dossier) ---------------
+  var SILHOUETTE = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' +
+    '<path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Zm0 2c-5 0-9 2.5-9 6v2h18v-2c0-3.5-4-6-9-6Z"/></svg>';
+
+  function avatarHTML(charId, st) {
+    if (st.icon) return '<span class="codex-ava"><img src="' + esc(st.icon) + '" alt=""></span>';
+    var s = styleFor(charId);
+    return '<span class="codex-ava codex-ava-fallback" style="background:' + s.color + '">' + esc(s.initials) + '</span>';
+  }
+  function portraitHTML(st) {
+    if (st.body) return '<img class="codex-body-img" src="' + esc(st.body) + '" alt="">';
+    return '<div class="codex-body-ph">' + SILHOUETTE + '<span>Full portrait coming soon</span></div>';
+  }
+  function detailHTML(st) {
+    var alias = st.alias ? '<p class="codex-alias">Alias &mdash; formerly known as <b>' + esc(st.alias) + '</b></p>' : '';
+    var facts = st.facts.length
+      ? '<div class="codex-facts">' + st.facts.map(function (f) {
+          return '<div class="codex-fact">' +
+            (f.type ? '<span class="codex-fact-type">' + esc(f.type) + '</span>' : '') +
+            '<p>' + esc(f.text) + '</p></div>'; }).join("") + '</div>'
+      : '<p class="codex-nofacts">No notes recorded yet.</p>';
+    return '<div class="codex-detail">' +
+      '<div class="codex-portrait">' + portraitHTML(st) + '</div>' +
+      '<div class="codex-info">' + alias + facts + '</div>' +
+    '</div>';
+  }
+
   function renderCodex() {
     var seq = beats[index].sequence;
-    var shown = D.codex.filter(function (e) { return e.sequence != null && e.sequence <= seq; })
-      .sort(function (a, b) { return a.sequence - b.sequence; });
-    if (!shown.length) { el.codex.innerHTML = '<div class="codex-empty">No codex entries revealed yet.<br>Advance the timeline to uncover them.</div>'; return; }
-    el.codex.innerHTML = shown.map(function (e) {
-      var c = charById[e.char_id], name = c ? c.display_name : e.char_id;
-      return '<div class="codex-card"><div class="codex-head"><span class="codex-name">' + name + '</span>' +
-        '<span class="codex-type">' + (e.entry_type || "") + '</span></div>' +
-        '<div class="codex-text">' + e.text + '</div>' +
-        '<div class="codex-meta">revealed @ seq ' + e.sequence + '</div></div>';
+    var known = D.characters.filter(function (c) { return isKnown(c.char_id, seq); });
+    if (!known.length) {
+      el.codex.innerHTML = '<div class="codex-empty">No characters known yet.<br>Advance the timeline to meet the cast.</div>';
+      return;
+    }
+    el.codex.innerHTML = known.map(function (c) {
+      var st = effectiveChar(c.char_id, seq);
+      var open = c.char_id === expandedCodexId;
+      return '<div class="codex-entry' + (open ? " open" : "") + '" data-char="' + c.char_id + '">' +
+        '<button class="codex-row" type="button">' +
+          avatarHTML(c.char_id, st) +
+          '<span class="codex-row-text">' +
+            '<span class="codex-row-name">' + esc(st.name) + '</span>' +
+            (st.faction ? '<span class="codex-row-meta">' + esc(st.faction) + '</span>' : '') +
+          '</span>' +
+          '<span class="codex-chevron" aria-hidden="true">' + (open ? "▾" : "▸") + '</span>' +
+        '</button>' +
+        (open ? detailHTML(st) : "") +
+      '</div>';
     }).join("");
   }
 
@@ -384,6 +464,15 @@
   el.cast.addEventListener("click", function (e) {
     var chip = e.target.closest(".cast-chip"); if (!chip) return;
     focusCharacter(chip.dataset.char);
+  });
+
+  // click a codex row -> expand/collapse that character's dossier (clicks inside the open
+  // dossier don't collapse it — only the row toggles)
+  el.codex.addEventListener("click", function (e) {
+    var row = e.target.closest(".codex-row"); if (!row) return;
+    var id = row.parentNode.dataset.char;
+    expandedCodexId = (expandedCodexId === id) ? null : id;
+    renderCodex();
   });
 
   // --- manual pan / zoom (Google-Maps style) -------------------------------

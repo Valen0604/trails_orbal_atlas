@@ -80,6 +80,7 @@ def main():
             "first_met_location": ("first_met_location", clean),
             "first_appearance_beat": ("first_appearance_beat", clean),
             "icon": ("icon", clean),
+            "body": ("body", clean),          # base full-body portrait image (optional)
         }),
         "locations": rows(xl["locations"], {
             "loc_id": ("loc_id", clean),
@@ -113,6 +114,9 @@ def main():
             "sequence": ("sequence", to_int),
             "entry_type": ("entry_type", clean),
             "text": ("text", clean),
+            "reveal_name": ("reveal_name", clean),  # if set, becomes the character's name from here on
+            "icon": ("icon", clean),                # if set, swaps the icon from this sequence on
+            "body": ("body", clean),                # if set, swaps the full-body portrait from here on
         }),
     }
 

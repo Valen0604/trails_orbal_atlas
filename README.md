@@ -23,11 +23,12 @@ trails-timeline/
 ├── app.js                  # timeline, movement animation, codex gating
 ├── data.js                 # GENERATED from the Excel — do not hand-edit
 ├── routes.js               # hand-drawn travel paths (you maintain this)
-├── zemuria.png             # the map image
 ├── build_data.py           # regenerates data.js from the spreadsheet
 ├── TrailsTimeline.xlsx     # source of truth for all timeline data
 ├── DATA_DICTIONARY.md      # what every column means
 ├── CODE_GUIDE.md           # how the code works, for editing it yourself
+├── assets/                 # all images live here
+│   └── zemuria.png         # the map image (plus character icons / portraits)
 └── tools/
     ├── map-coordinate-finder.html   # click the map to read x/y % for coordinates & routes
     └── road-network-editor.html     # visual editor for routes.js (draw/drag roads & junctions)
@@ -67,17 +68,25 @@ appearance that leaves before it joins, etc.) — worth a glance after each run.
 
 So a character follows the roads instead of cutting straight across the map:
 
-1. Open `tools/map-coordinate-finder.html`, load `zemuria.png`, and zoom in.
+1. Open `tools/map-coordinate-finder.html`, load `assets/zemuria.png`, and zoom in.
 2. Click along the road from the start location to the end, copying the **x / y %** at each click.
 3. Add an entry to `routes.js` keyed `"fromLocId>toLocId"`, with the points as `[x, y]` pairs.
 
 The app looks up `from>to`, then the reverse of `to>from`, then falls back to a straight line —
 so you only draw each pair once, and undrawn journeys still work (just as straight lines).
 
-## Adding character icons
+## Adding character icons & portraits
 
-Drop an image into the folder, put its filename in the `icon` column of the `characters`
-sheet, regenerate `data.js`, and it replaces that character's generated initials badge.
+Drop images into **`assets/`**, then reference them by path in the spreadsheet:
+
+- `characters` sheet → `icon` column (e.g. `assets/estelle.png`) replaces the generated initials
+  badge on the map and in the codex.
+- `characters` sheet → `body` column is the full-body portrait shown when you open the character
+  in the codex (a placeholder shows until you add one).
+
+Regenerate `data.js` afterwards. You can also make the icon or portrait **change partway through
+the story** — see the codex columns in [DATA_DICTIONARY.md](DATA_DICTIONARY.md) and the codex
+section of [CODE_GUIDE.md](CODE_GUIDE.md).
 
 ## Publishing with GitHub Pages
 

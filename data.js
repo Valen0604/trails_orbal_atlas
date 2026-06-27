@@ -8,7 +8,8 @@ window.TRAILS = {
       "faction": "Bracer Guild",
       "first_met_location": "bright_house",
       "first_appearance_beat": "fc_pro",
-      "icon": null
+      "icon": null,
+      "body": null
     },
     {
       "char_id": "joshua",
@@ -16,7 +17,8 @@ window.TRAILS = {
       "faction": "Bracer Guild",
       "first_met_location": "bright_house",
       "first_appearance_beat": "fc_pro",
-      "icon": null
+      "icon": null,
+      "body": null
     },
     {
       "char_id": "schera",
@@ -24,7 +26,8 @@ window.TRAILS = {
       "faction": "Bracer Guild",
       "first_met_location": "rolent_city",
       "first_appearance_beat": "fc_pro",
-      "icon": null
+      "icon": null,
+      "body": null
     },
     {
       "char_id": "cassius",
@@ -32,7 +35,8 @@ window.TRAILS = {
       "faction": "Bracer Guild",
       "first_met_location": "bright_house",
       "first_appearance_beat": "fc_pro",
-      "icon": null
+      "icon": null,
+      "body": null
     },
     {
       "char_id": "josette",
@@ -40,7 +44,8 @@ window.TRAILS = {
       "faction": "Jenis Royal Academy",
       "first_met_location": "rolent_city",
       "first_appearance_beat": "fc_pro",
-      "icon": null
+      "icon": null,
+      "body": null
     },
     {
       "char_id": "alba",
@@ -48,7 +53,8 @@ window.TRAILS = {
       "faction": "Archeologist",
       "first_met_location": "esmelas",
       "first_appearance_beat": "fc_pro",
-      "icon": null
+      "icon": null,
+      "body": null
     }
   ],
   "locations": [
@@ -474,21 +480,30 @@ window.TRAILS = {
       "revealed_at_beat": "fc_pro",
       "sequence": 32,
       "entry_type": "identity",
-      "text": "Josette Capua"
+      "text": "Josette Capua",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
     },
     {
       "char_id": "josette",
       "revealed_at_beat": "fc_pro",
       "sequence": 32,
       "entry_type": "faction",
-      "text": "Capua Sky Bandits"
+      "text": "Capua Sky Bandits",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
     },
     {
       "char_id": "cassius",
       "revealed_at_beat": "fc_pro",
       "sequence": 38,
       "entry_type": "bio",
-      "text": "Disappeared on captured airliner"
+      "text": "Disappeared on captured airliner",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
     }
   ]
 };

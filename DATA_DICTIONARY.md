@@ -25,13 +25,15 @@ One row per character. Stable facts only.
 | `faction` | Affiliation safe to show from the start (e.g. Bracer Guild). Reveals go in `codex`. |
 | `first_met_location` | `loc_id` where the party first meets them. |
 | `first_appearance_beat` | `beat_id` of that first meeting. |
-| `icon` | Image path for the marker + codex avatar, e.g. `assets/estelle.png`. Blank = generated initials badge. |
-| `body` | Full-body portrait shown in the expanded codex dossier, e.g. `assets/estelle_full.png`. Blank = placeholder. |
+| `icon` | Marker + codex avatar. Just the **file name** (e.g. `icon.png`); blank = generated initials badge. |
+| `body` | Full-body codex portrait. Just the **file name** (e.g. `full_body.png`); blank = placeholder. |
 
 > **Deliberately omitted:** `status` and `true_identity`. Both are spoilers and both change —
 > they belong in `codex` with reveal gating, not as flat columns here.
 >
-> Put image files in **`assets/`** and reference them by that relative path.
+> Each character has its own folder, **`assets/characters/<char_id>/`**. In `icon` / `body` you
+> write only the file name and the app prepends that folder automatically. (A value containing a
+> slash — a full path or URL — is used as-is instead.)
 
 ---
 
@@ -97,8 +99,10 @@ The progressive "what is known" entries — and the spoiler gate.
 | Column | Meaning |
 |---|---|
 The Codex tab is an **index of known characters**. Each known character is one row you can click
-to open a dossier; the dossier is built from that character's revealed codex entries (their `text`,
-labelled by `entry_type`). It never shows a "revealed @ sequence" line.
+to open a dossier; the dossier is built from that character's revealed codex entries. Entries are
+**grouped by `entry_type`** into sections (Bio, Status, …) and **accumulate** — every revealed line
+of a type stacks under that section, nothing is overwritten. It never shows a "revealed @ sequence"
+line.
 
 | Column | Meaning |
 |---|---|
@@ -108,8 +112,8 @@ labelled by `entry_type`). It never shows a "revealed @ sequence" line.
 | `entry_type` | `identity` / `status` / `faction` / `bio` / `relationship`. Labels the fact in the dossier. |
 | `text` | The entry itself. |
 | `reveal_name` | *(optional)* From this entry's sequence on, the character's **name changes** to this; the old name becomes their alias. |
-| `icon` | *(optional)* From this sequence on, swap the character's icon to this image path. |
-| `body` | *(optional)* From this sequence on, swap the full-body portrait to this image path. |
+| `icon` | *(optional)* From this sequence on, swap the icon (map badge **and** codex avatar). Just the file name, resolved in the character's folder. |
+| `body` | *(optional)* From this sequence on, swap the full-body codex portrait. Just the file name, resolved in the character's folder. |
 
 **Identity reveals.** An `entry_type: identity` row renames the character — its `text` is the new
 name (e.g. `Josette Haar` → reveal row with text `Josette Capua`). From that sequence on, the map,

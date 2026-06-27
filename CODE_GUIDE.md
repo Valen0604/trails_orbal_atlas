@@ -60,7 +60,7 @@ That's separate from running the site.
 | [routes.js](routes.js) | `window.ROAD_NETWORK` (the road graph) + `window.ROUTES` (manual overrides). | Yes — by hand or via the editor tool. |
 | [build_data.py](build_data.py) | Reads `TrailsTimeline.xlsx`, writes `data.js`. | Yes, when you add a new column. |
 | [TrailsTimeline.xlsx](TrailsTimeline.xlsx) | The source of truth for all timeline data. | Yes — this is where data lives. |
-| assets/ | All images — the map (`assets/zemuria.png`) plus character icons/portraits. | Add images here. |
+| assets/ | All images: the map (`assets/zemuria.png`) and one folder per character under `characters/<char_id>/`. | Add images here. |
 | tools/ | Two standalone helper pages (see §12). | They're dev tools, not the site. |
 
 **Important:** the site files reference each other by relative path, so they must stay siblings
@@ -331,8 +331,10 @@ A lone character gets no offset.
   replays every codex entry revealed by `seq` to compute their *current* `name`, `alias`, `icon`,
   `body`, and the list of `facts`. An `entry_type:"identity"` entry (or an explicit `reveal_name`)
   renames them and turns the old name into the `alias`; `icon`/`body` columns swap their art at that
-  sequence. This same function feeds the map name tags and cast chips too (via `displayNameAt`), so
-  an identity reveal updates the name everywhere at once.
+  sequence. This same function feeds the map name tags, the map badge art, and the cast chips, so an
+  identity reveal updates the name (and icon) everywhere at once. The dossier's facts are **grouped
+  by `entry_type`** and accumulate — every revealed Bio line stacks under one Bio section, nothing
+  is overwritten.
 - `isKnown(charId, seq)` decides who appears in the index (met on the timeline, or surfaced by a
   revealed codex entry).
 - `renderCodex()` builds the list; clicking a row sets `expandedCodexId` and re-renders, expanding
@@ -399,12 +401,14 @@ Edit the `STYLE` object at the top of [app.js](app.js) (~line 12). Each entry is
 `{ color, initials }`.
 
 **Give a character an image instead of initials.**
-Put the image in `assets/`, set the `icon` column of the `characters` sheet to its path
-(e.g. `assets/estelle.png`), regenerate. (`makeMarker` and the codex avatar use `icon` if present.)
+Put the image in that character's folder, `assets/characters/<char_id>/`, and set the `icon` column
+of the `characters` sheet to just the **file name** (e.g. `icon.png`), regenerate. The map badge,
+the cast strip, and the codex avatar all use it. (`charAsset()` prepends the folder; a value with a
+slash is treated as a full path/URL.)
 
 **Add a character's full-body codex portrait.**
-Put the image in `assets/`, set the `body` column of the `characters` sheet. Until then a
-placeholder shows in the codex dossier.
+Put the image in `assets/characters/<char_id>/`, set the `body` column to its file name
+(e.g. `full_body.png`). Until then a placeholder shows in the dossier.
 
 **Make an identity reveal (rename a character mid-story).**
 Add a `codex` row with `entry_type: identity` and `text` = the new name, gated at the reveal's
@@ -412,8 +416,10 @@ Add a `codex` row with `entry_type: identity` and `text` = the new name, gated a
 "formerly known as <old name>". (Code: `effectiveChar` in app.js.)
 
 **Change a character's icon or portrait partway through the story.**
-Put the new image in `assets/`, then add a `codex` row at the right `sequence` with the `icon`
-and/or `body` column set. `effectiveChar` applies the latest one revealed.
+Put the new image in that character's `assets/characters/<char_id>/` folder, then add a `codex` row
+at the right `sequence` with the `icon` and/or `body` column set to the new file name. `effectiveChar` applies the latest one
+revealed, and the map badge swaps to match (`render`'s marker loop only rebuilds the badge when the
+effective icon actually changes).
 
 **Add or reshape a road.**
 Use `tools/road-network-editor.html`, then paste the output over `routes.js`. Or hand-edit the

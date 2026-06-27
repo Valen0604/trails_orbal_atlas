@@ -160,7 +160,12 @@ input[type=range].scrub::-moz-range-thumb {
 .cast-chip.is-following { border-color: var(--gold); background: var(--panel-2); box-shadow: 0 0 0 1px var(--gold-dim) inset; }
 .cast-chip.is-following .cast-name { color: var(--gold); }
 .cast-chip-txt { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.25; }
-.cdot { width: 12px; height: 12px; border-radius: 50%; flex: none; border: 1px solid rgba(255,255,255,.4); }
+.cast-ava {
+  width: 26px; height: 26px; border-radius: 50%; flex: none; overflow: hidden;
+  display: grid; place-items: center; border: 1.5px solid rgba(255,255,255,.85);
+  color: #fff; font-size: 10px; font-weight: 700; font-family: var(--sans);
+}
+.cast-ava img { width: 100%; height: 100%; object-fit: cover; }
 .cast-name { font-size: 13px; font-weight: 600; }
 .cast-act { font-size: 11.5px; color: var(--muted); }
 .cast-empty { font-size: 12px; color: var(--muted); align-self: center; padding-left: 6px; }
@@ -201,14 +206,14 @@ input[type=range].scrub::-moz-range-thumb {
 .codex-body-ph span { font-size: 11px; color: var(--muted); }
 .codex-info { flex: 1; padding-top: 12px; }
 .codex-alias { font-size: 12.5px; color: var(--gold); font-style: italic; margin: 0 0 12px; }
-.codex-facts { display: flex; flex-direction: column; gap: 10px; }
-.codex-fact { display: flex; flex-direction: column; gap: 3px; }
+.codex-facts { display: flex; flex-direction: column; gap: 14px; }
+.codex-section { display: flex; flex-direction: column; gap: 5px; }
 .codex-fact-type {
   align-self: flex-start; font-size: 9.5px; text-transform: uppercase; letter-spacing: .08em;
   font-weight: 700; color: var(--gold); border: 1px solid var(--gold-dim);
-  padding: 1px 7px; border-radius: 20px;
+  padding: 1px 7px; border-radius: 20px; margin-bottom: 2px;
 }
-.codex-fact p { font-size: 14px; color: var(--ink); line-height: 1.45; margin: 0; }
+.codex-section p { font-size: 14px; color: var(--ink); line-height: 1.45; margin: 0; }
 .codex-nofacts { font-size: 13px; color: var(--muted); margin: 0; padding-top: 4px; }
 .codex-empty {
   text-align: center; color: var(--muted); padding: 50px 20px; font-size: 14px;

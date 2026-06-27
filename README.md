@@ -28,7 +28,8 @@ trails-timeline/
 ├── DATA_DICTIONARY.md      # what every column means
 ├── CODE_GUIDE.md           # how the code works, for editing it yourself
 ├── assets/                 # all images live here
-│   └── zemuria.png         # the map image (plus character icons / portraits)
+│   ├── zemuria.png         # the map image
+│   └── characters/         # one folder per character (its icon + full-body image)
 └── tools/
     ├── map-coordinate-finder.html   # click the map to read x/y % for coordinates & routes
     └── road-network-editor.html     # visual editor for routes.js (draw/drag roads & junctions)
@@ -77,12 +78,32 @@ so you only draw each pair once, and undrawn journeys still work (just as straig
 
 ## Adding character icons & portraits
 
-Drop images into **`assets/`**, then reference them by path in the spreadsheet:
+Each character gets **its own folder** under `assets/characters/<char_id>/`, holding that
+character's icon and full-body image:
 
-- `characters` sheet → `icon` column (e.g. `assets/estelle.png`) replaces the generated initials
-  badge on the map and in the codex.
-- `characters` sheet → `body` column is the full-body portrait shown when you open the character
-  in the codex (a placeholder shows until you add one).
+```
+assets/
+├── zemuria.png                          # the map
+└── characters/
+    ├── estelle/
+    │   ├── icon.png                     # marker / codex avatar
+    │   └── full_body.png                # codex portrait
+    ├── joshua/
+    │   └── ...
+    └── ...
+```
+
+Then in the spreadsheet you only write the **file name** — the app fills in
+`assets/characters/<char_id>/` automatically:
+
+- `characters` sheet → `icon` column = just `icon.png` (or `icon.webp`). Replaces the generated
+  initials badge on the map, the cast strip, **and** the codex.
+- `characters` sheet → `body` column = just `full_body.png`. The portrait shown when you open the
+  character in the codex (a placeholder shows until you add one).
+
+The file names inside each folder are up to you — just match them in the spreadsheet, including the
+`.png` / `.webp` extension. (If you ever want an image from somewhere else, write a value that
+contains a slash — a full path like `assets/shared/x.png` or a URL — and it's used as-is.)
 
 Regenerate `data.js` afterwards. You can also make the icon or portrait **change partway through
 the story** — see the codex columns in [DATA_DICTIONARY.md](DATA_DICTIONARY.md) and the codex

@@ -33,6 +33,12 @@
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch];
     });
   }
+  // Resolve an image cell. A bare filename ("icon.png") is taken from the character's own
+  // folder; anything containing a slash (a full path or a URL) is used exactly as written.
+  function charAsset(charId, val) {
+    if (!val) return null;
+    return val.indexOf("/") === -1 ? "assets/characters/" + charId + "/" + val : val;
+  }
 
   // --- DOM -----------------------------------------------------------------
   var $ = function (id) { return document.getElementById(id); };
@@ -160,12 +166,13 @@
   function effectiveChar(charId, seq) {
     var c = charById[charId] || { display_name: charId };
     var st = { id: charId, name: c.display_name, alias: null,
-               icon: c.icon || null, body: c.body || null, faction: c.faction || null, facts: [] };
+               icon: charAsset(charId, c.icon), body: charAsset(charId, c.body),
+               faction: c.faction || null, facts: [] };
     revealedCodex(charId, seq).forEach(function (e) {
       var rn = e.reveal_name || (e.entry_type === "identity" ? e.text : null);
       if (rn) st.name = rn;
-      if (e.icon) st.icon = e.icon;
-      if (e.body) st.body = e.body;
+      if (e.icon) st.icon = charAsset(charId, e.icon);
+      if (e.body) st.body = charAsset(charId, e.body);
       var isPureIdentity = e.entry_type === "identity" && !e.reveal_name;  // text IS the name
       if (e.text && !isPureIdentity) st.facts.push({ type: e.entry_type, text: e.text });
     });
@@ -262,10 +269,11 @@
   // --- markers + route lines ----------------------------------------------
   function makeMarker(c) {
     var s = styleFor(c.char_id), m = document.createElement("div");
+    var icon = charAsset(c.char_id, c.icon);                 // render() keeps this current per beat
     m.className = "marker hidden";
     m.innerHTML = '<div class="badge" style="background:' + s.color + '">' +
-      (c.icon ? '<img src="' + c.icon + '" alt="">' : s.initials) + '</div>' +
-      '<div class="nametag">' + c.display_name + '</div>';
+      (icon ? '<img src="' + esc(icon) + '" alt="">' : esc(s.initials)) + '</div>' +
+      '<div class="nametag">' + esc(c.display_name) + '</div>';
     el.markers.appendChild(m);
     return m;
   }
@@ -317,8 +325,13 @@
       var id = c.char_id;
       if (!markerEls[id]) markerEls[id] = makeMarker(c);
       var tgt = targets[id], from = currentPos[id], mk = markerEls[id];
-      var nt = mk.querySelector(".nametag");                       // keep the label on the revealed name
-      if (nt) nt.textContent = displayNameAt(id, beat.sequence);
+      var st = effectiveChar(id, beat.sequence);                   // name + icon both follow reveals
+      var nt = mk.querySelector(".nametag"); if (nt) nt.textContent = st.name;
+      var badge = mk.querySelector(".badge");                      // swap the badge art only when it changes
+      if (badge && mk.dataset.icon !== (st.icon || "")) {
+        mk.dataset.icon = st.icon || "";
+        badge.innerHTML = st.icon ? '<img src="' + esc(st.icon) + '" alt="">' : esc(styleFor(id).initials);
+      }
       if (!tgt) { delete currentPos[id]; return; }
       if (animate && from && (Math.abs(from.x - tgt.x) > 0.04 || Math.abs(from.y - tgt.y) > 0.04)) {
         var route = routeBetween(mk.dataset.loc || tgt.loc, tgt.loc);
@@ -373,12 +386,15 @@
     D.characters.forEach(function (c) {
       var loc = charLocAt(c.char_id, beat); if (!loc) return;
       var s = styleFor(c.char_id);
-      var name = displayNameAt(c.char_id, beat.sequence);
+      var st = effectiveChar(c.char_id, beat.sequence);   // icon + name follow reveals here too
       var place = (locById[loc] && locById[loc].name) || loc;
       var following = c.char_id === followId ? " is-following" : "";
-      rows.push('<button class="cast-chip' + following + '" data-char="' + c.char_id + '" title="Follow ' + esc(name) + ' on the map">' +
-        '<span class="cdot" style="background:' + s.color + '"></span>' +
-        '<span class="cast-chip-txt"><span class="cast-name">' + esc(name) + '</span>' +
+      var ava = st.icon
+        ? '<span class="cast-ava"><img src="' + esc(st.icon) + '" alt=""></span>'
+        : '<span class="cast-ava cast-ava-fallback" style="background:' + s.color + '">' + esc(s.initials) + '</span>';
+      rows.push('<button class="cast-chip' + following + '" data-char="' + c.char_id + '" title="Follow ' + esc(st.name) + ' on the map">' +
+        ava +
+        '<span class="cast-chip-txt"><span class="cast-name">' + esc(st.name) + '</span>' +
         '<span class="cast-act">' + esc(place) + '</span></span></button>');
     });
     el.cast.innerHTML = rows.length ? rows.join("") : '<div class="cast-empty">No one on the map yet.</div>';
@@ -399,12 +415,24 @@
   }
   function detailHTML(st) {
     var alias = st.alias ? '<p class="codex-alias">Alias &mdash; formerly known as <b>' + esc(st.alias) + '</b></p>' : '';
-    var facts = st.facts.length
-      ? '<div class="codex-facts">' + st.facts.map(function (f) {
-          return '<div class="codex-fact">' +
-            (f.type ? '<span class="codex-fact-type">' + esc(f.type) + '</span>' : '') +
-            '<p>' + esc(f.text) + '</p></div>'; }).join("") + '</div>'
-      : '<p class="codex-nofacts">No notes recorded yet.</p>';
+    var facts;
+    if (st.facts.length) {
+      // group by entry_type so each section (Bio, Status, …) accumulates every revealed line
+      var order = [], byType = {};
+      st.facts.forEach(function (f) {
+        var t = f.type || "note";
+        if (!byType[t]) { byType[t] = []; order.push(t); }
+        byType[t].push(f.text);
+      });
+      facts = '<div class="codex-facts">' + order.map(function (t) {
+        return '<div class="codex-section">' +
+          '<span class="codex-fact-type">' + esc(t) + '</span>' +
+          byType[t].map(function (tx) { return '<p>' + esc(tx) + '</p>'; }).join("") +
+        '</div>';
+      }).join("") + '</div>';
+    } else {
+      facts = '<p class="codex-nofacts">No notes recorded yet.</p>';
+    }
     return '<div class="codex-detail">' +
       '<div class="codex-portrait">' + portraitHTML(st) + '</div>' +
       '<div class="codex-info">' + alias + facts + '</div>' +

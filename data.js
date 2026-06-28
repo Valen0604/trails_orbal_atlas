@@ -1155,10 +1155,10 @@ window.TRAILS = {
       "char_id": "olivier",
       "join_beat": "fc_ch1",
       "join_sequence": 76,
-      "location": "rolent_city",
+      "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 88,
-      "activity": "Going to Rolent with Scherazard"
+      "activity": "Accompanying the gang to the Sky Bandit hideout"
     },
     {
       "char_id": "josette",
@@ -1186,6 +1186,15 @@ window.TRAILS = {
       "leave_beat": "fc_ch1",
       "leave_sequence": 88,
       "activity": "Going to Rolent with Olivier"
+    },
+    {
+      "char_id": "olivier",
+      "join_beat": "fc_ch1",
+      "join_sequence": 88,
+      "location": "rolent_city",
+      "leave_beat": "fc_ch1",
+      "leave_sequence": 88,
+      "activity": "Going to Rolent with Scherazard"
     }
   ],
   "codex": [

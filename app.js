@@ -180,10 +180,12 @@
     revealedCodex(charId, seq).forEach(function (e) {
       var rn = e.reveal_name || (e.entry_type === "identity" ? e.text : null);
       if (rn) st.name = rn;
+      if (e.entry_type === "faction" && e.text) st.faction = e.text;   // faction reveal -> the line under the name
       if (e.icon) st.icon = charAsset(charId, e.icon);
       if (e.body) st.body = charAsset(charId, e.body);
-      var isPureIdentity = e.entry_type === "identity" && !e.reveal_name;  // text IS the name
-      if (e.text && !isPureIdentity) st.facts.push({ type: e.entry_type, text: e.text, date: dateAtSequence(e.sequence) });
+      // identity text IS the name, faction text IS the faction — both shown in the header, not as facts
+      var consumed = (e.entry_type === "identity" && !e.reveal_name) || e.entry_type === "faction";
+      if (e.text && !consumed) st.facts.push({ type: e.entry_type, text: e.text, date: dateAtSequence(e.sequence) });
     });
     if (st.name !== c.display_name) st.alias = c.display_name;   // original name -> alias
     return st;
@@ -436,7 +438,7 @@
       });
       facts = '<div class="codex-facts">' + order.map(function (t) {
         return '<div class="codex-section">' +
-          '<span class="codex-fact-type">' + esc(t) + '</span>' +
+          '<span class="codex-fact-type">' + esc(String(t).replace(/[_-]+/g, " ")) + '</span>' +
           byType[t].map(function (f) {
             var showDate = String(t).toLowerCase() === "bio" && f.date;   // dates on Bio only
             var d = showDate ? '<span class="codex-fact-date">' + esc(f.date) + '</span>' : '';

@@ -330,9 +330,11 @@ A lone character gets no offset.
 - `effectiveChar(charId, seq)` is the brain: it starts from the character's base record, then
   replays every codex entry revealed by `seq` to compute their *current* `name`, `alias`, `icon`,
   `body`, and the list of `facts`. An `entry_type:"identity"` entry (or an explicit `reveal_name`)
-  renames them and turns the old name into the `alias`; `icon`/`body` columns swap their art at that
-  sequence. This same function feeds the map name tags, the map badge art, and the cast chips, so an
-  identity reveal updates the name (and icon) everywhere at once. The dossier's facts are **grouped
+  renames them and turns the old name into the `alias`; an `entry_type:"faction"` entry updates the
+  faction shown under the name; `icon`/`body` columns swap their art at that sequence. This same
+  function feeds the map name tags, the map badge art, and the cast chips, so an identity reveal
+  updates the name (and icon) everywhere at once. (`identity` and `faction` text is shown in the
+  header, not repeated as a fact.) The dossier's facts are **grouped
   by `entry_type`** and accumulate — every revealed Bio line stacks under one Bio section, nothing
   is overwritten. **Bio** lines are stamped with the in-world date they happened — the `approx_date`
   of the beat at that entry's `sequence` (via `dateAtSequence`); other sections show no date.

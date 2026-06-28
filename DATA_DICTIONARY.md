@@ -96,8 +96,6 @@ The heart. One row per character per continuous span with the party.
 
 The progressive "what is known" entries — and the spoiler gate.
 
-| Column | Meaning |
-|---|---|
 The Codex tab is an **index of known characters**. Each known character is one row you can click
 to open a dossier; the dossier is built from that character's revealed codex entries. Entries are
 **grouped by `entry_type`** into sections (Bio, Status, …) and **accumulate** — every revealed line
@@ -109,7 +107,7 @@ line.
 | `char_id` | Who it's about. |
 | `revealed_at_beat` | `beat_id` at/after which this entry may show. |
 | `sequence` | The `sequence` of `revealed_at_beat` — the single gating value the app checks. |
-| `entry_type` | `identity` / `status` / `faction` / `bio` / `relationship`. Labels the fact in the dossier. |
+| `entry_type` | `identity` / `status` / `faction` / `bio` / `relationship`. Labels the fact; `identity` and `faction` are special (see below). |
 | `text` | The entry itself. |
 | `reveal_name` | *(optional)* From this entry's sequence on, the character's **name changes** to this; the old name becomes their alias. |
 | `icon` | *(optional)* From this sequence on, swap the icon (map badge **and** codex avatar). Just the file name, resolved in the character's folder. |
@@ -120,6 +118,19 @@ name (e.g. `Josette Haar` → reveal row with text `Josette Capua`). From that s
 cast, and codex all show the new name, and the dossier adds a "formerly known as …" alias line.
 (Setting `reveal_name` explicitly does the same thing for any entry type, and then the row's `text`
 also shows as a normal fact.)
+
+**Faction reveals.** An `entry_type: faction` row updates the **current faction shown under the name**
+to its `text` (e.g. Josette's `Jenis Royal Academy` cover → `Capua Sky Bandits`). Like identity, the
+text is shown in that header line, not repeated as a fact section. The latest revealed faction wins.
+
+To instead record an **old faction they used to belong to** — without changing their current one —
+use a different `entry_type`, e.g. `former_faction` (or `past_faction`). Only `faction` touches the
+header; every other type just shows as its own note section in the dossier (underscores in the type
+become spaces, so `former_faction` reads as "Former faction"). Add a `faction` row *and* a
+`former_faction` row if a character changes allegiance and you want to keep the old one on record.
+
+**Dated Bio.** `entry_type: bio` lines show the in-world date they happened (the `approx_date` of the
+beat at their `sequence`), so a character's Bio reads as a timeline. Other types show no date.
 
 > **The one spoiler rule:** anything spoilery — true names, deaths, betrayals, faction flips —
 > is a `codex` row with a `revealed_at_beat`, never a flat column elsewhere. Entries (and name /

@@ -624,6 +624,16 @@ window.TRAILS = {
       "body": null
     },
     {
+      "char_id": "josette",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 32,
+      "entry_type": "former_faction",
+      "text": "Jenis Royal Academy (cover identity)",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
       "char_id": "cassius",
       "revealed_at_beat": "fc_pro",
       "sequence": 38,

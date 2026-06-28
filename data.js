@@ -506,6 +506,16 @@ window.TRAILS = {
       "body": null
     },
     {
+      "char_id": "alba",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 27,
+      "entry_type": "bio",
+      "text": "Anthropologist investigating the Tetracyclic towers",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
       "char_id": "josette",
       "revealed_at_beat": "fc_pro",
       "sequence": 32,

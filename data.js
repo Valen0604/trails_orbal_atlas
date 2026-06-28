@@ -628,7 +628,7 @@ window.TRAILS = {
       "revealed_at_beat": "fc_pro",
       "sequence": 38,
       "entry_type": "bio",
-      "text": "Disappeared on captured airliner",
+      "text": "Disappeared on missing airliner",
       "reveal_name": null,
       "icon": null,
       "body": null

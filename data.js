@@ -327,7 +327,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Get sent to Rolent to pickup a newspaper for Cassius",
       "default_location": "bright_house",
-      "approx_date": "March 1202"
+      "approx_date": "March 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -335,7 +336,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Going to Rolent",
       "default_location": "rolent_city",
-      "approx_date": "March 1202"
+      "approx_date": "March 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -343,7 +345,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Doing Junior Bracer Test",
       "default_location": "rolent_city",
-      "approx_date": "March 1202"
+      "approx_date": "March 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -351,7 +354,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Interrupted by Aina on the way home",
       "default_location": "rolent_city",
-      "approx_date": "March 1202"
+      "approx_date": "March 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -359,7 +363,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Attempting to rescue children from Esmelas Tower",
       "default_location": "esmelas",
-      "approx_date": "March 1202"
+      "approx_date": "March 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -367,7 +372,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Ambushed by monsters, Cassius comes to the rescue",
       "default_location": "esmelas",
-      "approx_date": "March 1202"
+      "approx_date": "March 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -375,7 +381,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Heading back home",
       "default_location": "bright_house",
-      "approx_date": "March 1202"
+      "approx_date": "March 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -383,7 +390,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Learned Cassius is leaving for work",
       "default_location": "bright_house",
-      "approx_date": "March 1202"
+      "approx_date": "March 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -391,7 +399,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Heading to Perzel Farm for Bracer job",
       "default_location": "perzel",
-      "approx_date": "April 1202"
+      "approx_date": "April 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -399,7 +408,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Dealing with crop detroying monsters",
       "default_location": "perzel",
-      "approx_date": "April 1202"
+      "approx_date": "April 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -407,7 +417,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Heading back to Rolent",
       "default_location": "rolent_city",
-      "approx_date": "April 1202"
+      "approx_date": "April 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -415,7 +426,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Learning about Esmelas Crystal that needs retrieving from Mayor Klaus",
       "default_location": "rolent_city",
-      "approx_date": "April 1202"
+      "approx_date": "April 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -423,7 +435,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Going to the mine to retrieve crystal",
       "default_location": "malga",
-      "approx_date": "April 1202"
+      "approx_date": "April 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -431,7 +444,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Rescuing miners from a cave in and recovering crystal",
       "default_location": "malga",
-      "approx_date": "April 1202"
+      "approx_date": "April 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -439,7 +453,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Heading back to Rolent",
       "default_location": "rolent_city",
-      "approx_date": "April 1202"
+      "approx_date": "April 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -447,7 +462,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Delivering crystal to Mayor Klaus, encountering Josette",
       "default_location": "rolent_city",
-      "approx_date": "April 1202"
+      "approx_date": "April 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -455,7 +471,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Learning about reporter escort mission to Esmelas Tower",
       "default_location": "rolent_city",
-      "approx_date": "May 1202"
+      "approx_date": "May 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -463,7 +480,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Escorting reporters to the top of Esmelas Tower",
       "default_location": "esmelas",
-      "approx_date": "May 1202"
+      "approx_date": "May 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -471,7 +489,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Encountered Professor Alba, learning about Tetracyclic Towers",
       "default_location": "esmelas",
-      "approx_date": "May 1202"
+      "approx_date": "May 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -479,7 +498,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Returning to Rolent after escort mission",
       "default_location": "rolent_city",
-      "approx_date": "May 1202"
+      "approx_date": "May 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -487,7 +507,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Mayor bursts into Bracer Guild exclaiming how the Septium Crystal was stolen",
       "default_location": "rolent_city",
-      "approx_date": "May 1202"
+      "approx_date": "May 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -495,7 +516,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Searching for clues about the robbery, suspecting of Josette",
       "default_location": "rolent_city",
-      "approx_date": "May 1202"
+      "approx_date": "May 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -503,7 +525,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Chasing thief to Mistwald",
       "default_location": "mistwald",
-      "approx_date": "May 1202"
+      "approx_date": "May 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -511,7 +534,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Encountered Capua Sky Bandits in the center of Mistwald with the crystal",
       "default_location": "mistwald",
-      "approx_date": "May 1202"
+      "approx_date": "May 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -519,7 +543,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Fighting Josette to retrieve the crystal",
       "default_location": "mistwald",
-      "approx_date": "May 1202"
+      "approx_date": "May 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -527,7 +552,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Retrived crystal but Josette is rescued by her brother on an airship and manages to flee",
       "default_location": "mistwald",
-      "approx_date": "May 1202"
+      "approx_date": "May 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -535,7 +561,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Returning to Rolent with crystal",
       "default_location": "rolent_city",
-      "approx_date": "May 1202"
+      "approx_date": "May 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -543,7 +570,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Receiving first recommendation for promotion to senior bracer",
       "default_location": "rolent_city",
-      "approx_date": "May 1202"
+      "approx_date": "May 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -551,7 +579,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Returning Home",
       "default_location": "bright_house",
-      "approx_date": "May 1202"
+      "approx_date": "May 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_pro",
@@ -559,7 +588,8 @@ window.TRAILS = {
       "chapter": "Prologue",
       "title": "Learned the airliner Linde has disappeared over Bose, which Cassius was aboard",
       "default_location": "bright_house",
-      "approx_date": "May 1202"
+      "approx_date": "May 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -567,7 +597,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Going to Bose in search of Cassius",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -575,7 +606,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Talking to Lugran on the Bracer Guild about the situation",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -583,7 +615,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Learned about General Morgan and his dislike for the guild",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -591,7 +624,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Learned how General Morgan is not sharing infformation with the guild, and limiting their movements in regards to the Linde disappearance investigation",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -599,7 +633,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Registering with the guild, going to Mayor Maybelle for a request",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -607,7 +642,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Learn about the Mayor's request for bracers to investigate the incident, receive letter of introduction that would allow them to speak with Morgan about the Linde",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -615,7 +651,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Going to haken Gate to speak with Morgan",
       "default_location": "haken",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -623,7 +660,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Removing Bracer badges to not trigger Morgan while waiting for him to arrive",
       "default_location": "haken",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -631,7 +669,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Encounter a traveler from the Erebonia Empire while waiting, who attempts to follow the party to their conversation with Morgan before being shooed out",
       "default_location": "haken",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -639,7 +678,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Morgan discloses the details, learn the Linde disappeared returning to Rolent, theorize it was hijacked by the Imperial Army for ransom or the cargo",
       "default_location": "haken",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -647,7 +687,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Learn the Capua Sky Bandits actually captured the Linde, and are demanding a ransom",
       "default_location": "haken",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -655,7 +696,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Accidentally reveal Bracer affiliation, get kicked out and Scherazard begind having an argument with Morgan about the military and the guild",
       "default_location": "haken",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -663,7 +705,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Interrupted by the Erebonian traveler, who starts playing the lute and singing to difuse the situation",
       "default_location": "haken",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -671,7 +714,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Learn the traveler is called Olivier Lenheim, and agree to travel with him to Bose City",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -679,7 +723,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Reporting to the Mayor and the Guild what happend with Morgan",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -687,7 +732,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Encountered the reporters Nial and Dorothy, who give the party a tip on the Linde's disappearance in exchange for up to date information",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -695,7 +741,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Decide to do some side-quests before pursuing the tip",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -703,7 +750,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Encounter Alba at Amberl Tower and rescue him, after which he departs back to Bose",
       "default_location": "amberl",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -711,7 +759,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Going to Ravennue Village in pursue of the tip",
       "default_location": "ravennue",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -719,7 +768,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Encounter Agate heading out of Ravennue, but he quickly leaves on another job after a short talk",
       "default_location": "ravennue",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -727,7 +777,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Talk to Ravennue's mayor, encounter a kid that claims to have seen something the night the Linde disappeared",
       "default_location": "ravennue",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -735,7 +786,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Go to Ravennue's mine followin the kids' lead. Encounter it locked, returned to the city to get it unlocked",
       "default_location": "ravennue",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -743,7 +795,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Inside the mine, encounter Josette's brother emptying the Linde, confronted him but he manages to flee",
       "default_location": "ravennue",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -751,7 +804,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Decide to investigate the Linde and notice it is empty",
       "default_location": "ravennue",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -759,7 +813,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Morgan arrives with the army and arrests the party despite their pleas thinking they were lying, sending them to Haken Gate",
       "default_location": "ravennue",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -767,7 +822,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "At the dungeon cell, encounter Olivier, who had also been arrested for drinking Bose's most expensive wine",
       "default_location": "haken",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -775,15 +831,17 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Mayor Maybelle comes and frees everyone, including Olivier on the condition he helps the the party solve the case",
       "default_location": "haken",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
       "sequence": 67,
       "chapter": "Chapter 1",
       "title": "At the same time the Capua Sky Bandits atatck Bose and steals almost every valuable item from the citizens of bose",
-      "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "default_location": "haken",
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -791,7 +849,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Going to Bose to see what happened",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -799,7 +858,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Encounter Alan Richard, who apologizes for the armies behavior and allows the party to interrogate the citizens after they are done",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -807,7 +867,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Finding a man named Lloyd who witnessed the Capua Sky Bandits alongside Valleria Lakeshore, and that they are coming back tonight",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -815,7 +876,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Wait for the Capua Sky Bandits to come back, Scherazard knocks out Olivier so he isn't exposed to danger by drinking him under the table",
       "default_location": "valleria_shore",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -823,7 +885,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Listened in to the Sky Bandit's conversation, who mention their oldest sibling has been behaving weirdly after meatting THAT guy",
       "default_location": "valleria_shore",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -831,7 +894,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "THAT guy arrives, saying the ransom payment is underway, and that the queen will pay it herself",
       "default_location": "valleria_shore",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -839,7 +903,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Kyle, Josettes's borther, revelas their airship is parked near the lakeshore, the only possible place being Amberl Tower",
       "default_location": "valleria_shore",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -847,7 +912,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "The party decide to go to Amberl Tower in search of their ship, only ot find it heavily guarded",
       "default_location": "amberl",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -855,7 +921,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Olivier interrupts while they are planning their assault, saying he will tag along regardless of the obstacles, and suggests sneaking into their ship, wich somehow works",
       "default_location": "amberl",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -863,7 +930,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Found themselves in Nebel Valley after boarding the ship, which was the Capua Sky Pirates' hideout",
       "default_location": "nebel",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": "air"
     },
     {
       "beat_id": "fc_ch1",
@@ -871,7 +939,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Finding a way through the maze to rescue the hostages and defeat the Sky Bandits",
       "default_location": "nebel",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -879,7 +948,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Rescued the hostages, fighting the Sky Pirates after they state how they would have killed the hostages after receiving the ransom",
       "default_location": "nebel",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -887,7 +957,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Defeated the Capua Sky Pirates, after which, their leader, and brother of Josette, states he has no memories of what happened after meeting THAT guy",
       "default_location": "nebel",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -895,7 +966,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Alan and the intelligence Division appear as teh Capua Sky Bandits try to flee and arrests them",
       "default_location": "nebel",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -903,7 +975,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Linde is rescued, but Cassius is nowhere to be found, the captain saying Cassis got off as soon as the linde took off",
       "default_location": "nebel",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -911,7 +984,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Returning to Bose to report findings, received second recommendation letter",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -919,7 +993,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Received a parcel from Cassius with a letter stating they will find him if they keep climbing the bracer ranks, and that he cannot return until the end of the queen's birthday ceremony",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -927,7 +1002,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Also received a parcel intended for Cassius, with a black myserious orbment from someone named \"K\", and that he should take it to \"R\" for analysis",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -935,7 +1011,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Deciding to go to Ruan to obtain the next recommendation letter from the guild",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -943,7 +1020,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "Part ways with Olivier and Scherazard who are going back to Rolent",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch1",
@@ -951,7 +1029,8 @@ window.TRAILS = {
       "chapter": "Chapter 1",
       "title": "After separating, Olivier is seen talking with someone about a mission on an orbment. Scherazard confronts him, and Olivier confesses he is involved with the Imperial Governmnet",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch2",
@@ -959,7 +1038,8 @@ window.TRAILS = {
       "chapter": "Chapter 2",
       "title": "Setting out for Ruan",
       "default_location": "bose_city",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     },
     {
       "beat_id": "fc_ch3",
@@ -967,7 +1047,8 @@ window.TRAILS = {
       "chapter": "Chapter 2",
       "title": "Stopping at the Krone Pass Checkpoint for the night",
       "default_location": "krone_pass",
-      "approx_date": "June 1202"
+      "approx_date": "June 1202",
+      "travel_mode": null
     }
   ],
   "appearances": [
@@ -978,7 +1059,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": null,
       "leave_sequence": null,
-      "activity": "Party leader"
+      "activity": "Party leader",
+      "travel_mode": null
     },
     {
       "char_id": "joshua",
@@ -987,7 +1069,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": null,
       "leave_sequence": null,
-      "activity": "Party leader"
+      "activity": "Party leader",
+      "travel_mode": null
     },
     {
       "char_id": "cassius",
@@ -996,7 +1079,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_pro",
       "leave_sequence": 10,
-      "activity": "Sent children to buy newspaper"
+      "activity": "Sent children to buy newspaper",
+      "travel_mode": null
     },
     {
       "char_id": "schera",
@@ -1005,7 +1089,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_pro",
       "leave_sequence": 13,
-      "activity": "Dealing with Bracer duties"
+      "activity": "Dealing with Bracer duties",
+      "travel_mode": null
     },
     {
       "char_id": "cassius",
@@ -1014,7 +1099,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_pro",
       "leave_sequence": 17,
-      "activity": "On a work trip with the guild"
+      "activity": "On a work trip with the guild",
+      "travel_mode": null
     },
     {
       "char_id": "josette",
@@ -1023,7 +1109,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_pro",
       "leave_sequence": 26,
-      "activity": "Speaking to Rolent's mayor"
+      "activity": "Speaking to Rolent's mayor",
+      "travel_mode": null
     },
     {
       "char_id": "alba",
@@ -1032,7 +1119,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_pro",
       "leave_sequence": 29,
-      "activity": "Researching Tetracyclic Towers"
+      "activity": "Researching Tetracyclic Towers",
+      "travel_mode": null
     },
     {
       "char_id": "schera",
@@ -1041,7 +1129,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 50,
-      "activity": "Guiding Estelle and Josua on their missions"
+      "activity": "Guiding Estelle and Josua on their missions",
+      "travel_mode": null
     },
     {
       "char_id": "josette",
@@ -1050,7 +1139,8 @@ window.TRAILS = {
       "location": "mistwald",
       "leave_beat": "fc_pro",
       "leave_sequence": 35,
-      "activity": "Fled on airship with his brother"
+      "activity": "Fled on airship with his brother",
+      "travel_mode": null
     },
     {
       "char_id": "schera",
@@ -1059,7 +1149,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 88,
-      "activity": "Tagging along Estelle and Joshua on their search for Cassius"
+      "activity": "Tagging along Estelle and Joshua on their search for Cassius",
+      "travel_mode": null
     },
     {
       "char_id": "olivier",
@@ -1068,7 +1159,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 49,
-      "activity": "Got shooed out from the meeting with Morgan he tried to sneak into"
+      "activity": "Got shooed out from the meeting with Morgan he tried to sneak into",
+      "travel_mode": null
     },
     {
       "char_id": "morgan",
@@ -1077,7 +1169,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 52,
-      "activity": "Left after Olivier difused his argument with Scherazard"
+      "activity": "Left after Olivier difused his argument with Scherazard",
+      "travel_mode": null
     },
     {
       "char_id": "olivier",
@@ -1086,7 +1179,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 54,
-      "activity": "Leaves to sightsee Bose"
+      "activity": "Leaves to sightsee Bose",
+      "travel_mode": null
     },
     {
       "char_id": "agate",
@@ -1095,7 +1189,18 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 59,
-      "activity": "On a Bracer job"
+      "activity": "On a Bracer job",
+      "travel_mode": null
+    },
+    {
+      "char_id": "morgan",
+      "join_beat": "fc_ch1",
+      "join_sequence": 64,
+      "location": null,
+      "leave_beat": "fc_ch1",
+      "leave_sequence": 64,
+      "activity": "Arrested the Bracers beleiving they kidnapped the Linde",
+      "travel_mode": null
     },
     {
       "char_id": "olivier",
@@ -1104,7 +1209,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 71,
-      "activity": "Helping the party to redeem himself for drinking Bose's most expensive wine"
+      "activity": "Helping the party to redeem himself for drinking Bose's most expensive wine",
+      "travel_mode": null
     },
     {
       "char_id": "josette",
@@ -1113,7 +1219,8 @@ window.TRAILS = {
       "location": "bose_city",
       "leave_beat": "fc_ch1",
       "leave_sequence": 67,
-      "activity": "Raided Bose with the Sky Bandits and stole almost everyone's valueable possesions"
+      "activity": "Raided Bose with the Sky Bandits and stole almost everyone's valueable possesions",
+      "travel_mode": null
     },
     {
       "char_id": "alan",
@@ -1122,7 +1229,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 69,
-      "activity": "Investigating the assault in Bose by the Capua Sky bandits"
+      "activity": "Investigating the assault in Bose by the Capua Sky bandits",
+      "travel_mode": null
     },
     {
       "char_id": "olivier",
@@ -1131,7 +1239,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 71,
-      "activity": "Got knocked out trying to outdrink Scherazard"
+      "activity": "Got knocked out trying to outdrink Scherazard",
+      "travel_mode": null
     },
     {
       "char_id": "josette",
@@ -1140,7 +1249,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 74,
-      "activity": "Preparing to head back to the Sky Bandit base"
+      "activity": "Preparing to head back to the Sky Bandit base",
+      "travel_mode": null
     },
     {
       "char_id": "loewe",
@@ -1149,7 +1259,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 74,
-      "activity": "Left after informing the Sky Bandits that the ransom payment is coming"
+      "activity": "Left after informing the Sky Bandits that the ransom payment is coming",
+      "travel_mode": null
     },
     {
       "char_id": "olivier",
@@ -1158,7 +1269,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 88,
-      "activity": "Accompanying the gang to the Sky Bandit hideout"
+      "activity": "Accompanying the gang to the Sky Bandit hideout",
+      "travel_mode": null
     },
     {
       "char_id": "josette",
@@ -1167,7 +1279,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 81,
-      "activity": "Taken away by the Intelligence Division"
+      "activity": "Taken away by the Intelligence Division",
+      "travel_mode": null
     },
     {
       "char_id": "alan",
@@ -1176,7 +1289,8 @@ window.TRAILS = {
       "location": null,
       "leave_beat": "fc_ch1",
       "leave_sequence": 81,
-      "activity": "Arrested the Capua Sky Bandits"
+      "activity": "Arrested the Capua Sky Bandits",
+      "travel_mode": null
     },
     {
       "char_id": "schera",
@@ -1185,7 +1299,8 @@ window.TRAILS = {
       "location": "rolent_city",
       "leave_beat": "fc_ch1",
       "leave_sequence": 88,
-      "activity": "Going to Rolent with Olivier"
+      "activity": "Going to Rolent with Olivier",
+      "travel_mode": "air"
     },
     {
       "char_id": "olivier",
@@ -1194,7 +1309,8 @@ window.TRAILS = {
       "location": "rolent_city",
       "leave_beat": "fc_ch1",
       "leave_sequence": 88,
-      "activity": "Going to Rolent with Scherazard"
+      "activity": "Going to Rolent with Scherazard",
+      "travel_mode": "air"
     }
   ],
   "codex": [
@@ -1420,7 +1536,7 @@ window.TRAILS = {
     },
     {
       "char_id": "schera",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 51,
       "entry_type": "bio",
       "text": "Believes the military is incompetent in situations like the Linde disappearance",
@@ -1430,7 +1546,7 @@ window.TRAILS = {
     },
     {
       "char_id": "morgan",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 51,
       "entry_type": "bio",
       "text": "Believes the Guild is incomepetent in situations like the Linde disappearance",
@@ -1440,7 +1556,7 @@ window.TRAILS = {
     },
     {
       "char_id": "olivier",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 53,
       "entry_type": "bio",
       "text": "Wandeing bard and musician from the Empire, impossible to have a normal conversation with",
@@ -1450,7 +1566,7 @@ window.TRAILS = {
     },
     {
       "char_id": "alba",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 57,
       "entry_type": "bio",
       "text": "Was rescued by Estelle and Joshua in Amberl Tower, but decides to return to Bose alone",
@@ -1460,7 +1576,7 @@ window.TRAILS = {
     },
     {
       "char_id": "agate",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 59,
       "entry_type": "bio",
       "text": "Senior Bracer on a solo quest",
@@ -1470,7 +1586,7 @@ window.TRAILS = {
     },
     {
       "char_id": "olivier",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 66,
       "entry_type": "bio",
       "text": "Arrested for drinking Bose's most expensive wine",
@@ -1480,7 +1596,7 @@ window.TRAILS = {
     },
     {
       "char_id": "alan",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 69,
       "entry_type": "bio",
       "text": "Head of the Liber Army Intelligence Division",
@@ -1490,7 +1606,7 @@ window.TRAILS = {
     },
     {
       "char_id": "schera",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 71,
       "entry_type": "bio",
       "text": "Heavy drinker",
@@ -1500,7 +1616,7 @@ window.TRAILS = {
     },
     {
       "char_id": "olivier",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 71,
       "entry_type": "bio",
       "text": "Tried outdrinking Scherazard and got knocked out",
@@ -1510,7 +1626,17 @@ window.TRAILS = {
     },
     {
       "char_id": "loewe",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
+      "sequence": 73,
+      "entry_type": "bio",
+      "text": "Josette's brother started acting weird after meeting him",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
+      "char_id": "loewe",
+      "revealed_at_beat": "fc_ch1",
       "sequence": 73,
       "entry_type": "bio",
       "text": "Assures the Capua Sky Bandits that the ransom payment is coming",
@@ -1519,8 +1645,18 @@ window.TRAILS = {
       "body": null
     },
     {
+      "char_id": "josette",
+      "revealed_at_beat": "fc_ch1",
+      "sequence": 73,
+      "entry_type": "bio",
+      "text": "Suspicious of THAT guy as his brother started acting weird after meeting him",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
       "char_id": "alan",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 81,
       "entry_type": "bio",
       "text": "Arrested the Capua Sky Bandits while they tried fleeing",
@@ -1530,7 +1666,7 @@ window.TRAILS = {
     },
     {
       "char_id": "josette",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 81,
       "entry_type": "bio",
       "text": "Arrested by the Intelligence Division after attempting to flee from the Bracer Guild operation",
@@ -1540,7 +1676,7 @@ window.TRAILS = {
     },
     {
       "char_id": "cassius",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 82,
       "entry_type": "bio",
       "text": "Never boarded the Linde, and has not been spotted since",
@@ -1550,7 +1686,7 @@ window.TRAILS = {
     },
     {
       "char_id": "estelle",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 83,
       "entry_type": "bio",
       "text": "Received second recommendation letter",
@@ -1560,7 +1696,7 @@ window.TRAILS = {
     },
     {
       "char_id": "joshua",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 83,
       "entry_type": "bio",
       "text": "Received second recommendation letter",
@@ -1570,7 +1706,7 @@ window.TRAILS = {
     },
     {
       "char_id": "cassius",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 84,
       "entry_type": "bio",
       "text": "Left a letter for Estelle and Joshua explaining he cannot come back until the Queen's birthday cermony",
@@ -1580,7 +1716,7 @@ window.TRAILS = {
     },
     {
       "char_id": "cassius",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 84,
       "entry_type": "bio",
       "text": "Urges Estelle and joshua to keep climbing the Bracer ranks to fins him",
@@ -1590,7 +1726,7 @@ window.TRAILS = {
     },
     {
       "char_id": "cassius",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 85,
       "entry_type": "bio",
       "text": "Received a parcel with a strange orbment to be analysed by \"R\"",
@@ -1600,7 +1736,7 @@ window.TRAILS = {
     },
     {
       "char_id": "estelle",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 86,
       "entry_type": "bio",
       "text": "Decided to head to Ruan to continue climbing the Bracer ranks",
@@ -1610,7 +1746,7 @@ window.TRAILS = {
     },
     {
       "char_id": "joshua",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 86,
       "entry_type": "bio",
       "text": "Decided to head to Ruan to continue climbing the Bracer ranks",
@@ -1620,7 +1756,7 @@ window.TRAILS = {
     },
     {
       "char_id": "olivier",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 88,
       "entry_type": "bio",
       "text": "Is involved with the Erebonian Empire government, and has been communicating with them secretely during a \"misison\"",
@@ -1630,7 +1766,7 @@ window.TRAILS = {
     },
     {
       "char_id": "schera",
-      "revealed_at_beat": null,
+      "revealed_at_beat": "fc_ch1",
       "sequence": 88,
       "entry_type": "bio",
       "text": "Suspects of Olivier of being a spy for the Erebonian Empire",

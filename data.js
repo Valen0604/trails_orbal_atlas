@@ -484,6 +484,26 @@ window.TRAILS = {
   ],
   "codex": [
     {
+      "char_id": "cassius",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 10,
+      "entry_type": "bio",
+      "text": "Widowed since the 100 day war",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
+      "char_id": "cassius",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 10,
+      "entry_type": "bio",
+      "text": "Father of Estelle, adoptive father of Josua",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
       "char_id": "joshua",
       "revealed_at_beat": "fc_pro",
       "sequence": 10,
@@ -569,6 +589,16 @@ window.TRAILS = {
       "sequence": 27,
       "entry_type": "bio",
       "text": "Archeologist investigating the Tetracyclic towers",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
+      "char_id": "josette",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 32,
+      "entry_type": "bio",
+      "text": "Faked being a Jenis Royal Academy student to appraoch Mayor Klaus",
       "reveal_name": null,
       "icon": null,
       "body": null

@@ -186,7 +186,7 @@ window.TRAILS = {
       "beat_id": "fc_pro",
       "sequence": 14,
       "chapter": "Prologue",
-      "title": "Rescuing children from Esmelas Tower",
+      "title": "Attempting to rescue children from Esmelas Tower",
       "default_location": "esmelas",
       "approx_date": "March 1202"
     },
@@ -194,15 +194,15 @@ window.TRAILS = {
       "beat_id": "fc_pro",
       "sequence": 15,
       "chapter": "Prologue",
-      "title": "Heading back home",
-      "default_location": "bright_house",
+      "title": "Ambushed by monsters, Cassius comes to the rescue",
+      "default_location": "esmelas",
       "approx_date": "March 1202"
     },
     {
       "beat_id": "fc_pro",
       "sequence": 16,
       "chapter": "Prologue",
-      "title": "Learned Cassius is leaving for work",
+      "title": "Heading back home",
       "default_location": "bright_house",
       "approx_date": "March 1202"
     },
@@ -210,15 +210,15 @@ window.TRAILS = {
       "beat_id": "fc_pro",
       "sequence": 17,
       "chapter": "Prologue",
-      "title": "Heading to Perzel Farm for Bracer job",
-      "default_location": "perzel",
-      "approx_date": "April 1202"
+      "title": "Learned Cassius is leaving for work",
+      "default_location": "bright_house",
+      "approx_date": "March 1202"
     },
     {
       "beat_id": "fc_pro",
       "sequence": 18,
       "chapter": "Prologue",
-      "title": "Dealing with crop detroying monsters",
+      "title": "Heading to Perzel Farm for Bracer job",
       "default_location": "perzel",
       "approx_date": "April 1202"
     },
@@ -226,15 +226,15 @@ window.TRAILS = {
       "beat_id": "fc_pro",
       "sequence": 19,
       "chapter": "Prologue",
-      "title": "Heading back to Rolent",
-      "default_location": "rolent_city",
+      "title": "Dealing with crop detroying monsters",
+      "default_location": "perzel",
       "approx_date": "April 1202"
     },
     {
       "beat_id": "fc_pro",
       "sequence": 20,
       "chapter": "Prologue",
-      "title": "Learning about Septium crystal that needs retrieving from Mayor Klaus",
+      "title": "Heading back to Rolent",
       "default_location": "rolent_city",
       "approx_date": "April 1202"
     },
@@ -242,15 +242,15 @@ window.TRAILS = {
       "beat_id": "fc_pro",
       "sequence": 21,
       "chapter": "Prologue",
-      "title": "Going to the mine to retrieve crystal",
-      "default_location": "malga",
+      "title": "Learning about Esmelas Crystal that needs retrieving from Mayor Klaus",
+      "default_location": "rolent_city",
       "approx_date": "April 1202"
     },
     {
       "beat_id": "fc_pro",
       "sequence": 22,
       "chapter": "Prologue",
-      "title": "Rescuing miners from a cave in and recovering crystal",
+      "title": "Going to the mine to retrieve crystal",
       "default_location": "malga",
       "approx_date": "April 1202"
     },
@@ -258,15 +258,15 @@ window.TRAILS = {
       "beat_id": "fc_pro",
       "sequence": 23,
       "chapter": "Prologue",
-      "title": "Heading back to Rolent",
-      "default_location": "rolent_city",
+      "title": "Rescuing miners from a cave in and recovering crystal",
+      "default_location": "malga",
       "approx_date": "April 1202"
     },
     {
       "beat_id": "fc_pro",
       "sequence": 24,
       "chapter": "Prologue",
-      "title": "Delivering crystal to Mayor Klaus, encountering Josette",
+      "title": "Heading back to Rolent",
       "default_location": "rolent_city",
       "approx_date": "April 1202"
     },
@@ -274,13 +274,21 @@ window.TRAILS = {
       "beat_id": "fc_pro",
       "sequence": 25,
       "chapter": "Prologue",
+      "title": "Delivering crystal to Mayor Klaus, encountering Josette",
+      "default_location": "rolent_city",
+      "approx_date": "April 1202"
+    },
+    {
+      "beat_id": "fc_pro",
+      "sequence": 26,
+      "chapter": "Prologue",
       "title": "Learning about reporter escort mission to Esmelas Tower",
       "default_location": "rolent_city",
       "approx_date": "May 1202"
     },
     {
       "beat_id": "fc_pro",
-      "sequence": 26,
+      "sequence": 27,
       "chapter": "Prologue",
       "title": "Escorting reporters to the top of Esmelas Tower",
       "default_location": "esmelas",
@@ -288,7 +296,7 @@ window.TRAILS = {
     },
     {
       "beat_id": "fc_pro",
-      "sequence": 27,
+      "sequence": 28,
       "chapter": "Prologue",
       "title": "Encountered Professor Alba, learning about Tetracyclic Towers",
       "default_location": "esmelas",
@@ -296,7 +304,7 @@ window.TRAILS = {
     },
     {
       "beat_id": "fc_pro",
-      "sequence": 28,
+      "sequence": 29,
       "chapter": "Prologue",
       "title": "Returning to Rolent after escort mission",
       "default_location": "rolent_city",
@@ -304,7 +312,7 @@ window.TRAILS = {
     },
     {
       "beat_id": "fc_pro",
-      "sequence": 29,
+      "sequence": 30,
       "chapter": "Prologue",
       "title": "Mayor bursts into Bracer Guild exclaiming how the Septium Crystal was stolen",
       "default_location": "rolent_city",
@@ -312,7 +320,7 @@ window.TRAILS = {
     },
     {
       "beat_id": "fc_pro",
-      "sequence": 30,
+      "sequence": 31,
       "chapter": "Prologue",
       "title": "Searching for clues about the robbery, suspecting of Josette",
       "default_location": "rolent_city",
@@ -320,7 +328,7 @@ window.TRAILS = {
     },
     {
       "beat_id": "fc_pro",
-      "sequence": 31,
+      "sequence": 32,
       "chapter": "Prologue",
       "title": "Chasing thief to Mistwald",
       "default_location": "mistwald",
@@ -328,7 +336,7 @@ window.TRAILS = {
     },
     {
       "beat_id": "fc_pro",
-      "sequence": 32,
+      "sequence": 33,
       "chapter": "Prologue",
       "title": "Encountered Capua Sky Bandits in the center of Mistwald with the crystal",
       "default_location": "mistwald",
@@ -336,7 +344,7 @@ window.TRAILS = {
     },
     {
       "beat_id": "fc_pro",
-      "sequence": 33,
+      "sequence": 34,
       "chapter": "Prologue",
       "title": "Fighting Josette to retrieve the crystal",
       "default_location": "mistwald",
@@ -344,7 +352,7 @@ window.TRAILS = {
     },
     {
       "beat_id": "fc_pro",
-      "sequence": 34,
+      "sequence": 35,
       "chapter": "Prologue",
       "title": "Retrived crystal but Josette is rescued by her brother on an airship and manages to flee",
       "default_location": "mistwald",
@@ -352,7 +360,7 @@ window.TRAILS = {
     },
     {
       "beat_id": "fc_pro",
-      "sequence": 35,
+      "sequence": 36,
       "chapter": "Prologue",
       "title": "Returning to Rolent with crystal",
       "default_location": "rolent_city",
@@ -360,7 +368,7 @@ window.TRAILS = {
     },
     {
       "beat_id": "fc_pro",
-      "sequence": 36,
+      "sequence": 37,
       "chapter": "Prologue",
       "title": "Receiving first recommendation for promotion to senior bracer",
       "default_location": "rolent_city",
@@ -368,7 +376,7 @@ window.TRAILS = {
     },
     {
       "beat_id": "fc_pro",
-      "sequence": 37,
+      "sequence": 38,
       "chapter": "Prologue",
       "title": "Returning Home",
       "default_location": "bright_house",
@@ -376,7 +384,7 @@ window.TRAILS = {
     },
     {
       "beat_id": "fc_pro",
-      "sequence": 38,
+      "sequence": 39,
       "chapter": "Prologue",
       "title": "Learned the airliner Linde has disappeared over Bose, which Cassius was aboard",
       "default_location": "bright_house",
@@ -431,34 +439,34 @@ window.TRAILS = {
     {
       "char_id": "cassius",
       "join_beat": "fc_pro",
-      "join_sequence": 14,
+      "join_sequence": 15,
       "location": null,
       "leave_beat": "fc_pro",
-      "leave_sequence": 16,
+      "leave_sequence": 17,
       "activity": "On a work trip with the guild"
     },
     {
       "char_id": "josette",
       "join_beat": "fc_pro",
-      "join_sequence": 24,
+      "join_sequence": 25,
       "location": null,
       "leave_beat": "fc_pro",
-      "leave_sequence": 25,
+      "leave_sequence": 26,
       "activity": "Speaking to Rolent's mayor"
     },
     {
       "char_id": "alba",
       "join_beat": "fc_pro",
-      "join_sequence": 27,
+      "join_sequence": 28,
       "location": null,
       "leave_beat": "fc_pro",
-      "leave_sequence": 28,
+      "leave_sequence": 29,
       "activity": "Researching Tetracyclic Towers"
     },
     {
       "char_id": "schera",
       "join_beat": "fc_pro",
-      "join_sequence": 29,
+      "join_sequence": 30,
       "location": null,
       "leave_beat": null,
       "leave_sequence": null,
@@ -467,10 +475,10 @@ window.TRAILS = {
     {
       "char_id": "josette",
       "join_beat": "fc_pro",
-      "join_sequence": 32,
+      "join_sequence": 33,
       "location": "mistwald",
       "leave_beat": "fc_pro",
-      "leave_sequence": 34,
+      "leave_sequence": 35,
       "activity": "Fled on airship with his brother"
     }
   ],
@@ -480,7 +488,7 @@ window.TRAILS = {
       "revealed_at_beat": "fc_pro",
       "sequence": 10,
       "entry_type": "bio",
-      "text": "Adopted brother of Estelle.",
+      "text": "Adopted brother of Estelle",
       "reveal_name": null,
       "icon": null,
       "body": null
@@ -490,7 +498,7 @@ window.TRAILS = {
       "revealed_at_beat": "fc_pro",
       "sequence": 10,
       "entry_type": "bio",
-      "text": "Her mother died protecting her during the 100 day war.",
+      "text": "Her mother died protecting her during the 100 day war",
       "reveal_name": null,
       "icon": null,
       "body": null
@@ -500,7 +508,57 @@ window.TRAILS = {
       "revealed_at_beat": "fc_pro",
       "sequence": 12,
       "entry_type": "bio",
-      "text": "Bracer mentor for Estelle and Joshua.",
+      "text": "Bracer mentor for Estelle and Joshua",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
+      "char_id": "cassius",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 17,
+      "entry_type": "bio",
+      "text": "S rank Bracer",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
+      "char_id": "cassius",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 17,
+      "entry_type": "bio",
+      "text": "On a work trip with the Bracer Guild",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
+      "char_id": "estelle",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 17,
+      "entry_type": "bio",
+      "text": "Doing the easier of the bracer jobs left over by Cassius with Joshua",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
+      "char_id": "joshua",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 17,
+      "entry_type": "bio",
+      "text": "Doing the easier of the bracer jobs left over by Cassius with Estelle",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
+      "char_id": "schera",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 17,
+      "entry_type": "bio",
+      "text": "Doing the hardest of the bracer jobs left by Cassius",
       "reveal_name": null,
       "icon": null,
       "body": null
@@ -510,7 +568,7 @@ window.TRAILS = {
       "revealed_at_beat": "fc_pro",
       "sequence": 27,
       "entry_type": "bio",
-      "text": "Archeologist investigating the Tetracyclic towers.",
+      "text": "Archeologist investigating the Tetracyclic towers",
       "reveal_name": null,
       "icon": null,
       "body": null
@@ -519,9 +577,9 @@ window.TRAILS = {
       "char_id": "josette",
       "revealed_at_beat": "fc_pro",
       "sequence": 32,
-      "entry_type": "identity",
-      "text": "Josette Capua",
-      "reveal_name": null,
+      "entry_type": "bio",
+      "text": "Attempted to steal the Esmelas Crystal that was going to be gifted to the Queen",
+      "reveal_name": "Josette Capua",
       "icon": "josetteCapua2.png",
       "body": "josetteFullBody2.png"
     },
@@ -540,7 +598,37 @@ window.TRAILS = {
       "revealed_at_beat": "fc_pro",
       "sequence": 38,
       "entry_type": "bio",
-      "text": "Disappeared on captured airliner.",
+      "text": "Disappeared on captured airliner",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
+      "char_id": "estelle",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 50,
+      "entry_type": "bio",
+      "text": "Going to Bose in search of Cassius",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
+      "char_id": "joshua",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 50,
+      "entry_type": "bio",
+      "text": "Going to Bose in search of Cassius",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
+    },
+    {
+      "char_id": "schera",
+      "revealed_at_beat": "fc_pro",
+      "sequence": 50,
+      "entry_type": "bio",
+      "text": "Accompanying Estelle and Joshua to Bose on their search for Cassius",
       "reveal_name": null,
       "icon": null,
       "body": null

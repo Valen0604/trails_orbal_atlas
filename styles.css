@@ -214,6 +214,7 @@ input[type=range].scrub::-moz-range-thumb {
   padding: 1px 7px; border-radius: 20px; margin-bottom: 2px;
 }
 .codex-section p { font-size: 14px; color: var(--ink); line-height: 1.45; margin: 0; }
+.codex-fact-date { color: var(--gold); font-family: var(--mono); font-size: 11px; margin-right: 8px; white-space: nowrap; }
 .codex-nofacts { font-size: 13px; color: var(--muted); margin: 0; padding-top: 4px; }
 .codex-empty {
   text-align: center; color: var(--muted); padding: 50px 20px; font-size: 14px;

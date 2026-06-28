@@ -160,6 +160,15 @@
       .filter(function (e) { return e.sequence != null && e.sequence <= seq; })
       .sort(function (a, b) { return a.sequence - b.sequence; });
   }
+  // In-world date for a sequence = the approx_date of the beat at (or just before) it.
+  function dateAtSequence(seq) {
+    var date = null;
+    for (var i = 0; i < beats.length; i++) {       // beats are sorted ascending
+      if (beats[i].sequence <= seq) date = beats[i].approx_date;
+      else break;
+    }
+    return date;
+  }
   // A character's state AT a point in the timeline: name/alias/icon/body evolve as the
   // codex reveals fire. An `entry_type: "identity"` row (or an explicit `reveal_name`)
   // renames them; the previous name becomes their alias. icon/body rows swap the art.
@@ -174,7 +183,7 @@
       if (e.icon) st.icon = charAsset(charId, e.icon);
       if (e.body) st.body = charAsset(charId, e.body);
       var isPureIdentity = e.entry_type === "identity" && !e.reveal_name;  // text IS the name
-      if (e.text && !isPureIdentity) st.facts.push({ type: e.entry_type, text: e.text });
+      if (e.text && !isPureIdentity) st.facts.push({ type: e.entry_type, text: e.text, date: dateAtSequence(e.sequence) });
     });
     if (st.name !== c.display_name) st.alias = c.display_name;   // original name -> alias
     return st;
@@ -423,12 +432,16 @@
       st.facts.forEach(function (f) {
         var t = f.type || "note";
         if (!byType[t]) { byType[t] = []; order.push(t); }
-        byType[t].push(f.text);
+        byType[t].push(f);
       });
       facts = '<div class="codex-facts">' + order.map(function (t) {
         return '<div class="codex-section">' +
           '<span class="codex-fact-type">' + esc(t) + '</span>' +
-          byType[t].map(function (tx) { return '<p>' + esc(tx) + '</p>'; }).join("") +
+          byType[t].map(function (f) {
+            var showDate = String(t).toLowerCase() === "bio" && f.date;   // dates on Bio only
+            var d = showDate ? '<span class="codex-fact-date">' + esc(f.date) + '</span>' : '';
+            return '<p>' + d + esc(f.text) + '</p>';
+          }).join("") +
         '</div>';
       }).join("") + '</div>';
     } else {

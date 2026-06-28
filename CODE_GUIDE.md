@@ -334,7 +334,8 @@ A lone character gets no offset.
   sequence. This same function feeds the map name tags, the map badge art, and the cast chips, so an
   identity reveal updates the name (and icon) everywhere at once. The dossier's facts are **grouped
   by `entry_type`** and accumulate — every revealed Bio line stacks under one Bio section, nothing
-  is overwritten.
+  is overwritten. **Bio** lines are stamped with the in-world date they happened — the `approx_date`
+  of the beat at that entry's `sequence` (via `dateAtSequence`); other sections show no date.
 - `isKnown(charId, seq)` decides who appears in the index (met on the timeline, or surfaced by a
   revealed codex entry).
 - `renderCodex()` builds the list; clicking a row sets `expandedCodexId` and re-renders, expanding

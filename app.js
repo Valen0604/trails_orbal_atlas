@@ -48,7 +48,7 @@
     scrub: $("scrub"), prev: $("prev"), next: $("next"), play: $("play"), start: $("start"),
     mapframe: $("mapframe"), mapcontent: $("mapcontent"), routes: $("routes"), markers: $("markers"), pips: $("pips"),
     cast: $("cast"),
-    codex: $("codexGrid"), tabMap: $("tabMap"), tabCodex: $("tabCodex"),
+    codex: $("codexGrid"), codexSearch: $("codexSearch"), tabMap: $("tabMap"), tabCodex: $("tabCodex"),
     viewMap: $("viewMap"), viewCodex: $("viewCodex")
   };
 
@@ -184,6 +184,11 @@
     return (codexByChar[charId] || [])
       .filter(function (e) { return e.sequence != null && e.sequence <= seq; })
       .sort(function (a, b) { return a.sequence - b.sequence; });
+  }
+  // Sequence of a character's most recent reveal so far (-1 if none yet).
+  function lastUpdateSeq(charId, seq) {
+    var r = revealedCodex(charId, seq);
+    return r.length ? r[r.length - 1].sequence : -1;
   }
   // In-world date for a sequence = the approx_date of the beat at (or just before) it.
   function dateAtSequence(seq) {
@@ -482,19 +487,40 @@
 
   function renderCodex() {
     var seq = beats[index].sequence;
+    var q = (el.codexSearch && el.codexSearch.value || "").trim().toLowerCase();
     var known = D.characters.filter(function (c) { return isKnown(c.char_id, seq); });
-    if (!known.length) {
-      el.codex.innerHTML = '<div class="codex-empty">No characters known yet.<br>Advance the timeline to meet the cast.</div>';
+
+    // build rows with their state, then float the most-recently-updated to the top
+    var rows = known.map(function (c, i) {
+      return { c: c, i: i, st: effectiveChar(c.char_id, seq), u: lastUpdateSeq(c.char_id, seq) };
+    });
+    rows.sort(function (a, b) { return (b.u - a.u) || (a.i - b.i); });   // recent first; stable otherwise
+
+    if (q) {
+      rows = rows.filter(function (r) {
+        return (r.st.name && r.st.name.toLowerCase().indexOf(q) !== -1)
+            || (r.st.alias && r.st.alias.toLowerCase().indexOf(q) !== -1)
+            || r.c.char_id.toLowerCase().indexOf(q) !== -1;
+      });
+    }
+
+    if (!rows.length) {
+      el.codex.innerHTML = '<div class="codex-empty">' +
+        (q ? "No characters match your search." : "No characters known yet.<br>Advance the timeline to meet the cast.") +
+        '</div>';
       return;
     }
-    el.codex.innerHTML = known.map(function (c) {
-      var st = effectiveChar(c.char_id, seq);
+
+    el.codex.innerHTML = rows.map(function (r) {
+      var c = r.c, st = r.st;
       var open = c.char_id === expandedCodexId;
+      var fresh = r.u === seq;                                    // a reveal landed on this exact beat
       return '<div class="codex-entry' + (open ? " open" : "") + '" data-char="' + c.char_id + '">' +
         '<button class="codex-row" type="button">' +
           avatarHTML(c.char_id, st) +
           '<span class="codex-row-text">' +
-            '<span class="codex-row-name">' + esc(st.name) + '</span>' +
+            '<span class="codex-row-name">' + esc(st.name) +
+              (fresh ? ' <span class="codex-new">updated</span>' : '') + '</span>' +
             (st.faction ? '<span class="codex-row-meta">' + esc(st.faction) + '</span>' : '') +
           '</span>' +
           '<span class="codex-chevron" aria-hidden="true">' + (open ? "▾" : "▸") + '</span>' +
@@ -543,6 +569,7 @@
     expandedCodexId = (expandedCodexId === id) ? null : id;
     renderCodex();
   });
+  el.codexSearch.addEventListener("input", renderCodex);
 
   // --- manual pan / zoom (Google-Maps style) -------------------------------
   var MAX_VW = 80;                       // most zoomed-out; MIN_VW (=6) is most zoomed-in

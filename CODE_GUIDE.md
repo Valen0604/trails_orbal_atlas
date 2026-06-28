@@ -348,6 +348,10 @@ A lone character gets no offset.
   that one into a dossier (full-body portrait — a placeholder until a `body` image exists — plus the
   alias line and the facts). It is spoiler-gated by `seq` and shows **no** "revealed @ sequence"
   text. The Map/Codex tabs are switched by `showTab()`.
+- The list is sorted by `lastUpdateSeq` (most-recently-revealed character first, stable otherwise),
+  so whoever just got new info **floats to the top**; a reveal landing on the exact current beat gets
+  an "updated" tag. A name search box (`#codexSearch`) filters by effective name / alias / `char_id`;
+  it lives outside `#codexGrid`, so typing doesn't lose focus when the list re-renders.
 
 ---
 

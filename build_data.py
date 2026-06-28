@@ -98,6 +98,7 @@ def main():
             "title": ("title", clean),
             "default_location": ("default_location", clean),
             "approx_date": ("approx_date", clean),
+            "travel_mode": ("travel_mode", clean),   # party-wide default: blank/foot | rail | air
         }), key=lambda b: (b["sequence"] is None, b["sequence"])),
         "appearances": rows(xl["appearances"], {
             "char_id": ("char_id", clean),
@@ -107,6 +108,7 @@ def main():
             "leave_beat": ("leave_beat", clean),
             "leave_sequence": ("leave_sequence", to_int),
             "activity": ("activity", clean),
+            "travel_mode": ("travel_mode", clean),   # blank/foot | rail | air — how they reached this spot
         }),
         "codex": rows(xl["codex"], {
             "char_id": ("char_id", clean),

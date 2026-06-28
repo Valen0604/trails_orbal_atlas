@@ -6,6 +6,7 @@
   "use strict";
   var D = window.TRAILS;
   var NET = window.ROAD_NETWORK || { nodes: {}, edges: [] };
+  var RAIL = window.RAIL_NETWORK || { nodes: {}, edges: [] };
   var OVERRIDE = window.ROUTES || {};
 
   // --- presentation config (edit freely; not part of the data) -------------
@@ -61,18 +62,20 @@
   var animId = null, pipEls = [];
 
   // =========================================================================
-  //  ROAD GRAPH  (nodes = locations + junctions; edges = road segments)
+  //  TRAVEL GRAPHS  (foot = road network, rail = rail network; air = direct line)
+  //  nodes = locations + junctions; edges = segments with optional `via` bends.
   // =========================================================================
-  var nodeCoord = {}, adj = {};
-  function buildGraph() {
+  var graphs = { foot: null, rail: null };
+  function buildGraphFor(net) {
+    var nodeCoord = {}, adj = {};
     D.locations.forEach(function (l) {
       if (l.map_x != null && l.map_y != null) nodeCoord[l.loc_id] = { x: l.map_x, y: l.map_y };
     });
-    Object.keys(NET.nodes || {}).forEach(function (id) {
-      nodeCoord[id] = { x: NET.nodes[id][0], y: NET.nodes[id][1] };
+    Object.keys(net.nodes || {}).forEach(function (id) {
+      nodeCoord[id] = { x: net.nodes[id][0], y: net.nodes[id][1] };
     });
     Object.keys(nodeCoord).forEach(function (id) { adj[id] = []; });
-    (NET.edges || []).forEach(function (e) {
+    (net.edges || []).forEach(function (e) {
       var A = nodeCoord[e.a], B = nodeCoord[e.b];
       if (!A || !B) { console.warn("Edge references unknown node:", e.a, e.b); return; }
       var via = (e.via || []).map(function (p) { return { x: p[0], y: p[1] }; });
@@ -81,14 +84,20 @@
       adj[e.a].push({ to: e.b, w: len, poly: poly });
       adj[e.b].push({ to: e.a, w: len, poly: poly.slice().reverse() });
     });
+    return { nodeCoord: nodeCoord, adj: adj };
+  }
+  function buildGraph() {
+    graphs.foot = buildGraphFor(NET);     // roads
+    graphs.rail = buildGraphFor(RAIL);    // train lines (empty until you add them)
   }
   function polyLen(p) {
     var s = 0;
     for (var i = 1; i < p.length; i++) s += Math.hypot(p[i].x - p[i - 1].x, p[i].y - p[i - 1].y);
     return s;
   }
-  // Dijkstra over the node graph; returns ordered node id list or null.
-  function shortestNodes(from, to) {
+  // Dijkstra over one graph; returns ordered node id list or null.
+  function shortestNodes(g, from, to) {
+    var adj = g.adj, nodeCoord = g.nodeCoord;
     if (!adj[from] || !adj[to]) return null;
     var dist = {}, prev = {}, seen = {}, pq = [from];
     Object.keys(nodeCoord).forEach(function (id) { dist[id] = Infinity; });
@@ -108,29 +117,37 @@
     while (path[0] !== from) { var p = prev[path[0]]; if (p == null) return null; path.unshift(p); }
     return path;
   }
-  // Full polyline (map %) for a journey between two locations.
-  function routeBetween(fromLoc, toLoc) {
+  function edgePoly(g, a, b) {
+    var list = g.adj[a] || [];
+    for (var i = 0; i < list.length; i++) if (list[i].to === b) return list[i].poly;
+    return null;
+  }
+  // Stitched polyline through a graph, or null if there's no path.
+  function graphRoute(g, fromLoc, toLoc) {
+    var nodes = shortestNodes(g, fromLoc, toLoc);
+    if (!nodes || nodes.length < 2) return null;
+    var pts = [];
+    for (var i = 1; i < nodes.length; i++) {
+      var seg = edgePoly(g, nodes[i - 1], nodes[i]);
+      if (!seg) continue;
+      if (pts.length) seg = seg.slice(1);            // drop shared junction point
+      pts = pts.concat(seg);
+    }
+    return pts.length > 1 ? pts : null;
+  }
+  // Full polyline (map %) for a journey, by travel mode.
+  //   air  -> straight line between the two points
+  //   rail -> rail network (falls back to a straight line while it's empty)
+  //   foot -> manual ROUTES override, then the road network, then a straight line
+  function routeBetween(fromLoc, toLoc, travelMode) {
+    var a = locPoint(fromLoc), b = locPoint(toLoc);
+    var straight = (a && b) ? [a, b] : (a ? [a] : (b ? [b] : []));
+    if (travelMode === "air") return straight;
+    if (travelMode === "rail") return graphRoute(graphs.rail, fromLoc, toLoc) || straight;
     var ov = OVERRIDE[fromLoc + ">" + toLoc], rv = OVERRIDE[toLoc + ">" + fromLoc];
     if (ov) return ov.map(function (p) { return { x: p[0], y: p[1] }; });
     if (rv) return rv.map(function (p) { return { x: p[0], y: p[1] }; }).reverse();
-    var nodes = shortestNodes(fromLoc, toLoc);
-    if (nodes && nodes.length > 1) {
-      var pts = [];
-      for (var i = 1; i < nodes.length; i++) {
-        var seg = edgePoly(nodes[i - 1], nodes[i]);
-        if (!seg) continue;
-        if (pts.length) seg = seg.slice(1);          // drop shared junction point
-        pts = pts.concat(seg);
-      }
-      if (pts.length > 1) return pts;
-    }
-    var a = locPoint(fromLoc), b = locPoint(toLoc);
-    return (a && b) ? [a, b] : (a ? [a] : (b ? [b] : []));
-  }
-  function edgePoly(a, b) {
-    var list = adj[a] || [];
-    for (var i = 0; i < list.length; i++) if (list[i].to === b) return list[i].poly;
-    return null;
+    return graphRoute(graphs.foot, fromLoc, toLoc) || straight;
   }
 
   // --- geometry helpers ----------------------------------------------------
@@ -138,21 +155,29 @@
     var l = locById[id];
     return (l && l.map_x != null) ? { x: l.map_x, y: l.map_y } : null;
   }
-  function charLocAt(charId, beat) {
+  // The character's active appearance row at this beat (latest matching interval wins).
+  function appearanceAt(charId, beat) {
     var list = appsByChar[charId] || [], match = null;
     for (var i = 0; i < list.length; i++) {
       var a = list[i], hi = (a.leave_sequence == null ? Infinity : a.leave_sequence);
       if (a.join_sequence <= beat.sequence && beat.sequence <= hi) match = a;
     }
-    return match ? (match.location || beat.default_location) : null;
+    return match;
+  }
+  function charLocAt(charId, beat) {
+    var a = appearanceAt(charId, beat);
+    return a ? (a.location || beat.default_location) : null;
   }
   function activityAt(charId, beat) {
-    var list = appsByChar[charId] || [], match = null;
-    for (var i = 0; i < list.length; i++) {
-      var a = list[i], hi = (a.leave_sequence == null ? Infinity : a.leave_sequence);
-      if (a.join_sequence <= beat.sequence && beat.sequence <= hi) match = a;
-    }
-    return match ? match.activity : null;
+    var a = appearanceAt(charId, beat);
+    return a ? a.activity : null;
+  }
+  // How they travelled INTO this location: appearance override, else the beat's
+  // default (party-wide), else foot.
+  function travelModeAt(charId, beat) {
+    var a = appearanceAt(charId, beat);
+    var m = String((a && a.travel_mode) || beat.travel_mode || "").toLowerCase();
+    return (m === "rail" || m === "air") ? m : "foot";
   }
   // Codex entries this character has unlocked by `seq`, oldest first.
   function revealedCodex(charId, seq) {
@@ -346,7 +371,7 @@
       }
       if (!tgt) { delete currentPos[id]; return; }
       if (animate && from && (Math.abs(from.x - tgt.x) > 0.04 || Math.abs(from.y - tgt.y) > 0.04)) {
-        var route = routeBetween(mk.dataset.loc || tgt.loc, tgt.loc);
+        var route = routeBetween(mk.dataset.loc || tgt.loc, tgt.loc, travelModeAt(id, beat));
         var rs = route[0], re = route[route.length - 1];
         movers.push({ id: id, route: route, tgt: tgt,
           prevOff: { x: from.x - rs.x, y: from.y - rs.y }, tgtOff: { x: tgt.x - re.x, y: tgt.y - re.y } });

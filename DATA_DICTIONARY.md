@@ -67,6 +67,7 @@ The spine — the canonical timeline.
 | `title` | Short human label ("Arrive in Bose"). |
 | `default_location` | `loc_id` where the party mostly is this beat; appearances inherit it. |
 | `approx_date` | Interpolated in-world date. **Display only** — revise freely, nothing depends on it. |
+| `travel_mode` | Party-wide default for *how everyone moved into this beat*: blank/`foot` = roads, `rail` = rail network, `air` = straight line. A character's appearance can override it. |
 
 > `sequence` values don't have to be contiguous. Gaps (e.g. `38` → `50`) are fine; the app
 > orders by sequence and steps through whatever beats exist.
@@ -86,9 +87,17 @@ The heart. One row per character per continuous span with the party.
 | `leave_beat` | `beat_id` they leave. Blank = stays through the end. |
 | `leave_sequence` | The `sequence` of `leave_beat`; blank = open-ended. |
 | `activity` | What they're doing — short phrase, shown in the cast panel. |
+| `travel_mode` | *(optional override)* This character's mode for this move, when it differs from the beat's. Same values: `foot` / `rail` / `air`. |
 
 > One character can have several rows (leaves, rejoins, splits off). That's the point of
 > intervals — don't force one row per character. When intervals overlap, the **later row wins**.
+>
+> **Travel mode resolves like location does:** the beat's `travel_mode` is the party-wide default,
+> and an appearance's `travel_mode` overrides it for that one character. So set it on the **beat**
+> for "the whole party takes the train," and only fill the appearance column when someone splits off
+> (e.g. one member flies while the rest walk). `foot`/blank routes along `ROAD_NETWORK` (with
+> `ROUTES` overrides), `rail` along `RAIL_NETWORK` (a straight line until you draw rail lines), and
+> `air` is always a straight line.
 
 ---
 

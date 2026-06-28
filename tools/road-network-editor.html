@@ -184,6 +184,7 @@
   var TRAILS = window.TRAILS || { locations: [] };
   var NET = window.ROAD_NETWORK || { nodes: {}, edges: [] };
   var OVR = window.ROUTES || {};
+  var RAIL = window.RAIL_NETWORK || { nodes: {}, edges: [] };   // preserved verbatim in the export
 
   var stage = document.getElementById('stage');
   var zoombar = document.getElementById('zoombar'), zpct = document.getElementById('zpct');
@@ -352,8 +353,23 @@
       '  nodes: {\n' + nodeLines + (nodeLines ? '\n' : '') + '  },\n\n' +
       '  edges: [\n' + edgeLines + (edgeLines ? '\n' : '') + '  ]\n' +
       '};\n\n' +
+      '// RAIL NETWORK — train lines, passed through unchanged by this editor.\n' +
+      emitNetwork('RAIL_NETWORK', RAIL) + '\n' +
       '// Optional hard overrides, keyed "from>to". Checked before the network search.\n' +
       'window.ROUTES = {\n' + ovrBody + (ovrBody ? '\n' : '') + '};\n';
+  }
+  // Serialize a raw {nodes, edges} network verbatim (used to preserve the rail block).
+  function emitNetwork(name, net) {
+    var nl = Object.keys(net.nodes || {}).map(function (id) {
+      var p = net.nodes[id]; return '    "' + id + '": [' + p[0] + ', ' + p[1] + ']';
+    }).join(',\n');
+    var el = (net.edges || []).map(function (e) {
+      var s = '    { a: "' + e.a + '", b: "' + e.b + '"';
+      if (e.via && e.via.length) s += ', via: [' + e.via.map(function (v) { return '[' + v[0] + ', ' + v[1] + ']'; }).join(', ') + ']';
+      return s + ' }';
+    }).join(',\n');
+    return 'window.' + name + ' = {\n  nodes: {\n' + nl + (nl ? '\n' : '') + '  },\n\n' +
+           '  edges: [\n' + el + (el ? '\n' : '') + '  ]\n};\n';
   }
 
   function refresh() { render(); updateExport(); }

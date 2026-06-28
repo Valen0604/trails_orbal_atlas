@@ -23,7 +23,6 @@ window.ROAD_NETWORK = {
     "j17": [27.2, 66.4],
     "j18": [26.7, 66.2],
     "j19": [26.6, 66.1],
-    "j20": [28.9, 66.5],
     "j21": [26.8, 67.7],
     "j22": [26.7, 65.4],
     "j23": [26.5, 64.7],
@@ -98,7 +97,6 @@ window.ROAD_NETWORK = {
     { a: "j7", b: "perzel" },
     { a: "j7", b: "j13" },
     { a: "j13", b: "j14" },
-    { a: "j20", b: "j14" },
     { a: "j14", b: "j15" },
     { a: "j15", b: "j16" },
     { a: "j16", b: "j17" },
@@ -168,6 +166,19 @@ window.ROAD_NETWORK = {
     { a: "j71", b: "letten" },
     { a: "j69", b: "j70" },
     { a: "j70", b: "sapphirl" }
+  ]
+};
+
+// RAIL NETWORK — same shape as ROAD_NETWORK, used only when an appearance's
+// `travel_mode` is "rail". Draw train lines here exactly like roads (junctions in
+// `nodes`, segments in `edges` with optional `via` bends). Empty for now; a train
+// with no rail path between its two stops falls back to a straight line.
+// (The road-network editor preserves this block — it won't wipe your rail lines.)
+window.RAIL_NETWORK = {
+  nodes: {
+  },
+
+  edges: [
   ]
 };
 

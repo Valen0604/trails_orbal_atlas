@@ -19,7 +19,7 @@ and click a function name, or use <kbd>Ctrl</kbd>+<kbd>P</kbd> then type `@` to 
 5. [Coordinate systems — the one thing to really understand](#5-coordinate-systems)
 6. [The render pipeline](#6-the-render-pipeline)
 7. [Movement animation](#7-movement-animation)
-8. [The road network (how routes are found)](#8-the-road-network)
+8. [The travel network (roads, rail, air)](#8-the-travel-network-roads-rail-air)
 9. [Camera / view modes (zoom, pan, follow)](#9-camera--view-modes)
 10. [Markers, pips, the cast strip, the codex](#10-markers-pips-cast-codex)
 11. [styles.css tour](#11-stylescss-tour)
@@ -243,30 +243,34 @@ finds where `t` of the total length lands — standard "point at fraction along 
 
 ---
 
-## 8. The road network
+## 8. The travel network (roads, rail, air)
 
-Defined in [routes.js](routes.js); consumed by the "ROAD GRAPH" section of app.js (~line 50).
-The full how-to-draw explanation is in the comments at the top of `routes.js` — here's how the
-*code* uses it.
+Defined in [routes.js](routes.js); consumed by the "TRAVEL GRAPHS" section of app.js. The full
+how-to-draw explanation is in the comments at the top of `routes.js` — here's how the *code* uses it.
 
-It's a **graph**: `nodes` (every location with coordinates, plus any extra `junctions`) and
-`edges` (two-way road segments, each optionally bending through `via` points).
+There are two graphs of the same shape — `window.ROAD_NETWORK` (roads) and `window.RAIL_NETWORK`
+(train lines) — each with `nodes` (every location with coordinates, plus any extra `junctions`) and
+`edges` (two-way segments, each optionally bending through `via` points).
 
-- `buildGraph()` (~line 54) builds two structures: `nodeCoord` (id → {x,y}) and `adj` (an
-  adjacency list — for each node, the edges leaving it, each with its pixel **length** as weight
-  and its full point list `poly`).
-- `shortestNodes(from, to)` (~line 78) is **Dijkstra's algorithm** — it finds the shortest chain
-  of nodes between two locations, minimizing total road length.
-- `routeBetween(fromLoc, toLoc)` (~line 99) is what the rest of the app calls. Its order of
-  preference:
-  1. A manual override in `window.ROUTES` keyed `"from>to"` (or the reverse), if present.
-  2. The shortest path through the graph, with each edge's bend points stitched in.
-  3. **Fallback:** a straight line between the two locations.
+- `buildGraphFor(net)` builds one graph: `nodeCoord` (id → {x,y}) and `adj` (an adjacency list —
+  for each node, the edges leaving it, each with its pixel **length** as weight and its full point
+  list `poly`). `buildGraph()` builds both into `graphs.foot` and `graphs.rail`.
+- `shortestNodes(g, from, to)` is **Dijkstra's algorithm** over one graph — the shortest chain of
+  nodes between two locations; `graphRoute(g, …)` stitches that into a polyline.
+- `routeBetween(fromLoc, toLoc, travelMode)` is what `render` calls, picking by the move's
+  **travel mode** (`travelModeAt(charId, beat)` = the appearance's `travel_mode` if set, else the
+  beat's `travel_mode`, else foot — same default/override pattern as location):
+  - **`air`** → a straight line between the two stops.
+  - **`rail`** → the rail graph; **straight-line fallback** while `RAIL_NETWORK` is empty.
+  - **`foot`** (blank/default) → a `window.ROUTES` override if present, else the road graph, else a
+    straight line.
 
-That fallback is your "did I forget a road?" signal — if a journey cuts straight across the map,
-there's no graph path connecting those two places yet.
+That straight-line fallback (for foot) is your "did I forget a road?" signal — if a foot journey
+cuts straight across the map, there's no graph path connecting those two places yet.
 
-You normally edit this file with **`tools/road-network-editor.html`** (§12), not by hand.
+You normally edit the **road** network with **`tools/road-network-editor.html`** (§12), not by hand;
+it now also passes the `RAIL_NETWORK` block through untouched, so pasting its output won't wipe your
+rail lines. Rail lines are added by hand for now (same syntax as roads).
 
 ---
 
@@ -431,6 +435,12 @@ Use `tools/road-network-editor.html`, then paste the output over `routes.js`. Or
 **Force one journey to follow an exact line.**
 Add an entry to `window.ROUTES` in `routes.js` keyed `"fromLocId>toLocId"` with `[x,y]` points.
 It overrides the graph search for that specific trip.
+
+**Make the party (or one character) travel by train or by air.**
+Set the `travel_mode` column on the **beat** for the whole party (`air` = straight line, `rail` =
+rail network, blank/`foot` = roads). To make just one character differ, set `travel_mode` on their
+`appearance` row instead — it overrides the beat. (`rail` follows `RAIL_NETWORK` in routes.js — draw
+train lines there like roads; empty = straight line for now.)
 
 **Change animation speed.**
 `ANIM_MS` at the top of app.js (~line 21). It controls both the marker glide and the camera glide,

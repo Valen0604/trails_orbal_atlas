@@ -76,6 +76,20 @@ So a character follows the roads instead of cutting straight across the map:
 The app looks up `from>to`, then the reverse of `to>from`, then falls back to a straight line —
 so you only draw each pair once, and undrawn journeys still work (just as straight lines).
 
+### Travel modes (foot / rail / air)
+
+How a move is drawn is set by `travel_mode`, on the **beat** for the whole party (with an
+`appearance` column to override it for one character — same default/override pattern as location):
+
+- **blank / `foot`** — follow the roads (the network above).
+- **`rail`** — follow the **`RAIL_NETWORK`** in `routes.js` (drawn exactly like roads; empty for now,
+  so trains travel in a straight line until you add rail lines).
+- **`air`** — a straight line between the two stops.
+
+So set it once on the beat for "the party takes the train," and only fill an appearance's
+`travel_mode` when someone splits off. The road-network editor leaves the `RAIL_NETWORK` block
+untouched, so you can keep rail lines in `routes.js` by hand without the editor wiping them.
+
 ## Adding character icons & portraits
 
 Each character gets **its own folder** under `assets/characters/<char_id>/`, holding that

@@ -36,8 +36,8 @@
     min-height: 320px; display: flex; align-items: center; justify-content: center;
   }
   .stage.has-image {
-    display: block; height: 62vh; min-height: 320px;
-    overflow: auto; text-align: left;
+    display: block; aspect-ratio: 16 / 9; max-height: 64vh; min-height: 320px;
+    overflow: auto; text-align: left;   /* a fixed map frame, like the app — not a tall oversized box */
   }
   .drop {
     width: 100%; min-height: 320px; display: flex; flex-direction: column;

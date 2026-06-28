@@ -44,9 +44,9 @@ body {
 }
 .beat-title {
   color: var(--muted); font-size: 14px; line-height: 1.4; margin: 8px 0 0;
-  width: 42ch; max-width: 100%; height: 2.8em; /* reserves 2 lines so it never reflows */
+  width: 42ch; max-width: 100%; height: 4.2em; /* reserves 3 lines so it never reflows */
   overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; line-clamp: 2;
+  -webkit-line-clamp: 3; line-clamp: 3;
 }
 
 .timeline { flex: 1; min-width: 280px; }

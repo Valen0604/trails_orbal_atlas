@@ -480,7 +480,7 @@ window.TRAILS = {
       "revealed_at_beat": "fc_pro",
       "sequence": 10,
       "entry_type": "bio",
-      "text": "Adopted brother of Estelle",
+      "text": "Adopted brother of Estelle.",
       "reveal_name": null,
       "icon": null,
       "body": null
@@ -490,7 +490,7 @@ window.TRAILS = {
       "revealed_at_beat": "fc_pro",
       "sequence": 10,
       "entry_type": "bio",
-      "text": "Her mother died protecting her during the 100 day war",
+      "text": "Her mother died protecting her during the 100 day war.",
       "reveal_name": null,
       "icon": null,
       "body": null
@@ -500,7 +500,7 @@ window.TRAILS = {
       "revealed_at_beat": "fc_pro",
       "sequence": 12,
       "entry_type": "bio",
-      "text": "Estelle's and Joshua's bracer mentor",
+      "text": "Bracer mentor for Estelle and Joshua.",
       "reveal_name": null,
       "icon": null,
       "body": null
@@ -510,7 +510,7 @@ window.TRAILS = {
       "revealed_at_beat": "fc_pro",
       "sequence": 27,
       "entry_type": "bio",
-      "text": "Anthropologist investigating the Tetracyclic towers",
+      "text": "Archeologist investigating the Tetracyclic towers.",
       "reveal_name": null,
       "icon": null,
       "body": null
@@ -540,7 +540,7 @@ window.TRAILS = {
       "revealed_at_beat": "fc_pro",
       "sequence": 38,
       "entry_type": "bio",
-      "text": "Disappeared on captured airliner",
+      "text": "Disappeared on captured airliner.",
       "reveal_name": null,
       "icon": null,
       "body": null

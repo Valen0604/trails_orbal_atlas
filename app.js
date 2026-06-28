@@ -271,7 +271,7 @@
     var s = styleFor(c.char_id), m = document.createElement("div");
     var icon = charAsset(c.char_id, c.icon);                 // render() keeps this current per beat
     m.className = "marker hidden";
-    m.innerHTML = '<div class="badge" style="background:' + s.color + '">' +
+    m.innerHTML = '<div class="badge" style="background:' + (icon ? "#fff" : s.color) + '">' +
       (icon ? '<img src="' + esc(icon) + '" alt="">' : esc(s.initials)) + '</div>' +
       '<div class="nametag">' + esc(c.display_name) + '</div>';
     el.markers.appendChild(m);
@@ -330,6 +330,7 @@
       var badge = mk.querySelector(".badge");                      // swap the badge art only when it changes
       if (badge && mk.dataset.icon !== (st.icon || "")) {
         mk.dataset.icon = st.icon || "";
+        badge.style.background = st.icon ? "#fff" : styleFor(id).color;   // white circle behind an icon; color only for initials
         badge.innerHTML = st.icon ? '<img src="' + esc(st.icon) + '" alt="">' : esc(styleFor(id).initials);
       }
       if (!tgt) { delete currentPos[id]; return; }

@@ -1800,6 +1800,16 @@ window.TRAILS = {
       "reveal_name": null,
       "icon": null,
       "body": null
+    },
+    {
+      "char_id": "olivier",
+      "revealed_at_beat": "fc_ch1",
+      "sequence": 90,
+      "entry_type": "faction",
+      "text": "Erebonian Empire Government",
+      "reveal_name": null,
+      "icon": null,
+      "body": null
     }
   ]
 };

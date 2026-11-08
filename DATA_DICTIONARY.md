@@ -71,10 +71,10 @@ A mapping of `loc_id` → record. Every place a marker can stand.
 | Field | Meaning |
 |---|---|
 | `name` | Display name. |
-| `type` | `nation` / `region` / `city` / `district`. Containers (`nation`, `region`) need no `xy`. |
-| `parent` | The containing place (`bose_city` → `bose` → `liberl`). Omit for the top level. |
-| `xy` | `[x, y]` in map %. **Required for anything characters stand at** — without it the place is neither drawn nor routable, and the build warns. |
-| `show_name` | `true` = the label is always visible on the map (default: on hover). |
+| `type` | `nation` / `region` / `city` / `district`. Also the **label tier**: nations are drawn when zoomed out, cities from mid zoom, districts when zoomed in. |
+| `parent` | The containing place (`bose_city` → `bose` → `liberl`). Omit for the top level. The parent chain is also how the codex groups characters by nation. |
+| `xy` | `[x, y]` in map %. **Required for anything characters stand at** — without it the place is neither drawn nor routable, and the build warns. On a `nation` / `region` it is optional and simply places the label. |
+| `show_name` | `true` = the name is shown at every zoom level, not just its tier. |
 
 ```yaml
 perzel:

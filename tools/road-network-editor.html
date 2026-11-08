@@ -214,7 +214,7 @@
 <script src="../routes.js"></script>
 <script>
 (function () {
-  var IMG_SRC = '../assets/zemuria.png';
+  var IMG_SRC = '../assets/zemuria_clean.png';
   var TRAILS = window.TRAILS || { locations: [] };
   var OVR = window.ROUTES || {};                       // manual overrides, passed through untouched
 
@@ -254,6 +254,7 @@
     locs = {};
     (TRAILS.locations || []).forEach(function (l) {
       if (l.map_x == null || l.map_y == null) return;
+      if (l.type === 'nation' || l.type === 'region') return;   // label anchors, not places roads reach
       locs[l.loc_id] = { x: l.map_x, y: l.map_y, name: l.name || l.loc_id };
     });
     Object.keys(LAYERS).forEach(function (k) {

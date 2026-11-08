@@ -123,11 +123,11 @@ window.TRAILS = {
     },
     {
       "loc_id": "liberl",
-      "name": "Liberl",
+      "name": "Liberl Kingdom",
       "parent_loc_id": null,
       "type": "nation",
-      "map_x": null,
-      "map_y": null,
+      "map_x": 28.5,
+      "map_y": 64.9,
       "show_name": false
     },
     {
@@ -318,6 +318,420 @@ window.TRAILS = {
       "map_x": 21.9,
       "map_y": 70.4,
       "show_name": true
+    },
+    {
+      "loc_id": "grancel",
+      "name": "Grancel",
+      "parent_loc_id": "liberl",
+      "type": "region",
+      "map_x": null,
+      "map_y": null,
+      "show_name": false
+    },
+    {
+      "loc_id": "grancel_city",
+      "name": "Grancel",
+      "parent_loc_id": "grancel",
+      "type": "city",
+      "map_x": 27.7,
+      "map_y": 71.2,
+      "show_name": false
+    },
+    {
+      "loc_id": "erbe_villa",
+      "name": "Erbe Royal Villa",
+      "parent_loc_id": "grancel",
+      "type": "district",
+      "map_x": 28.9,
+      "map_y": 72.5,
+      "show_name": false
+    },
+    {
+      "loc_id": "zeiss",
+      "name": "Zeiss",
+      "parent_loc_id": "liberl",
+      "type": "region",
+      "map_x": null,
+      "map_y": null,
+      "show_name": false
+    },
+    {
+      "loc_id": "zeiss_city",
+      "name": "Zeiss",
+      "parent_loc_id": "zeiss",
+      "type": "city",
+      "map_x": 26.4,
+      "map_y": 75.3,
+      "show_name": false
+    },
+    {
+      "loc_id": "leiston",
+      "name": "Leiston Fortress",
+      "parent_loc_id": "zeiss",
+      "type": "district",
+      "map_x": 26.5,
+      "map_y": 72.2,
+      "show_name": false
+    },
+    {
+      "loc_id": "carnelia",
+      "name": "Carnelia Tower",
+      "parent_loc_id": "zeiss",
+      "type": "district",
+      "map_x": 27.8,
+      "map_y": 75.4,
+      "show_name": false
+    },
+    {
+      "loc_id": "wolf_fort",
+      "name": "Wolf Fort",
+      "parent_loc_id": "zeiss",
+      "type": "district",
+      "map_x": 28.7,
+      "map_y": 75.4,
+      "show_name": false
+    },
+    {
+      "loc_id": "elmo",
+      "name": "Elmo Village",
+      "parent_loc_id": "zeiss",
+      "type": "district",
+      "map_x": 27.7,
+      "map_y": 76.9,
+      "show_name": false
+    },
+    {
+      "loc_id": "erebonia",
+      "name": "Erebonian Empire",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 25.4,
+      "map_y": 40.0,
+      "show_name": false
+    },
+    {
+      "loc_id": "heimdallr",
+      "name": "Heimdallr",
+      "parent_loc_id": "erebonia",
+      "type": "city",
+      "map_x": 26.8,
+      "map_y": 45.1,
+      "show_name": false
+    },
+    {
+      "loc_id": "roer",
+      "name": "Roer",
+      "parent_loc_id": "erebonia",
+      "type": "city",
+      "map_x": 31.8,
+      "map_y": 37.8,
+      "show_name": false
+    },
+    {
+      "loc_id": "ordis",
+      "name": "Ordis",
+      "parent_loc_id": "erebonia",
+      "type": "city",
+      "map_x": 12.8,
+      "map_y": 40.2,
+      "show_name": false
+    },
+    {
+      "loc_id": "saint_arkh",
+      "name": "Saint-Arkh",
+      "parent_loc_id": "erebonia",
+      "type": "city",
+      "map_x": 21.7,
+      "map_y": 53.7,
+      "show_name": false
+    },
+    {
+      "loc_id": "bareahard",
+      "name": "Bareahard",
+      "parent_loc_id": "erebonia",
+      "type": "city",
+      "map_x": 30.6,
+      "map_y": 52.1,
+      "show_name": false
+    },
+    {
+      "loc_id": "legram",
+      "name": "Legram",
+      "parent_loc_id": "erebonia",
+      "type": "city",
+      "map_x": 30.7,
+      "map_y": 57.3,
+      "show_name": false
+    },
+    {
+      "loc_id": "lohengrin",
+      "name": "Lohengrin Castle",
+      "parent_loc_id": "erebonia",
+      "type": "district",
+      "map_x": 29.9,
+      "map_y": 56.3,
+      "show_name": false
+    },
+    {
+      "loc_id": "parm",
+      "name": "Parm",
+      "parent_loc_id": "erebonia",
+      "type": "city",
+      "map_x": 25.5,
+      "map_y": 58.2,
+      "show_name": false
+    },
+    {
+      "loc_id": "hamel",
+      "name": "Hamel",
+      "parent_loc_id": "erebonia",
+      "type": "district",
+      "map_x": 25.1,
+      "map_y": 60.0,
+      "show_name": false
+    },
+    {
+      "loc_id": "titus_gate",
+      "name": "Titus Gate",
+      "parent_loc_id": "erebonia",
+      "type": "district",
+      "map_x": 25.9,
+      "map_y": 62.5,
+      "show_name": false
+    },
+    {
+      "loc_id": "crossbell",
+      "name": "Crossbell",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 39.3,
+      "map_y": 44.6,
+      "show_name": false
+    },
+    {
+      "loc_id": "crossbell_city",
+      "name": "Crossbell City",
+      "parent_loc_id": "crossbell",
+      "type": "city",
+      "map_x": 39.3,
+      "map_y": 46.3,
+      "show_name": false
+    },
+    {
+      "loc_id": "calvard",
+      "name": "Republic of Calvard",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 48.9,
+      "map_y": 57.3,
+      "show_name": false
+    },
+    {
+      "loc_id": "edith",
+      "name": "Edith",
+      "parent_loc_id": "calvard",
+      "type": "city",
+      "map_x": 48.7,
+      "map_y": 53.0,
+      "show_name": false
+    },
+    {
+      "loc_id": "oracion",
+      "name": "Oración",
+      "parent_loc_id": "calvard",
+      "type": "city",
+      "map_x": 54.6,
+      "map_y": 39.5,
+      "show_name": false
+    },
+    {
+      "loc_id": "langport",
+      "name": "Langport",
+      "parent_loc_id": "calvard",
+      "type": "city",
+      "map_x": 44.3,
+      "map_y": 69.7,
+      "show_name": false
+    },
+    {
+      "loc_id": "north_ambria",
+      "name": "North Ambria",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 25.2,
+      "map_y": 15.2,
+      "show_name": false
+    },
+    {
+      "loc_id": "haliask",
+      "name": "Haliask",
+      "parent_loc_id": "north_ambria",
+      "type": "city",
+      "map_x": 22.9,
+      "map_y": 18.5,
+      "show_name": false
+    },
+    {
+      "loc_id": "remiferia",
+      "name": "Principality of Remiferia",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 39.6,
+      "map_y": 15.9,
+      "show_name": false
+    },
+    {
+      "loc_id": "ardent",
+      "name": "Ardent",
+      "parent_loc_id": "remiferia",
+      "type": "city",
+      "map_x": 35.0,
+      "map_y": 15.3,
+      "show_name": false
+    },
+    {
+      "loc_id": "ored",
+      "name": "Ored",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 46.0,
+      "map_y": 20.5,
+      "show_name": false
+    },
+    {
+      "loc_id": "lavance",
+      "name": "L'avance",
+      "parent_loc_id": "ored",
+      "type": "city",
+      "map_x": 45.7,
+      "map_y": 23.2,
+      "show_name": false
+    },
+    {
+      "loc_id": "leman",
+      "name": "Leman",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 52.4,
+      "map_y": 17.3,
+      "show_name": false
+    },
+    {
+      "loc_id": "arteria",
+      "name": "Arteria",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 57.3,
+      "map_y": 19.3,
+      "show_name": false
+    },
+    {
+      "loc_id": "remote_region",
+      "name": "Remote Region",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 59.4,
+      "map_y": 11.7,
+      "show_name": false
+    },
+    {
+      "loc_id": "free_city_range",
+      "name": "Free-City Range",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 59.6,
+      "map_y": 24.8,
+      "show_name": false
+    },
+    {
+      "loc_id": "nord",
+      "name": "Nord Highlands",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 37.1,
+      "map_y": 26.2,
+      "show_name": false
+    },
+    {
+      "loc_id": "nomadic_settlement",
+      "name": "Nomadic Settlement",
+      "parent_loc_id": "nord",
+      "type": "district",
+      "map_x": 37.1,
+      "map_y": 28.8,
+      "show_name": false
+    },
+    {
+      "loc_id": "jurai",
+      "name": "Jurai SEZ",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 10.1,
+      "map_y": 22.8,
+      "show_name": false
+    },
+    {
+      "loc_id": "jurai_city",
+      "name": "Jurai City",
+      "parent_loc_id": "jurai",
+      "type": "city",
+      "map_x": 9.5,
+      "map_y": 20.7,
+      "show_name": false
+    },
+    {
+      "loc_id": "elsaim",
+      "name": "Principality of Elsaim",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 59.8,
+      "map_y": 74.2,
+      "show_name": false
+    },
+    {
+      "loc_id": "ludos",
+      "name": "Ludos",
+      "parent_loc_id": "elsaim",
+      "type": "city",
+      "map_x": 56.6,
+      "map_y": 78.0,
+      "show_name": false
+    },
+    {
+      "loc_id": "central_eastern",
+      "name": "Central Eastern Region",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 69.3,
+      "map_y": 79.0,
+      "show_name": false
+    },
+    {
+      "loc_id": "valis",
+      "name": "Valis",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 61.9,
+      "map_y": 89.7,
+      "show_name": false
+    },
+    {
+      "loc_id": "valis_city",
+      "name": "Valis",
+      "parent_loc_id": "valis",
+      "type": "city",
+      "map_x": 59.4,
+      "map_y": 91.8,
+      "show_name": false
+    },
+    {
+      "loc_id": "molujia",
+      "name": "Molujia Archipelago",
+      "parent_loc_id": null,
+      "type": "nation",
+      "map_x": 45.0,
+      "map_y": 88.3,
+      "show_name": false
     }
   ],
   "beats": [

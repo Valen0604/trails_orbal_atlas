@@ -19,8 +19,9 @@ rolent_city:
   xy: [31.3, 68.9]
 
 liberl:
-  name: Liberl
+  name: Liberl Kingdom
   type: nation
+  xy: [28.5, 64.9]
 
 esmelas:
   name: Esmelas Tower
@@ -154,3 +155,274 @@ mercia:
   parent: ruan
   xy: [21.9, 70.4]
   show_name: true
+
+# ---------------------------------------------------------------------------------------
+# Added 7 Nov 2026: the names that used to be baked into the map image, now drawn by the
+# site. Label tiers follow `type`: nation = far zoom, city = mid, district = close.
+# Positions were read off the image and are approximate; nudge any of them with
+# tools/map-coordinate-finder.html.
+# ---------------------------------------------------------------------------------------
+
+# Liberl regions and places the story hasn't reached yet
+grancel:
+  name: Grancel
+  type: region
+  parent: liberl
+
+grancel_city:
+  name: Grancel
+  type: city
+  parent: grancel
+  xy: [27.7, 71.2]
+
+erbe_villa:
+  name: Erbe Royal Villa
+  type: district
+  parent: grancel
+  xy: [28.9, 72.5]
+
+zeiss:
+  name: Zeiss
+  type: region
+  parent: liberl
+
+zeiss_city:
+  name: Zeiss
+  type: city
+  parent: zeiss
+  xy: [26.4, 75.3]
+
+leiston:
+  name: Leiston Fortress
+  type: district
+  parent: zeiss
+  xy: [26.5, 72.2]
+
+carnelia:
+  name: Carnelia Tower
+  type: district
+  parent: zeiss
+  xy: [27.8, 75.4]
+
+wolf_fort:
+  name: Wolf Fort
+  type: district
+  parent: zeiss
+  xy: [28.7, 75.4]
+
+elmo:
+  name: Elmo Village
+  type: district
+  parent: zeiss
+  xy: [27.7, 76.9]
+
+# Erebonia
+erebonia:
+  name: Erebonian Empire
+  type: nation
+  xy: [25.4, 40.0]
+
+heimdallr:
+  name: Heimdallr
+  type: city
+  parent: erebonia
+  xy: [26.8, 45.1]
+
+roer:
+  name: Roer
+  type: city
+  parent: erebonia
+  xy: [31.8, 37.8]
+
+ordis:
+  name: Ordis
+  type: city
+  parent: erebonia
+  xy: [12.8, 40.2]
+
+saint_arkh:
+  name: Saint-Arkh
+  type: city
+  parent: erebonia
+  xy: [21.7, 53.7]
+
+bareahard:
+  name: Bareahard
+  type: city
+  parent: erebonia
+  xy: [30.6, 52.1]
+
+legram:
+  name: Legram
+  type: city
+  parent: erebonia
+  xy: [30.7, 57.3]
+
+lohengrin:
+  name: Lohengrin Castle
+  type: district
+  parent: erebonia
+  xy: [29.9, 56.3]
+
+parm:
+  name: Parm
+  type: city
+  parent: erebonia
+  xy: [25.5, 58.2]
+
+hamel:
+  name: Hamel
+  type: district
+  parent: erebonia
+  xy: [25.1, 60.0]
+
+titus_gate:
+  name: Titus Gate
+  type: district
+  parent: erebonia
+  xy: [25.9, 62.5]
+
+# Crossbell
+crossbell:
+  name: Crossbell
+  type: nation
+  xy: [39.3, 44.6]
+
+crossbell_city:
+  name: Crossbell City
+  type: city
+  parent: crossbell
+  xy: [39.3, 46.3]
+
+# Calvard
+calvard:
+  name: Republic of Calvard
+  type: nation
+  xy: [48.9, 57.3]
+
+edith:
+  name: Edith
+  type: city
+  parent: calvard
+  xy: [48.7, 53.0]
+
+oracion:
+  name: Oración
+  type: city
+  parent: calvard
+  xy: [54.6, 39.5]
+
+langport:
+  name: Langport
+  type: city
+  parent: calvard
+  xy: [44.3, 69.7]
+
+# the north and east
+north_ambria:
+  name: North Ambria
+  type: nation
+  xy: [25.2, 15.2]
+
+haliask:
+  name: Haliask
+  type: city
+  parent: north_ambria
+  xy: [22.9, 18.5]
+
+remiferia:
+  name: Principality of Remiferia
+  type: nation
+  xy: [39.6, 15.9]
+
+ardent:
+  name: Ardent
+  type: city
+  parent: remiferia
+  xy: [35.0, 15.3]
+
+ored:
+  name: Ored
+  type: nation
+  xy: [46.0, 20.5]
+
+lavance:
+  name: L'avance
+  type: city
+  parent: ored
+  xy: [45.7, 23.2]
+
+leman:
+  name: Leman
+  type: nation
+  xy: [52.4, 17.3]
+
+arteria:
+  name: Arteria
+  type: nation
+  xy: [57.3, 19.3]
+
+remote_region:
+  name: Remote Region
+  type: nation
+  xy: [59.4, 11.7]
+
+free_city_range:
+  name: Free-City Range
+  type: nation
+  xy: [59.6, 24.8]
+
+nord:
+  name: Nord Highlands
+  type: nation
+  xy: [37.1, 26.2]
+
+nomadic_settlement:
+  name: Nomadic Settlement
+  type: district
+  parent: nord
+  xy: [37.1, 28.8]
+
+jurai:
+  name: Jurai SEZ
+  type: nation
+  xy: [10.1, 22.8]
+
+jurai_city:
+  name: Jurai City
+  type: city
+  parent: jurai
+  xy: [9.5, 20.7]
+
+# the south
+elsaim:
+  name: Principality of Elsaim
+  type: nation
+  xy: [59.8, 74.2]
+
+ludos:
+  name: Ludos
+  type: city
+  parent: elsaim
+  xy: [56.6, 78.0]
+
+central_eastern:
+  name: Central Eastern Region
+  type: nation
+  xy: [69.3, 79.0]
+
+valis:
+  name: Valis
+  type: nation
+  xy: [61.9, 89.7]
+
+valis_city:
+  name: Valis
+  type: city
+  parent: valis
+  xy: [59.4, 91.8]
+
+molujia:
+  name: Molujia Archipelago
+  type: nation
+  xy: [45.0, 88.3]

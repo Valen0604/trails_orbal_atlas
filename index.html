@@ -2,60 +2,68 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Trails Timeline — Zemuria</title>
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="app">
 
-  <!-- ===== timeline header ===== -->
-  <div class="topbar">
-    <div class="datewrap">
-      <p class="eyebrow">In-world date</p>
-      <h1 class="date" id="date">—</h1>
-      <p class="beat-title" id="beatTitle"></p>
-    </div>
-    <div class="timeline">
-      <div class="transport">
-        <button class="tbtn" id="start" title="Jump to start">⏮</button>
-        <button class="tbtn" id="prev" title="Previous beat (←)">‹</button>
-        <button class="tbtn play" id="play" title="Play / pause (space)">▶</button>
-        <button class="tbtn" id="next" title="Next beat (→)">›</button>
-        <span class="counter" id="counter"></span>
-      </div>
-      <input type="range" class="scrub" id="scrub" min="0" max="0" value="0" step="1">
-      <span class="chaptag" id="chaptag"></span>
-    </div>
+<!-- ===== the map IS the page: a full-viewport frame with one transformed "world" inside ===== -->
+<div id="mapframe">
+  <div id="world">
+    <img id="mapimg" src="assets/zemuria_clean.png" alt="Map of Zemuria" draggable="false">
+    <svg id="routes" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+    <div id="places"></div>
+    <div id="markers"></div>
   </div>
-
-  <!-- ===== tabs ===== -->
-  <div class="tabs">
-    <button class="tab active" id="tabMap">Map</button>
-    <button class="tab" id="tabCodex">Codex</button>
-  </div>
-
-  <!-- ===== MAP view ===== -->
-  <div class="view active" id="viewMap">
-    <div class="maplayout">
-      <div class="mapframe" id="mapframe">
-        <div class="mapcontent" id="mapcontent"><img src="assets/zemuria.png" alt="Map of Zemuria"></div>
-        <svg id="routes" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
-        <div id="pips"></div>
-        <div id="markers"></div>
-      </div>
-      <div class="caststrip" id="cast"></div>
-    </div>
-  </div>
-
-  <!-- ===== CODEX view ===== -->
-  <div class="view" id="viewCodex">
-    <p class="spoiler-note">Characters appear as the timeline reaches them, and their details fill in as the story reveals them — click a name to open their dossier. Scrubbing back re-hides later spoilers.</p>
-    <input type="search" class="codex-search" id="codexSearch" placeholder="Search characters by name…" autocomplete="off">
-    <div class="codex-grid" id="codexGrid"></div>
-  </div>
-
 </div>
+
+<!-- ===== top HUD: date, beat, counter, codex ===== -->
+<header class="hud hud-top">
+  <div class="datewrap">
+    <p class="eyebrow">In-world date</p>
+    <h1 class="date" id="date">—</h1>
+    <p class="beat-title" id="beatTitle"></p>
+  </div>
+  <div class="hud-right">
+    <div class="hud-right-row">
+      <span class="counter" id="counter"></span>
+      <span class="chaptag" id="chaptag"></span>
+      <button class="hbtn" id="openCodex" title="Open the codex (C)">Codex</button>
+    </div>
+    <p class="credit">Map: <em>Map of Zemuria 2024 Edition</em> by NegativeNac (fan map, labels redrawn). Not affiliated with Nihon Falcom.</p>
+  </div>
+</header>
+
+<!-- ===== bottom HUD: cast strip + transport ===== -->
+<div class="hud hud-bottom">
+  <div class="caststrip" id="cast"></div>
+  <div class="timeline">
+    <div class="transport">
+      <button class="tbtn" id="start" title="Jump to start">⏮</button>
+      <button class="tbtn" id="prev" title="Previous beat (←)">‹</button>
+      <button class="tbtn play" id="play" title="Play / pause (space)">▶</button>
+      <button class="tbtn" id="next" title="Next beat (→)">›</button>
+    </div>
+    <input type="range" class="scrub" id="scrub" min="0" max="0" value="0" step="1">
+    <button class="tbtn home" id="home" title="Frame the story (H)">⌂</button>
+  </div>
+</div>
+
+<!-- ===== codex drawer ===== -->
+<aside class="drawer" id="drawer" aria-hidden="true">
+  <div class="drawer-head">
+    <button class="hbtn ghost" id="drawerBack" hidden>‹ All</button>
+    <h2 class="drawer-title" id="drawerTitle">Codex</h2>
+    <button class="hbtn ghost" id="drawerClose" title="Close (Esc)">✕</button>
+  </div>
+  <div class="drawer-tools" id="drawerTools">
+    <input type="search" class="codex-search" id="codexSearch" placeholder="Search characters…" autocomplete="off">
+    <button class="chip" id="filterUpdated" title="Only characters with a reveal on this beat">Updated</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <p class="spoiler-note">Characters appear as the timeline reaches them and their notes fill in as the story reveals them. Scrubbing back re-hides later spoilers.</p>
+</aside>
 
 <!-- data first, then routes, then the app -->
 <script src="data.js"></script>

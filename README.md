@@ -9,10 +9,11 @@ across the map, and a spoiler-gated codex reveals facts only once the story reac
 
 ## What it does
 
+- **The map is the page.** It fills the window on any screen shape (desktop, tablet, phone); the date, beat title and transport controls float over it. Drag to pan, scroll or pinch to zoom, `⌂` (or H) re-frames the story.
 - **Timeline scrubber** with a big in-world date, chapter/beat title, and ◀ ▶ / play controls (arrow keys and space also work).
-- **Animated markers** — characters move from beat to beat, fanning out when several share a location.
-- **Traced routes** — journeys follow hand-drawn paths along the map's roads instead of straight lines.
-- **Codex tab** — character reveals appear only once the timeline reaches the beat that unlocks them, so scrubbing back re-hides later spoilers.
+- **Character cards** — square portraits that travel along the roads beat by beat. Characters at the same place form a pile with a count badge; hover (or tap) fans it out, click a card to open that character's dossier.
+- **Labels drawn by the site**, in the map's own black-serif-with-white-halo style, tiered by zoom: nations when zoomed out, cities and districts as you zoom in.
+- **Codex drawer** (C) — a grid of known characters grouped by nation and faction, each opening into a dossier. Reveals appear only once the timeline reaches the beat that unlocks them, so scrubbing back re-hides later spoilers.
 
 ## Project structure
 
@@ -34,13 +35,18 @@ trails_orbal_atlas/
 ├── DATA_DICTIONARY.md      # the story format, field by field
 ├── CODE_GUIDE.md           # how the code works, for editing it yourself
 ├── assets/                 # all images live here
-│   ├── zemuria.png         # the map image
+│   ├── zemuria_clean.png   # the map the site shows: the fan map with its labels stripped
+│   ├── zemuria.png         # the original fan map (source for the cleanup; not shown)
 │   └── characters/         # one folder per character (its icon + full-body image)
 ├── tools/
 │   ├── map-coordinate-finder.html   # click the map to read x/y % for coordinates & routes
-│   └── road-network-editor.html     # visual editor for routes.js (draw/drag roads & junctions)
+│   ├── road-network-editor.html     # visual editor for routes.js (roads + rail; saves itself)
+│   ├── clean_map_labels.py          # strips the baked-in labels off the map (see below)
+│   ├── upscale_map.py               # 2x Lanczos upscale, run once after the hand touch-up
+│   └── requirements-tools.txt       # the image libraries those two scripts need
 └── archive/
-    └── TrailsTimeline.xlsx # the old spreadsheet, kept for reference; no longer used
+    ├── TrailsTimeline.xlsx          # the old spreadsheet, kept for reference; no longer used
+    └── zemuria_clean_marks.png      # every pixel the cleanup changed, tinted magenta
 ```
 
 New to the codebase? Read **[CODE_GUIDE.md](CODE_GUIDE.md)** — it walks through how every part
@@ -134,6 +140,24 @@ Create `story/04_fc_chapter3.yaml` (the numeric prefix sets the order) with `id:
 `chapter:`, `date:` and a `beats:` list. The party carries over from the previous file, so
 its first beat only needs `at:` and a title.
 
+## The map image
+
+The site shows `assets/zemuria_clean.png`: NegativeNac's fan map with its place names, title,
+legend and disclaimer removed, so the site can draw every label itself (crisp at any zoom,
+and spoiler-gateable). `tools/clean_map_labels.py` does the automatic pass; it also writes
+`archive/zemuria_clean_marks.png`, where every changed pixel is tinted magenta, so a hand
+touch-up knows where to look. Small labels come off cleanly; the big country titles leave
+light ghosts where they crossed mountain hatching, and those need a few minutes in Krita /
+Clip Studio / GIMP (keep the original as a hidden reference layer underneath).
+
+Once the touch-up is done, run `python tools/upscale_map.py` once: it backs the native file
+up to `archive/` and replaces it with a 2× Lanczos upscale. The site reads the image size at
+load time, so nothing else changes.
+
+The names themselves live in `story/locations.yaml`: `nation` entries are the far-zoom
+labels, `city` the mid tier, `district` the close tier. Positions came off the original image
+and are approximate; nudge any of them with the coordinate finder.
+
 ## Drawing routes
 
 So a character follows the roads instead of cutting straight across the map:
@@ -184,8 +208,9 @@ assets/
     └── ...
 ```
 
-Then in `story/characters.yaml` you only write the **file name** — the app fills in
-`assets/characters/<char_id>/` automatically:
+Icons are shown as **square cards** on the map (and square tiles in the codex), so square
+crops look best. Then in `story/characters.yaml` you only write the **file name** — the app
+fills in `assets/characters/<char_id>/` automatically:
 
 ```yaml
 estelle:

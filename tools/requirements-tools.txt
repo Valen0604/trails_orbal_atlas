@@ -1,0 +1,4 @@
+# Only for tools/clean_map_labels.py (the site and build_data.py don't need these).
+opencv-python-headless>=4.8
+numpy>=1.26
+pillow>=10

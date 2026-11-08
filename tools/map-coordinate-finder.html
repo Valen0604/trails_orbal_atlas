@@ -29,7 +29,7 @@
   .layout { display: grid; grid-template-columns: 1fr 240px; gap: 18px; align-items: start; }
   @media (max-width: 720px) { .layout { grid-template-columns: 1fr; } }
 
-  .stagewrap { position: relative; }
+  .stagewrap { position: relative; min-width: 0; }   /* min-width:0 keeps the frame inside its grid column */
   .stage {
     position: relative; background: var(--panel);
     border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
@@ -52,6 +52,14 @@
   .imgbox.panning { cursor: grabbing; }
   .imgbox img { display: block; user-select: none; -webkit-user-drag: none; }
 
+  .refs { position: absolute; inset: 0; pointer-events: none; }
+  .refs.off { display: none; }
+  .ref { position: absolute; width: 7px; height: 7px; border-radius: 50%; background: #4fd1c5;
+    border: 1px solid rgba(0,0,0,.6); transform: translate(-50%,-50%); }
+  .ref span { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); white-space: nowrap;
+    font-size: 10px; font-family: var(--mono); color: #11161a; background: rgba(255,255,255,.9);
+    padding: 0 4px; border-radius: 3px; display: none; }
+  .imgbox.zoomed .ref span { display: block; }
   .marker { position: absolute; width: 0; height: 0; transform: translate(-50%,-50%); pointer-events: none; }
   .marker::before, .marker::after { content: ""; position: absolute; background: var(--accent); box-shadow: 0 0 0 1px rgba(0,0,0,.55); }
   .marker::before { width: 22px; height: 2px; left: -11px; top: -1px; }
@@ -87,8 +95,8 @@
   .css-out { margin-top: 14px; padding: 11px; background: var(--bg); border: 1px solid var(--line); border-radius: 7px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); white-space: pre-wrap; word-break: break-all; line-height: 1.5; }
   .css-out span { color: var(--accent); }
 
-  .controls { display: flex; gap: 8px; margin-top: 14px; }
-  .btn { flex: 1; background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 7px; padding: 8px; font-size: 12px; cursor: pointer; transition: all .12s; }
+  .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .btn { flex: 1 1 45%; background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 7px; padding: 8px; font-size: 12px; cursor: pointer; transition: all .12s; }
   .btn:hover { border-color: var(--accent-dim); color: var(--accent); }
   .btn:disabled { opacity: .4; cursor: default; }
 
@@ -100,7 +108,7 @@
 <div class="wrap">
   <header>
     <h1>Map Coordinate Finder</h1>
-    <p class="sub">Load an image, click any point, read its x / y percentage. Origin is top-left; y increases downward.</p>
+    <p class="sub">The project map loads automatically. Click any point to read its x / y percentage. Origin is top-left; y increases downward.</p>
   </header>
 
   <div class="layout">
@@ -135,12 +143,15 @@
       <div class="controls">
         <button class="btn" id="precise">2 decimals</button>
         <button class="btn" id="reset" disabled>Clear pin</button>
+        <button class="btn" id="refs">Hide locations</button>
+        <label class="btn" for="file" style="text-align:center;cursor:pointer">Other image&hellip;</label>
       </div>
-      <p class="hint">Drag to pan when zoomed. Scroll-wheel zooms toward the cursor (hold <b>Ctrl/&#8984;</b> if the frame scrolls instead). Percentages are resolution-independent &mdash; they stay correct at any zoom or display size.</p>
+      <p class="hint">Drag to pan when zoomed; the scroll-wheel zooms toward the cursor. Teal dots are the locations already in <code>story/locations.yaml</code> (names appear once you zoom in). Percentages are resolution-independent &mdash; they stay correct at any zoom or display size.</p>
     </div>
   </div>
 </div>
 
+<script src="../data.js"></script>
 <script>
 (function () {
   var stage = document.getElementById('stage');
@@ -153,7 +164,7 @@
   var cx = document.getElementById('cx'), cy = document.getElementById('cy');
   var resetBtn = document.getElementById('reset'), preciseBtn = document.getElementById('precise');
 
-  var decimals = 1, last = null, imgbox = null, img = null;
+  var decimals = 1, last = null, imgbox = null, img = null, refs = null, showRefs = true;
   var baseW = 0, zoom = 1, MIN = 1, MAX = 8;
 
   function showError(msg) {
@@ -173,6 +184,8 @@
     img = image;
     image.draggable = false;
     imgbox.appendChild(image);
+    refs = document.createElement('div'); refs.className = 'refs' + (showRefs ? '' : ' off');
+    imgbox.appendChild(refs); renderRefs();
     stage.appendChild(imgbox);
     // fit width: never upscale a small image past natural on load
     baseW = Math.min(stage.clientWidth, image.naturalWidth);
@@ -183,10 +196,21 @@
     resetState();
   }
 
+  // Existing locations from data.js, drawn as reference dots so a new coordinate can be judged
+  // against the places already on the map. Skipped silently when data.js isn't reachable.
+  function renderRefs() {
+    if (!refs) return;
+    var locs = (window.TRAILS && window.TRAILS.locations) || [];
+    refs.innerHTML = locs.filter(function (l) { return l.map_x != null && l.map_y != null; }).map(function (l) {
+      return '<div class="ref" style="left:' + l.map_x + '%;top:' + l.map_y + '%"><span>' + l.name + '</span></div>';
+    }).join('');
+  }
+
   function applyZoom() {
     img.style.width = (baseW * zoom) + 'px';
     img.style.height = 'auto';
     zpct.textContent = Math.round((baseW * zoom / img.naturalWidth) * 100) + '%';
+    if (imgbox) imgbox.classList.toggle('zoomed', baseW * zoom / img.naturalWidth >= 0.5);   // reference names only when zoomed in
   }
 
   // zoom toward an anchor point given in client coords
@@ -232,10 +256,8 @@
     imgbox.addEventListener('pointercancel', function () { isDown = false; imgbox.classList.remove('panning'); });
 
     stage.addEventListener('wheel', function (e) {
-      if (e.ctrlKey || e.metaKey || !e.shiftKey && stage.scrollHeight <= stage.clientHeight && stage.scrollWidth <= stage.clientWidth) {
-        e.preventDefault();
-        zoomTo(zoom * (e.deltaY < 0 ? 1.15 : 1 / 1.15), e.clientX, e.clientY);
-      }
+      e.preventDefault();                                  // wheel always zooms toward the cursor; drag to pan
+      zoomTo(zoom * (e.deltaY < 0 ? 1.15 : 1 / 1.15), e.clientX, e.clientY);
     }, { passive: false });
   }
 
@@ -287,6 +309,13 @@
     preciseBtn.textContent = decimals === 1 ? '2 decimals' : '1 decimal';
     render();
   });
+  var refsBtn = document.getElementById('refs');
+  if (!(window.TRAILS && window.TRAILS.locations)) refsBtn.hidden = true;
+  refsBtn.addEventListener('click', function () {
+    showRefs = !showRefs;
+    if (refs) refs.classList.toggle('off', !showRefs);
+    refsBtn.textContent = showRefs ? 'Hide locations' : 'Show locations';
+  });
 
   document.getElementById('zin').addEventListener('click', function () { var a = centerAnchor(); zoomTo(zoom * 1.4, a.x, a.y); });
   document.getElementById('zout').addEventListener('click', function () { var a = centerAnchor(); zoomTo(zoom / 1.4, a.x, a.y); });
@@ -297,20 +326,21 @@
     if (!/^image\//.test(f.type) && !/\.(png|jpe?g|gif|webp|bmp|svg)$/i.test(f.name || '')) {
       showError('That file is not an image format the browser can display.'); return;
     }
-    var reader = new FileReader();
-    reader.onerror = function () { showError('The file could not be read.'); };
-    reader.onload = function (e) {
-      var image = new Image();
-      image.onload = function () { mount(image); };
-      image.onerror = function () { showError('The browser cannot decode this image. HEIC/HEIF photos from iPhones are a common cause &mdash; re-save as PNG or JPEG.'); };
-      image.src = e.target.result;
-    };
-    reader.readAsDataURL(f);
+    var url = URL.createObjectURL(f), image = new Image();
+    image.onload = function () { URL.revokeObjectURL(url); mount(image); };
+    image.onerror = function () { URL.revokeObjectURL(url); showError('The browser cannot decode this image. HEIC/HEIF photos from iPhones are a common cause &mdash; re-save as PNG or JPEG.'); };
+    image.src = url;
   }
   fileInput.addEventListener('change', function (e) { loadFile(e.target.files[0]); });
   ['dragenter', 'dragover'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.add('over'); }); });
   ['dragleave', 'drop'].forEach(function (ev) { drop.addEventListener(ev, function (e) { e.preventDefault(); drop.classList.remove('over'); }); });
   drop.addEventListener('drop', function (e) { if (e.dataTransfer.files && e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
+
+  // Auto-load the project map when this page is opened from tools/. If the relative path
+  // doesn't resolve (file moved, opened from elsewhere) the drop zone simply stays.
+  var auto = new Image();
+  auto.onload = function () { if (!img) mount(auto); };
+  auto.src = '../assets/zemuria.png';
 })();
 </script>
 </body>

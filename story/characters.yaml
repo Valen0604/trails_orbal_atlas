@@ -1,0 +1,98 @@
+# Characters — one entry per character, keyed by a permanent slug.
+# Stable, non-spoiler facts only. Anything that changes or spoils goes in a
+# chapter file as a codex entry on the beat where it is revealed.
+#
+#   name      display name (the publicly-safe one at the start of the story)
+#   faction   affiliation safe to show from the start
+#   icon      file in assets/characters/<id>/  — marker + codex avatar
+#   body      file in assets/characters/<id>/  — full-body codex portrait
+#   color     route line + initials badge color
+#   initials  badge text when no icon is set
+
+estelle:
+  name: Estelle Bright
+  faction: Bracer Guild
+  icon: estelle1.png
+  body: estelleFullBody1.webp
+  color: "#e8623d"
+  initials: Es
+
+joshua:
+  name: Joshua Bright
+  faction: Bracer Guild
+  icon: joshua1.png
+  body: joshuaFullBody1.png
+  color: "#3f5d8a"
+  initials: Jo
+
+schera:
+  name: Scherazard Harvey
+  faction: Bracer Guild
+  icon: scherazard1.webp
+  body: scherazardFullBody1.webp
+  color: "#c0436a"
+  initials: Sc
+
+cassius:
+  name: Cassius Bright
+  faction: Bracer Guild
+  icon: cassius1.png
+  body: cassiusFullBody1.png
+  color: "#5f6b78"
+  initials: Ca
+
+josette:
+  name: Josette Haar
+  faction: Jenis Royal Academy
+  icon: josetteCapua1.png
+  body: josetteFullBody1.webp
+  color: "#d98a2b"
+  initials: Js
+
+alba:
+  name: Professor Alba
+  faction: Archeologist
+  icon: weismann1.webp
+  body: weismannFullBody1.webp
+  color: "#7a5ea8"
+  initials: Al
+
+morgan:
+  name: General Morgan
+  faction: Liberl Army
+  icon: morgan1.webp
+  body: morganFullBody1.webp
+  color: "#8a6d3b"
+  initials: Mo
+
+olivier:
+  name: Erebonian Traveller
+  faction: Bard
+  icon: olivier1.png
+  body: olivierFullBody1.png
+  color: "#b86bd1"
+  initials: Ol
+
+agate:
+  name: Agate Crosner
+  faction: Bracer Guild
+  icon: agate1.png
+  body: agateFullBody1.webp
+  color: "#c24a2e"
+  initials: Ag
+
+alan:
+  name: Alan Richard
+  faction: Liberl Army
+  icon: alan1.png
+  body: alanFullBody1.png
+  color: "#4a8c6f"
+  initials: An
+
+loewe:
+  name: THAT guy
+  faction: Unknown
+  icon: loewe1.webp
+  body: loeweFullBody1.webp
+  color: "#6a7f99"
+  initials: Lw

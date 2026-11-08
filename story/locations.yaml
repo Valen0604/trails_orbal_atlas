@@ -1,0 +1,156 @@
+# Locations — every place a marker can sit, keyed by a permanent slug.
+#
+#   name       display name
+#   type       nation | region | city | district   (containers need no xy)
+#   parent     the containing place
+#   xy         [x, y] as a percentage of the map image, top-left origin
+#              (click the map in tools/map-coordinate-finder.html to read these)
+#   show_name  true = label always visible on the map (default: on hover)
+
+rolent:
+  name: Rolent
+  type: region
+  parent: liberl
+
+rolent_city:
+  name: Rolent City
+  type: city
+  parent: rolent
+  xy: [31.3, 68.9]
+
+liberl:
+  name: Liberl
+  type: nation
+
+esmelas:
+  name: Esmelas Tower
+  type: district
+  parent: rolent
+  xy: [30.5, 67.7]
+
+perzel:
+  name: Perzel Farm
+  type: district
+  parent: rolent
+  xy: [30.1, 69.2]
+  show_name: true
+
+bright_house:
+  name: Bright Family House
+  type: district
+  parent: rolent
+  xy: [31.3, 69.9]
+  show_name: true
+
+malga:
+  name: Malga Mine
+  type: district
+  parent: rolent
+  xy: [31.1, 65.8]
+
+mistwald:
+  name: Mistwald
+  type: district
+  parent: rolent
+  xy: [31.2, 70.6]
+  show_name: true
+
+bose:
+  name: Bose
+  type: region
+  parent: liberl
+
+bose_city:
+  name: Bose City
+  type: city
+  parent: bose
+  xy: [26.3, 66.6]
+
+haken:
+  name: Haken Gate
+  type: district
+  parent: bose
+  xy: [25.9, 63.1]
+
+nebel:
+  name: Nebel Valley
+  type: district
+  parent: bose
+  xy: [28.9, 66.5]
+  show_name: true
+
+ravennue:
+  name: Ravennue Village
+  type: district
+  parent: bose
+  xy: [24.3, 65.2]
+
+amberl:
+  name: Amberl Tower
+  type: district
+  parent: bose
+  xy: [26.2, 67.9]
+
+valleria_shore:
+  name: Valleria Lakeshore
+  type: district
+  parent: bose
+  xy: [26.8, 68.6]
+  show_name: true
+
+krone_pass:
+  name: Krone Pass
+  type: district
+  parent: bose
+  xy: [21.8, 67.6]
+  show_name: true
+
+ruan:
+  name: Ruan
+  type: region
+  parent: liberl
+
+ruan_city:
+  name: Ruan City
+  type: city
+  parent: ruan
+  xy: [23.3, 72.7]
+
+manoria:
+  name: Manoria
+  type: district
+  parent: ruan
+  xy: [21.5, 71.5]
+
+jenis:
+  name: Jenis Royal Academy
+  type: district
+  parent: ruan
+  xy: [25.1, 70.6]
+
+sapphirl:
+  name: Sapphirl Tower
+  type: district
+  parent: ruan
+  xy: [23.6, 74.1]
+
+letten:
+  name: Air Letten
+  type: district
+  parent: ruan
+  xy: [24.3, 75]
+  show_name: true
+
+varenne:
+  name: Varenne Lighthouse
+  type: district
+  parent: ruan
+  xy: [21.3, 73.4]
+  show_name: true
+
+mercia:
+  name: Mercia Orphanage
+  type: district
+  parent: ruan
+  xy: [21.9, 70.4]
+  show_name: true

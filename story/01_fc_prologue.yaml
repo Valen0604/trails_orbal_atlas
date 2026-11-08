@@ -1,0 +1,159 @@
+# Trails in the Sky FC — Prologue
+# One list item per beat, in story order. Sequence numbers are derived from
+# position, so inserting a beat anywhere just works.
+#
+#   date   in-world date; sticky until the next beat that sets one
+#   at     where the party is; sticky until the next beat that sets one
+#   by     how the party travelled INTO this beat: foot (default) | rail | air
+#   title  what happens
+#   join   who starts travelling with the party here   (- id  or  - id: what they're doing)
+#   cameo  who is present for this beat only
+#   leave  who is last seen with the party on this beat
+#   codex  facts revealed on this beat, per character   (- bio: text, - faction: text, ...)
+#
+# Someone can be somewhere else than the party, or travel differently, with the
+# long form:
+#   - who: id
+#     doing: text
+#     at: loc_id
+#     by: air
+
+game: Trails in the Sky FC
+id: fc_pro
+chapter: Prologue
+date: March 1202
+
+beats:
+
+  - at: bright_house
+    title: Get sent to Rolent to pickup a newspaper for Cassius
+    join:
+      - estelle: Party leader
+      - joshua: Party leader
+    cameo:
+      - cassius: Sent children to buy newspaper
+    codex:
+      cassius:
+        - bio: Widowed since the 100 day war
+        - bio: Father of Estelle, adoptive father of Josua
+      joshua:
+        - bio: Adopted brother of Estelle
+      estelle:
+        - bio: Her mother died protecting her during the 100 day war
+
+  - at: rolent_city
+    title: Going to Rolent
+    join:
+      - schera: Dealing with Bracer duties
+
+  - title: Doing Junior Bracer Test
+    codex:
+      schera:
+        - bio: Bracer mentor for Estelle and Joshua
+
+  - title: Interrupted by Aina on the way home
+    leave: [schera]
+
+  - at: esmelas
+    title: Attempting to rescue children from Esmelas Tower
+
+  - title: Ambushed by monsters, Cassius comes to the rescue
+    join:
+      - cassius: On a work trip with the guild
+
+  - at: bright_house
+    title: Heading back home
+
+  - title: Learned Cassius is leaving for work
+    leave: [cassius]
+    codex:
+      cassius:
+        - bio: S rank Bracer
+        - bio: On a work trip with the Bracer Guild
+      estelle:
+        - bio: Doing the easier of the bracer jobs left over by Cassius with Joshua
+      joshua:
+        - bio: Doing the easier of the bracer jobs left over by Cassius with Estelle
+      schera:
+        - bio: Doing the hardest of the bracer jobs left by Cassius
+
+  - date: April 1202
+    at: perzel
+    title: Heading to Perzel Farm for Bracer job
+
+  - title: Dealing with crop detroying monsters
+
+  - at: rolent_city
+    title: Heading back to Rolent
+
+  - title: Learning about Esmelas Crystal that needs retrieving from Mayor Klaus
+
+  - at: malga
+    title: Going to the mine to retrieve crystal
+
+  - title: Rescuing miners from a cave in and recovering crystal
+
+  - at: rolent_city
+    title: Heading back to Rolent
+
+  - title: Delivering crystal to Mayor Klaus, encountering Josette
+    join:
+      - josette: Speaking to Rolent's mayor
+
+  - date: May 1202
+    title: Learning about reporter escort mission to Esmelas Tower
+    leave: [josette]
+
+  - at: esmelas
+    title: Escorting reporters to the top of Esmelas Tower
+    codex:
+      alba:
+        - bio: Archeologist investigating the Tetracyclic towers
+
+  - title: Encountered Professor Alba, learning about Tetracyclic Towers
+    join:
+      - alba: Researching Tetracyclic Towers
+
+  - at: rolent_city
+    title: Returning to Rolent after escort mission
+    leave: [alba]
+
+  - title: Mayor bursts into Bracer Guild exclaiming how the Septium Crystal was stolen
+    join:
+      - schera: Guiding Estelle and Josua on their missions
+
+  - title: Searching for clues about the robbery, suspecting of Josette
+
+  - at: mistwald
+    title: Chasing thief to Mistwald
+    codex:
+      josette:
+        - bio: Faked being a Jenis Royal Academy student to appraoch Mayor Klaus
+        - bio: Attempted to steal the Esmelas Crystal that was going to be gifted to the Queen
+          name: Josette Capua
+          icon: josetteCapua2.png
+          body: josetteFullBody2.png
+        - faction: Capua Sky Bandits
+        - former_faction: Jenis Royal Academy (cover identity)
+
+  - title: Encountered Capua Sky Bandits in the center of Mistwald with the crystal
+    join:
+      - josette: Fled on airship with his brother
+
+  - title: Fighting Josette to retrieve the crystal
+
+  - title: Retrived crystal but Josette is rescued by her brother on an airship and manages to flee
+    leave: [josette]
+
+  - at: rolent_city
+    title: Returning to Rolent with crystal
+
+  - title: Receiving first recommendation for promotion to senior bracer
+
+  - at: bright_house
+    title: Returning Home
+    codex:
+      cassius:
+        - bio: Disappeared on missing airliner
+
+  - title: Learned the airliner Linde has disappeared over Bose, which Cassius was aboard

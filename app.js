@@ -10,15 +10,6 @@
   var OVERRIDE = window.ROUTES || {};
 
   // --- presentation config (edit freely; not part of the data) -------------
-  var STYLE = {
-    estelle: { color: "#e8623d", initials: "Es" },
-    joshua:  { color: "#3f5d8a", initials: "Jo" },
-    schera:  { color: "#c0436a", initials: "Sc" },
-    cassius: { color: "#5f6b78", initials: "Ca" },
-    josette: { color: "#d98a2b", initials: "Js" },
-    alba:    { color: "#7a5ea8", initials: "Al" }
-  };
-  function styleFor(id) { return STYLE[id] || { color: "#888", initials: (id || "?").slice(0, 2) }; }
   var ANIM_MS = 900, VIEW_PAD = 1.5, MIN_VW = 6;
 
   // --- indexes -------------------------------------------------------------
@@ -29,6 +20,16 @@
   D.appearances.forEach(function (a) { (appsByChar[a.char_id] = appsByChar[a.char_id] || []).push(a); });
   var codexByChar = {};
   D.codex.forEach(function (e) { (codexByChar[e.char_id] = codexByChar[e.char_id] || []).push(e); });
+  // Badge color + initials come from the character record (story/characters.yaml).
+  // Initials fall back to the first letters of the display name; color to neutral grey.
+  function initialsFor(name) {
+    var w = String(name || "?").trim().split(/\s+/);
+    return w.length > 1 ? (w[0][0] + w[1][0]) : w[0].slice(0, 2);
+  }
+  function styleFor(id) {
+    var c = charById[id] || {};
+    return { color: c.color || "#888", initials: c.initials || initialsFor(c.display_name || id) };
+  }
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"]/g, function (ch) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[ch];
@@ -431,10 +432,12 @@
       var st = effectiveChar(c.char_id, beat.sequence);   // icon + name follow reveals here too
       var place = (locById[loc] && locById[loc].name) || loc;
       var following = c.char_id === followId ? " is-following" : "";
+      var act = activityAt(c.char_id, beat);                  // what they're doing, from the story file
+      var tip = (act ? act + ". " : "") + "Click to follow " + st.name + " on the map";
       var ava = st.icon
         ? '<span class="cast-ava"><img src="' + esc(st.icon) + '" alt=""></span>'
         : '<span class="cast-ava cast-ava-fallback" style="background:' + s.color + '">' + esc(s.initials) + '</span>';
-      rows.push('<button class="cast-chip' + following + '" data-char="' + c.char_id + '" title="Follow ' + esc(st.name) + ' on the map">' +
+      rows.push('<button class="cast-chip' + following + '" data-char="' + c.char_id + '" title="' + esc(tip) + '">' +
         ava +
         '<span class="cast-chip-txt"><span class="cast-name">' + esc(st.name) + '</span>' +
         '<span class="cast-act">' + esc(place) + '</span></span></button>');

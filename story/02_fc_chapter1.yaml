@@ -1,0 +1,271 @@
+# Trails in the Sky FC — Chapter 1
+# One list item per beat, in story order. Sequence numbers are derived from
+# position, so inserting a beat anywhere just works.
+#
+#   date   in-world date; sticky until the next beat that sets one
+#   at     where the party is; sticky until the next beat that sets one
+#   by     how the party travelled INTO this beat: foot (default) | rail | air
+#   title  what happens
+#   join   who starts travelling with the party here   (- id  or  - id: what they're doing)
+#   cameo  who is present for this beat only
+#   leave  who is last seen with the party on this beat
+#   codex  facts revealed on this beat, per character   (- bio: text, - faction: text, ...)
+#
+# Someone can be somewhere else than the party, or travel differently, with the
+# long form:
+#   - who: id
+#     doing: text
+#     at: loc_id
+#     by: air
+
+# Party carried over from the previous chapter: estelle, joshua, schera
+
+game: Trails in the Sky FC
+id: fc_ch1
+chapter: Chapter 1
+date: June 1202
+
+beats:
+
+  - at: bose_city
+    title: Going to Bose in search of Cassius
+    join:
+      - schera: Tagging along Estelle and Joshua on their search for Cassius
+    codex:
+      estelle:
+        - bio: Going to Bose in search of Cassius
+      joshua:
+        - bio: Going to Bose in search of Cassius
+      schera:
+        - bio: Accompanying Estelle and Joshua to Bose on their search for Cassius
+
+  - title: Talking to Lugran on the Bracer Guild about the situation
+    codex:
+      morgan:
+        - bio: General of the Liberl army
+
+  - title: Learned about General Morgan and his dislike for the guild
+
+  - title: Learned how General Morgan is not sharing infformation with the guild, and limiting their movements in regards to the Linde disappearance investigation
+    codex:
+      morgan:
+        - bio: Dislikes the guild, and is not sharing information about the disappeared airliner
+
+  - title: Registering with the guild, going to Mayor Maybelle for a request
+
+  - title: Learn about the Mayor's request for bracers to investigate the incident, receive letter of introduction that would allow them to speak with Morgan about the Linde
+
+  - at: haken
+    title: Going to haken Gate to speak with Morgan
+
+  - title: Removing Bracer badges to not trigger Morgan while waiting for him to arrive
+
+  - title: Encounter a traveler from the Erebonia Empire while waiting, who attempts to follow the party to their conversation with Morgan before being shooed out
+    join:
+      - olivier: Got shooed out from the meeting with Morgan he tried to sneak into
+      - morgan: Left after Olivier difused his argument with Scherazard
+
+  - title: Morgan discloses the details, learn the Linde disappeared returning to Rolent, theorize it was hijacked by the Imperial Army for ransom or the cargo
+    leave: [olivier]
+
+  - title: Learn the Capua Sky Bandits actually captured the Linde, and are demanding a ransom
+    codex:
+      josette:
+        - bio: Captured the Linde alongside the rest of the Sky Pirates
+
+  - title: Accidentally reveal Bracer affiliation, get kicked out and Scherazard begind having an argument with Morgan about the military and the guild
+    codex:
+      schera:
+        - bio: Believes the military is incompetent in situations like the Linde disappearance
+      morgan:
+        - bio: Believes the Guild is incomepetent in situations like the Linde disappearance
+
+  - title: Interrupted by the Erebonian traveler, who starts playing the lute and singing to difuse the situation
+    join:
+      - olivier: Leaves to sightsee Bose
+    leave: [morgan]
+
+  - at: bose_city
+    title: Learn the traveler is called Olivier Lenheim, and agree to travel with him to Bose City
+    codex:
+      olivier:
+        - bio: Wandeing bard and musician from the Empire, impossible to have a normal conversation with
+          name: Olivier Lenheim
+
+  - title: Reporting to the Mayor and the Guild what happend with Morgan
+    leave: [olivier]
+
+  - title: Encountered the reporters Nial and Dorothy, who give the party a tip on the Linde's disappearance in exchange for up to date information
+
+  - title: Decide to do some side-quests before pursuing the tip
+
+  - at: amberl
+    title: Encounter Alba at Amberl Tower and rescue him, after which he departs back to Bose
+    codex:
+      alba:
+        - bio: Was rescued by Estelle and Joshua in Amberl Tower, but decides to return to Bose alone
+
+  - at: ravennue
+    title: Going to Ravennue Village in pursue of the tip
+
+  - title: Encounter Agate heading out of Ravennue, but he quickly leaves on another job after a short talk
+    cameo:
+      - agate: On a Bracer job
+    codex:
+      agate:
+        - bio: Senior Bracer on a solo quest
+
+  - title: Talk to Ravennue's mayor, encounter a kid that claims to have seen something the night the Linde disappeared
+
+  - title: Go to Ravennue's mine followin the kids' lead. Encounter it locked, returned to the city to get it unlocked
+
+  - title: Inside the mine, encounter Josette's brother emptying the Linde, confronted him but he manages to flee
+
+  - title: Decide to investigate the Linde and notice it is empty
+
+  - title: Morgan arrives with the army and arrests the party despite their pleas thinking they were lying, sending them to Haken Gate
+    join:
+      - morgan: Arrested the Bracers beleiving they kidnapped the Linde
+
+  - at: haken
+    title: At the dungeon cell, encounter Olivier, who had also been arrested for drinking Bose's most expensive wine
+    join:
+      - olivier: Helping the party to redeem himself for drinking Bose's most expensive wine
+    leave: [morgan]
+
+  - title: Mayor Maybelle comes and frees everyone, including Olivier on the condition he helps the the party solve the case
+    codex:
+      olivier:
+        - bio: Arrested for drinking Bose's most expensive wine
+
+  - title: At the same time the Capua Sky Bandits atatck Bose and steals almost every valuable item from the citizens of bose
+    cameo:
+      - who: josette
+        doing: Raided Bose with the Sky Bandits and stole almost everyone's valueable possesions
+        at: bose_city
+
+  - at: bose_city
+    title: Going to Bose to see what happened
+
+  - title: Encounter Alan Richard, who apologizes for the armies behavior and allows the party to interrogate the citizens after they are done
+    cameo:
+      - alan: Investigating the assault in Bose by the Capua Sky bandits
+    codex:
+      alan:
+        - bio: Head of the Liber Army Intelligence Division
+
+  - title: Finding a man named Lloyd who witnessed the Capua Sky Bandits alongside Valleria Lakeshore, and that they are coming back tonight
+
+  - at: valleria_shore
+    title: Wait for the Capua Sky Bandits to come back, Scherazard knocks out Olivier so he isn't exposed to danger by drinking him under the table
+    join:
+      - olivier: Got knocked out trying to outdrink Scherazard
+    leave: [olivier]
+    codex:
+      schera:
+        - bio: Heavy drinker
+      olivier:
+        - bio: Tried outdrinking Scherazard and got knocked out
+
+  - title: Listened in to the Sky Bandit's conversation, who mention their oldest sibling has been behaving weirdly after meatting THAT guy
+    join:
+      - josette: Preparing to head back to the Sky Bandit base
+
+  - title: THAT guy arrives, saying the ransom payment is underway, and that the queen will pay it herself
+    join:
+      - loewe: Left after informing the Sky Bandits that the ransom payment is coming
+    codex:
+      loewe:
+        - bio: Josette's brother started acting weird after meeting him
+        - bio: Assures the Capua Sky Bandits that the ransom payment is coming
+      josette:
+        - bio: Suspicious of THAT guy as his brother started acting weird after meeting him
+
+  - title: Kyle, Josettes's borther, revelas their airship is parked near the lakeshore, the only possible place being Amberl Tower
+    leave: [josette, loewe]
+
+  - at: amberl
+    title: The party decide to go to Amberl Tower in search of their ship, only ot find it heavily guarded
+
+  - title: Olivier interrupts while they are planning their assault
+    join:
+      - olivier: Accompanying the gang to the Sky Bandit hideout
+
+  - title: Olivier suggests sneaking into the ship, which somehow works
+
+  - at: nebel
+    by: air
+    title: Found themselves in Nebel Valley after boarding the ship, which was the Capua Sky Pirates' hideout
+
+  - title: Finding a way through the maze to rescue the hostages and defeat the Sky Bandits
+
+  - title: Rescued the hostages, fighting the Sky Pirates after they state how they would have killed the hostages after receiving the ransom
+    join:
+      - josette: Taken away by the Intelligence Division
+
+  - title: Defeated the Capua Sky Pirates
+
+  - title: The Sky Bandit's leader, Josette's brother, says he has no memories of what happened after meeting THAT guy
+
+  - title: Alan and the intelligence Division appear as teh Capua Sky Bandits try to flee and arrests them
+    cameo:
+      - alan: Arrested the Capua Sky Bandits
+    leave: [josette]
+    codex:
+      alan:
+        - bio: Arrested the Capua Sky Bandits while they tried fleeing
+      josette:
+        - bio: Arrested by the Intelligence Division after attempting to flee from the Bracer Guild operation
+
+  - title: Linde is rescued, but Cassius is nowhere to be found, the captain saying Cassis got off as soon as the linde took off
+    codex:
+      cassius:
+        - bio: Never boarded the Linde, and has not been spotted since
+
+  - at: bose_city
+    title: Returning to Bose to report findings, received second recommendation letter
+    codex:
+      estelle:
+        - bio: Received second recommendation letter
+      joshua:
+        - bio: Received second recommendation letter
+
+  - title: Received a parcel from Cassius urging them to keep climbing the ranks, and he cannot return until the queen's birthday ceremony
+    codex:
+      cassius:
+        - bio: Left a letter for Estelle and Joshua explaining he cannot come back until the Queen's birthday cermony
+        - bio: Urges Estelle and joshua to keep climbing the Bracer ranks to fins him
+
+  - title: Also received a parcel intended for Cassius, with a black myserious orbment from someone named "K", and that he should take it to "R"
+    codex:
+      cassius:
+        - bio: Received a parcel with a strange orbment to be analysed by "R"
+
+  - title: Deciding to go to Ruan to obtain the next recommendation letter from the guild
+    codex:
+      estelle:
+        - bio: Decided to head to Ruan to continue climbing the Bracer ranks
+      joshua:
+        - bio: Decided to head to Ruan to continue climbing the Bracer ranks
+
+  - title: Part ways with Olivier and Scherazard who are going back to Rolent
+
+  - title: After separating, Olivier is seen talking with someone about a mission on an orbment
+    join:
+      - who: schera
+        doing: Going to Rolent with Olivier
+        at: rolent_city
+        by: air
+      - who: olivier
+        doing: Going to Rolent with Scherazard
+        at: rolent_city
+        by: air
+    codex:
+      olivier:
+        - bio: Is involved with the Erebonian Empire government, and has been communicating with them secretely during a "misison"
+        - faction: Erebonian Empire Government
+      schera:
+        - bio: Suspects of Olivier of being a spy for the Erebonian Empire
+
+  - title: Scherazard confronts Olivier, and Olivier confesses he is involved with the Imperial Governmnet
+    leave: [schera, olivier]

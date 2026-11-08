@@ -1,0 +1,2 @@
+# Only needed to run build_data.py (story/*.yaml -> data.js). The site itself needs nothing.
+pyyaml>=6

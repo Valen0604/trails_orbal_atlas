@@ -1,0 +1,34 @@
+# Trails in the Sky FC — Chapter 2
+# One list item per beat, in story order. Sequence numbers are derived from
+# position, so inserting a beat anywhere just works.
+#
+#   date   in-world date; sticky until the next beat that sets one
+#   at     where the party is; sticky until the next beat that sets one
+#   by     how the party travelled INTO this beat: foot (default) | rail | air
+#   title  what happens
+#   join   who starts travelling with the party here   (- id  or  - id: what they're doing)
+#   cameo  who is present for this beat only
+#   leave  who is last seen with the party on this beat
+#   codex  facts revealed on this beat, per character   (- bio: text, - faction: text, ...)
+#
+# Someone can be somewhere else than the party, or travel differently, with the
+# long form:
+#   - who: id
+#     doing: text
+#     at: loc_id
+#     by: air
+
+# Party carried over from the previous chapter: estelle, joshua
+
+game: Trails in the Sky FC
+id: fc_ch2
+chapter: Chapter 2
+date: June 1202
+
+beats:
+
+  - at: bose_city
+    title: Setting out for Ruan
+
+  - at: krone_pass
+    title: Stopping at the Krone Pass Checkpoint for the night
